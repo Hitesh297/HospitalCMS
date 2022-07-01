@@ -31,7 +31,7 @@ namespace HospitalCMS.Models
         public int Experience { get; set; }
         public int SpecialityId { get; set; }
         public int Phone { get; set; }
-        public String Email { get; set; }
+        public string Email { get; set; }
     }
 
 }
