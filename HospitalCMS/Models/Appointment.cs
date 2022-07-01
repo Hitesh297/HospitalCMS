@@ -14,8 +14,35 @@ namespace HospitalCMS.Models
         [ForeignKey("Speciality")]
         public int SpecialityId { get; set; }
         public virtual Speciality Speciality { get; set; }
-        [ForeignKey("Speciality")]
+
+
+        [ForeignKey("Doctor")]
+        public int DoctorId { get; set; }
+        public virtual Doctor Doctor { get; set; }
+
+
+        [ForeignKey("Patient")]
+        public int PatientId { get; set; }
+        public virtual Patient Patient{ get; set; }
+
+
+        public DateTime Schedule { get; set; }
+
+        public string Notes { get; set; }
+
+    }
+    public class AppointmentDto
+    {
+        public int AppointmentId { get; set; }
+
+        public int SpecialityId { get; set; }
+
         public int DoctorId { get; set; }
 
+        public int PatientId { get; set; }
+
+        public DateTime Schedule { get; set; }
+
+        public string Notes { get; set; }
     }
 }
