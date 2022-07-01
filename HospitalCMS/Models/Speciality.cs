@@ -7,5 +7,6 @@ namespace HospitalCMS.Models
 {
     public class Speciality
     {
+
     }
 }
