@@ -11,6 +11,7 @@ namespace HospitalCMS.Models
         [Key]
         public int SpecialityId { get; set; }
         public string Name { get; set; }
+        public ICollection<Doctor> Doctors { get; set; }
     }
     public class SpecialityDto { 
         public int SpecialityId { get; set; }

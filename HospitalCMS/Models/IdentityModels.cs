@@ -25,6 +25,11 @@ namespace HospitalCMS.Models
         {
         }
 
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Speciality> Specialities { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

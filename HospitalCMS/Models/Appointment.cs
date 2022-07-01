@@ -28,7 +28,7 @@ namespace HospitalCMS.Models
 
         public DateTime Schedule { get; set; }
 
-        public string Notes { get; set; }
+        public string DoctorNotes { get; set; }
 
     }
     public class AppointmentDto
@@ -43,6 +43,6 @@ namespace HospitalCMS.Models
 
         public DateTime Schedule { get; set; }
 
-        public string Notes { get; set; }
+        public string DoctorNotes { get; set; }
     }
 }
