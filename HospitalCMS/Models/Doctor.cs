@@ -20,7 +20,7 @@ namespace HospitalCMS.Models
         public string SpecialityId { get; set; }
         public virtual Speciality Speciality { get; set; }
 
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         public string Email { get; set; }
     }
@@ -30,7 +30,7 @@ namespace HospitalCMS.Models
         public string Name { get; set; }
         public int Experience { get; set; }
         public int SpecialityId { get; set; }
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         public string Email { get; set; }
     }
 
