@@ -19,7 +19,7 @@ namespace HospitalCMS.Models
 
         public string Gender { get; set; }
 
-        public int Mobile { get; set; }
+        public string Mobile { get; set; }
 
         public string Email { get; set; }
 
