@@ -11,9 +11,11 @@ namespace HospitalCMS.Models
     {
         [Key]
         public int AppointmentId { get; set; }
-        [ForeignKey("Speciality")]
-        public int SpecialityId { get; set; }
-        public virtual Speciality Speciality { get; set; }
+        //removed speciality foreign key from the appointment because it
+        //can be found inside Doctor object
+        //[ForeignKey("Speciality")]
+        //public int SpecialityId { get; set; }
+        //public virtual Speciality Speciality { get; set; }
 
 
         [ForeignKey("Doctor")]
@@ -23,7 +25,7 @@ namespace HospitalCMS.Models
 
         [ForeignKey("Patient")]
         public int PatientId { get; set; }
-        public virtual Patient Patient{ get; set; }
+        public virtual Patient Patient { get; set; }
 
 
         public DateTime Schedule { get; set; }

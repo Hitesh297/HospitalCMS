@@ -190,6 +190,10 @@
     <Compile Include="Migrations\202207011619172_FirstCreate.Designer.cs">
       <DependentUpon>202207011619172_FirstCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207030008095_RemoveSpecialityFromAppointment.cs" />
+    <Compile Include="Migrations\202207030008095_RemoveSpecialityFromAppointment.Designer.cs">
+      <DependentUpon>202207030008095_RemoveSpecialityFromAppointment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
@@ -277,6 +281,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202207011619172_FirstCreate.resx">
       <DependentUpon>202207011619172_FirstCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207030008095_RemoveSpecialityFromAppointment.resx">
+      <DependentUpon>202207030008095_RemoveSpecialityFromAppointment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
