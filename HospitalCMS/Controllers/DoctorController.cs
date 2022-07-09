@@ -1,18 +1,49 @@
-﻿using System;
+﻿using HospitalCMS.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace HospitalCMS.Controllers
 {
     public class DoctorController : Controller
     {
-        // GET: Doctor
-        public ActionResult Index()
+        private static readonly HttpClient client;
+        private JavaScriptSerializer jss = new JavaScriptSerializer();
+
+        static DoctorController()
         {
-            return View();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+
+            client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44370/api/");
         }
+
+        // GET: Doctor
+        [HttpGet]
+        public ActionResult List()
+        {
+           
+            //curl https://localhost:44370/api/doctordata/listDoctors
+            string url = "docotrdata/listDoctors";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IEnumerable<DoctorDto> doctors = response.Content.ReadAsAsync<IEnumerable<DoctorDto>>().Result;
+            return View(doctors);
+        }
+
+        // GET: Doctor
+       // public ActionResult Index()
+        //{
+          //  return View();
+        //}
 
         // GET: Doctor/Details/5
         public ActionResult Details(int id)
