@@ -12,10 +12,36 @@ using HospitalCMS.Models;
 
 namespace HospitalCMS.Controllers
 {
+
     public class DonorDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        //------------------------------
+        [HttpGet]
+        [ResponseType(typeof(DonorDto))]
+        // GET: api/DonorData
+        public IHttpActionResult ListDonors() // Ihttpaction result
+        {
+            List<Donor> Donor = db.Donors.ToList();
+            List<DonorDto> DonorDto = new List<DonorDto>();
 
+            Donor.ForEach(a => DonorDto.Add(new DonorDto()
+            {
+                DonorId = a.DonorId,
+                Email = a.Email,
+                DepartmentId = a.DepartmentId,
+               // Department = a.Department, do we need to make this (it is having a foreign key)
+                Phone = a.Phone,
+                Amount = a.Amount,
+
+            })) ;
+            return Ok(DonorDto);
+        }
+
+
+
+
+        // ----------------------------- Get ------------------
         // GET: api/DonorData
         public IQueryable<Donor> GetDonors()
         {
@@ -33,11 +59,80 @@ namespace HospitalCMS.Controllers
             }
 
             return Ok(donor);
-        }
+       }
 
-        // PUT: api/DonorData/5
+        //-------------------------put patient-----------------------
+       //  PUT: api/DonorData/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutDonor(int id, Donor donor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+           }
+
+            if (id != donor.DonorId)
+            {
+                return BadRequest();
+            }
+
+           db.Entry(donor).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DonorExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+           }
+
+           return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private bool DonorExists(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        // -------------------------------------------------------------
+
+
+        [HttpGet]
+        [ResponseType(typeof(Donor))]
+        // GET: api/DonorData/1
+        public IHttpActionResult FindDonor(int id)
+
+        {
+            Donor Donor = db.Donors.Find(id);
+            DonorDto DonorDto = new DonorDto()
+            {
+                DonorId = Donor.DonorId,
+                Email = Donor.Email,
+                DepartmentId = Donor.DepartmentId,
+                Phone = Donor.Phone,
+                Amount = Donor.Amount
+            };
+            if (Donor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(DonorDto);
+        }
+
+
+        [HttpPost]
+        // PUT: api/DonorData/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult UpdateDonor(int id, Donor donor)
         {
             if (!ModelState.IsValid)
             {
@@ -70,9 +165,11 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
+        [HttpPost]
         // POST: api/DonorData
         [ResponseType(typeof(Donor))]
-        public IHttpActionResult PostDonor(Donor donor)
+        public IHttpActionResult AddDonor(Donor donor)
         {
             if (!ModelState.IsValid)
             {
@@ -85,6 +182,26 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = donor.DonorId }, donor);
         }
 
+
+
+        // POST: api/DonorData
+        //[ResponseType(typeof(Donor))]
+        //public IHttpActionResult PostDonor(Donor donor)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    db.Donors.Add(donor);
+        //    db.SaveChanges();
+
+        //    return CreatedAtRoute("DefaultApi", new { id = donor.DonorId }, donor);
+        //}
+
+        // DELETE: api/DonorData/5
+
+        [HttpPost]
         // DELETE: api/DonorData/5
         [ResponseType(typeof(Donor))]
         public IHttpActionResult DeleteDonor(int id)
@@ -110,9 +227,11 @@ namespace HospitalCMS.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DonorExists(int id)
+        private bool PatientExists(int id)
         {
-            return db.Donors.Count(e => e.DonorId == id) > 0;
+            return db.Patients.Count(e => e.PatientId == id) > 0;
+
         }
     }
+
 }

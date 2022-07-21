@@ -16,4 +16,17 @@ namespace HospitalCMS.Models
         public string Phone { get; set; }
         public decimal Amount { get; set; }
     }
+
+    public class DonorDto
+    {
+        public int DonorId { get; set; }
+        public string Email { get; set; }
+      //  [ForeignKey("Department")]
+        public int DepartmentId { get; set; }
+        public virtual Department Department { get; set; }
+        public string Phone { get; set; }
+        public decimal Amount { get; set; }
+    }
+
+
 }
