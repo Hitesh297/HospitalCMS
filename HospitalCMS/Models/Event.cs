@@ -17,4 +17,17 @@ namespace HospitalCMS.Models
         public string Description { get; set; }
         public ICollection<Article> Articles { get; set; }
     }
+
+    public class EventDto
+    {
+        public int EventId { get; set; }
+        public string Title { get; set; }
+        public DateTime Date { get; set; }
+        public bool HasPic { get; set; }
+        public string PicExtension { get; set; }
+        public string Description { get; set; }
+        public ICollection<Article> Articles { get; set; }
+    }
+
+
 }
