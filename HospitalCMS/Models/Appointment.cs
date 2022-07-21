@@ -37,7 +37,7 @@ namespace HospitalCMS.Models
     {
         public int AppointmentId { get; set; }
 
-        public int SpecialityId { get; set; }
+        //public int SpecialityId { get; set; }
 
         public int DoctorId { get; set; }
 

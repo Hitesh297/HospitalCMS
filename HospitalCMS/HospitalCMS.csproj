@@ -203,10 +203,23 @@
     <Compile Include="Migrations\202207030008095_RemoveSpecialityFromAppointment.Designer.cs">
       <DependentUpon>202207030008095_RemoveSpecialityFromAppointment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207210248281_othermodelsadded.cs" />
+    <Compile Include="Migrations\202207210248281_othermodelsadded.designer.cs">
+      <DependentUpon>202207210248281_othermodelsadded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207210253281_modelsadded.cs" />
+    <Compile Include="Migrations\202207210253281_modelsadded.designer.cs">
+      <DependentUpon>202207210253281_modelsadded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
+    <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Doctor.cs" />
+    <Compile Include="Models\Donor.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\FAQ.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Patient.cs" />
@@ -297,6 +310,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207030008095_RemoveSpecialityFromAppointment.resx">
       <DependentUpon>202207030008095_RemoveSpecialityFromAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207210248281_othermodelsadded.resx">
+      <DependentUpon>202207210248281_othermodelsadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207210253281_modelsadded.resx">
+      <DependentUpon>202207210253281_modelsadded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

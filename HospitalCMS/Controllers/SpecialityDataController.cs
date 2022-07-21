@@ -16,15 +16,17 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/SpecialityData
-        public IQueryable<Speciality> GetSpecialities()
+        // GET: api/SpecialityData/ListSpecialities
+        [HttpGet]
+        public IEnumerable<Speciality> ListSpecialities()
         {
             return db.Specialities;
         }
 
-        // GET: api/SpecialityData/5
+        // GET: api/SpecialityData/FindSpeciality/5
         [ResponseType(typeof(Speciality))]
-        public IHttpActionResult GetSpeciality(int id)
+        [HttpGet]
+        public IHttpActionResult FindSpeciality(int id)
         {
             Speciality speciality = db.Specialities.Find(id);
             if (speciality == null)
@@ -35,9 +37,10 @@ namespace HospitalCMS.Controllers
             return Ok(speciality);
         }
 
-        // PUT: api/SpecialityData/5
+        // PUT: api/SpecialityData/UpdateSpeciality/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSpeciality(int id, Speciality speciality)
+        [HttpPost]
+        public IHttpActionResult UpdateSpeciality(int id, Speciality speciality)
         {
             if (!ModelState.IsValid)
             {
@@ -70,9 +73,10 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/SpecialityData
+        // POST: api/SpecialityData/CreateSpeciality
         [ResponseType(typeof(Speciality))]
-        public IHttpActionResult PostSpeciality(Speciality speciality)
+        [HttpPost]
+        public IHttpActionResult CreateSpeciality(Speciality speciality)
         {
             if (!ModelState.IsValid)
             {
@@ -87,6 +91,7 @@ namespace HospitalCMS.Controllers
 
         // DELETE: api/SpecialityData/5
         [ResponseType(typeof(Speciality))]
+        [HttpPost]
         public IHttpActionResult DeleteSpeciality(int id)
         {
             Speciality speciality = db.Specialities.Find(id);
