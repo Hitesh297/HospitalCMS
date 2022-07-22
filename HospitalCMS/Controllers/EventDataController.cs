@@ -17,8 +17,8 @@ namespace HospitalCMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         [HttpGet]
         [ResponseType(typeof(EventDto))]
-        // GET: api/EventData
-        public IHttpActionResult ListEvents() // Ihttpaction result
+        // GET: api/EventData/ListEvents
+        public IHttpActionResult ListEvents()
         {
             List<Event> Event = db.Events.ToList();
             List<EventDto> EventDto = new List<EventDto>();
@@ -30,15 +30,14 @@ namespace HospitalCMS.Controllers
                 Date = a.Date,
                 HasPic = a.HasPic,
                 PicExtension = a.PicExtension,
-                Description = a.Description,
-                Articles = a.Articles
+                Description = a.Description
             }));
             return Ok(EventDto);
         }
 
         [HttpGet]
         [ResponseType(typeof(Event))]
-        // GET: api/EventData/1
+        // GET: api/EventData/FindEvent/1
         public IHttpActionResult FindEvent(int id)
 
         {
@@ -62,7 +61,7 @@ namespace HospitalCMS.Controllers
         }
 
         [HttpPost]
-        // POST: api/EventData
+        // POST: api/EventData/AddEvent
         [ResponseType(typeof(Event))]
         public IHttpActionResult AddEvent(Event @event)
         {
@@ -77,22 +76,11 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = @event.EventId }, @event);
         }
 
-        // GET: api/EventData/5
-        [ResponseType(typeof(Event))]
-        public IHttpActionResult GetEvent(int id)
-        {
-            Event @event = db.Events.Find(id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(@event);
-        }
-
-        // PUT: api/EventData/5
+        // POST: api/EventData/EditEvent/5
+        [HttpPost]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutEvent(int id, Event @event)
+        public IHttpActionResult EditEvent(int id, Event @event)
         {
             if (!ModelState.IsValid)
             {

@@ -16,28 +16,55 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Article
-        public IQueryable<Article> GetArticles()
+        // GET: api/Article/ListArticles
+        [HttpGet]
+        public IHttpActionResult ListArticles()
         {
-            return db.Articles;
+            List<Article> Articles = db.Articles.ToList();
+            List<ArticleDto> ArticlesDto = new List<ArticleDto>();
+
+            Articles.ForEach(a => ArticlesDto.Add(new ArticleDto()
+            {
+                ArticleId = a.ArticleId,
+                Description = a.Description,
+                EventId = a.EventId,
+                HasPic = a.HasPic,
+                PicExtension = a.PicExtension,
+                Title = a.Title
+
+            }));
+            return Ok(ArticlesDto);
         }
 
-        // GET: api/Article/5
+        // GET: api/Article/ListArticles/5
         [ResponseType(typeof(Article))]
-        public IHttpActionResult GetArticle(int id)
+        [HttpGet]
+        public IHttpActionResult FindArticle(int id)
         {
             Article article = db.Articles.Find(id);
+
             if (article == null)
             {
                 return NotFound();
             }
 
-            return Ok(article);
+            ArticleDto articleDto = new ArticleDto()
+            {
+                ArticleId = article.ArticleId,
+                Description = article.Description,
+                EventId = article.EventId,
+                HasPic = article.HasPic,
+                PicExtension = article.PicExtension,
+                Title = article.Title
+            };
+
+            return Ok(articleDto);
         }
 
-        // PUT: api/Article/5
+        // PUT: api/Article/EditArticle/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutArticle(int id, Article article)
+        [HttpPost]
+        public IHttpActionResult EditArticle(int id, Article article)
         {
             if (!ModelState.IsValid)
             {
@@ -70,9 +97,10 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Article
+        // POST: api/Article/CreateArticle
         [ResponseType(typeof(Article))]
-        public IHttpActionResult PostArticle(Article article)
+        [HttpPost]
+        public IHttpActionResult CreateArticle(Article article)
         {
             if (!ModelState.IsValid)
             {
@@ -85,8 +113,9 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = article.ArticleId }, article);
         }
 
-        // DELETE: api/Article/5
+        // DELETE: api/Article/DeleteArticle/5
         [ResponseType(typeof(Article))]
+        [HttpPost]
         public IHttpActionResult DeleteArticle(int id)
         {
             Article article = db.Articles.Find(id);

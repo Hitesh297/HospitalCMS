@@ -17,4 +17,13 @@ namespace HospitalCMS.Models
         public int EventId { get; set; }
         public virtual Event Event { get; set; }
     }
+    public class ArticleDto
+    {
+        public int ArticleId { get; set; }
+        public string Title { get; set; }
+        public bool HasPic { get; set; }
+        public string PicExtension { get; set; }
+        public string Description { get; set; }
+        public int EventId { get; set; }
+    }
 }
