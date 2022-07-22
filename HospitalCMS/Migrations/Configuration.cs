@@ -34,13 +34,13 @@ namespace HospitalCMS.Migrations
 
             context.Departments.AddOrUpdate(x => x.DepartmentId,
                 new Department() { DepartmentId = 1, Name = "Anaesthesia" },
-                new Department() { DepartmentId = 1, Name = "Family Medicine" },
-                new Department() { DepartmentId = 1, Name = "Lab Medicine & Pathobiology" },
-                new Department() { DepartmentId = 1, Name = "Medical Imaging" },
-                new Department() { DepartmentId = 1, Name = "Medicine" },
-                new Department() { DepartmentId = 1, Name = "Obstetrics & Gynaecology" },
-                new Department() { DepartmentId = 1, Name = "Ophthalmology & Vision Sciences" },
-                new Department() { DepartmentId = 1, Name = "Otolaryngology Head & Neck" }
+                new Department() { DepartmentId = 2, Name = "Family Medicine" },
+                new Department() { DepartmentId = 3, Name = "Lab Medicine & Pathobiology" },
+                new Department() { DepartmentId = 4, Name = "Medical Imaging" },
+                new Department() { DepartmentId = 5, Name = "Medicine" },
+                new Department() { DepartmentId = 6, Name = "Obstetrics & Gynaecology" },
+                new Department() { DepartmentId = 7, Name = "Ophthalmology & Vision Sciences" },
+                new Department() { DepartmentId = 8, Name = "Otolaryngology Head & Neck" }
                 );
 
             context.Appointments.AddOrUpdate(x => x.AppointmentId,
