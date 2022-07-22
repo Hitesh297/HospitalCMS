@@ -30,7 +30,7 @@ namespace HospitalCMS.Models
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<Article> Articles { get; set; }
-        public DbSet<Department> Department { get; set; }
+        public DbSet<Department> Departments { get; set; }
         public DbSet<Donor> Donors { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<FAQ> FAQs { get; set; }

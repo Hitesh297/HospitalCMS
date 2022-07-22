@@ -19,14 +19,14 @@ namespace HospitalCMS.Controllers
         // GET: api/DepartmentData
         public IQueryable<Department> GetDepartment()
         {
-            return db.Department;
+            return db.Departments;
         }
 
         // GET: api/DepartmentData/5
         [ResponseType(typeof(Department))]
         public IHttpActionResult GetDepartment(int id)
         {
-            Department department = db.Department.Find(id);
+            Department department = db.Departments.Find(id);
             if (department == null)
             {
                 return NotFound();
@@ -79,7 +79,7 @@ namespace HospitalCMS.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Department.Add(department);
+            db.Departments.Add(department);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = department.DepartmentId }, department);
@@ -89,13 +89,13 @@ namespace HospitalCMS.Controllers
         [ResponseType(typeof(Department))]
         public IHttpActionResult DeleteDepartment(int id)
         {
-            Department department = db.Department.Find(id);
+            Department department = db.Departments.Find(id);
             if (department == null)
             {
                 return NotFound();
             }
 
-            db.Department.Remove(department);
+            db.Departments.Remove(department);
             db.SaveChanges();
 
             return Ok(department);
@@ -112,7 +112,7 @@ namespace HospitalCMS.Controllers
 
         private bool DepartmentExists(int id)
         {
-            return db.Department.Count(e => e.DepartmentId == id) > 0;
+            return db.Departments.Count(e => e.DepartmentId == id) > 0;
         }
     }
 }
