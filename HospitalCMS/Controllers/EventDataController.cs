@@ -50,7 +50,8 @@ namespace HospitalCMS.Controllers
                 HasPic = Event.HasPic,
                 PicExtension = Event.PicExtension,
                 Description= Event.Description,
-                Articles = Event.Articles
+                Articles = Event.Articles,
+                Department = new DepartmentDto() { Name = Event.Department.Name }
             };
             if (Event == null)
             {

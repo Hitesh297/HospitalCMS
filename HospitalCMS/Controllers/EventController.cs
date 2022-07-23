@@ -33,7 +33,10 @@ namespace HospitalCMS.Controllers
         // GET: Event/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string url = "EventData/FindEvent/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            EventDto eventDto = response.Content.ReadAsAsync<EventDto>().Result;
+            return View(eventDto);
         }
 
         // GET: Event/Create

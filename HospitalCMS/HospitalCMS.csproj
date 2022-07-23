@@ -313,6 +313,14 @@
     <Content Include="Views\FAQ\List.cshtml" />
     <Content Include="Views\Patient\List.cshtml" />
     <Content Include="Views\Speciality\List.cshtml" />
+    <Content Include="Views\Article\Details.cshtml" />
+    <Content Include="Views\Department\Details.cshtml" />
+    <Content Include="Views\Doctor\Details.cshtml" />
+    <Content Include="Views\Donor\Details.cshtml" />
+    <Content Include="Views\Event\Details.cshtml" />
+    <Content Include="Views\FAQ\Details.cshtml" />
+    <Content Include="Views\Patient\Details.cshtml" />
+    <Content Include="Views\Speciality\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

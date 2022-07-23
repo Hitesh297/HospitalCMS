@@ -33,6 +33,7 @@ namespace HospitalCMS.Models
         public string Description { get; set; }
         public int DepartmentId { get; set; }
         public ICollection<Article> Articles { get; set; }
+        public DepartmentDto Department { get; set; }
     }
 
 

@@ -33,7 +33,10 @@ namespace HospitalCMS.Controllers
         // GET: FAQ/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string url = "FAQData/FindFAQ/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            FAQDto fAQ = response.Content.ReadAsAsync<FAQDto>().Result;
+            return View(fAQ);
         }
 
         // GET: FAQ/Create

@@ -33,7 +33,10 @@ namespace HospitalCMS.Controllers
         // GET: Speciality/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string url = "SpecialityData/FindSpeciality/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            SpecialityDto speciality = response.Content.ReadAsAsync<SpecialityDto>().Result;
+            return View(speciality);
         }
 
         // GET: Speciality/Create

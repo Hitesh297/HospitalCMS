@@ -34,7 +34,10 @@ namespace HospitalCMS.Controllers
         // GET: Department/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string url = "DepartmentData/FindDepartment/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            DepartmentDto department = response.Content.ReadAsAsync<DepartmentDto>().Result;
+            return View(department);
         }
 
         // GET: Department/Create

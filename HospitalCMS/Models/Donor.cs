@@ -29,6 +29,7 @@ namespace HospitalCMS.Models
         public int DepartmentId { get; set; }
         public string Phone { get; set; }
         public decimal Amount { get; set; }
+        public DepartmentDto Department { get; set; }
     }
 
 

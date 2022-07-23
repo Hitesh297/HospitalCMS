@@ -35,7 +35,10 @@ namespace HospitalCMS.Controllers
         // GET: Article/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string url = "ArticleData/FindArticle/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            ArticleDto article = response.Content.ReadAsAsync<ArticleDto>().Result;
+            return View(article);
         }
 
         // GET: Article/Create

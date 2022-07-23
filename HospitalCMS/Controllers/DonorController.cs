@@ -33,7 +33,10 @@ namespace HospitalCMS.Controllers
         // GET: Donor/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string url = "DonorData/FindDonor/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            DonorDto donor = response.Content.ReadAsAsync<DonorDto>().Result;
+            return View(donor);
         }
 
         // GET: Donor/Create

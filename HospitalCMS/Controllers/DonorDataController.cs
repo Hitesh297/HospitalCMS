@@ -59,7 +59,8 @@ namespace HospitalCMS.Controllers
                 Email = Donor.Email,
                 DepartmentId = Donor.DepartmentId,
                 Phone = Donor.Phone,
-                Amount = Donor.Amount
+                Amount = Donor.Amount,
+                Department = new DepartmentDto() { Name = Donor.Department.Name}
             };
 
             return Ok(DonorDto);

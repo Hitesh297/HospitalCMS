@@ -32,16 +32,13 @@ namespace HospitalCMS.Controllers
             return View(doctors);
         }
 
-        // GET: Doctor
-       // public ActionResult Index()
-        //{
-          //  return View();
-        //}
-
         // GET: Doctor/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string url = "DoctorData/FindDoctor/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            DoctorDto doctor = response.Content.ReadAsAsync<DoctorDto>().Result;
+            return View(doctor);
         }
 
         // GET: Doctor/Create

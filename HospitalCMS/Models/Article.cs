@@ -27,5 +27,6 @@ namespace HospitalCMS.Models
         public string PicExtension { get; set; }
         public string Description { get; set; }
         public int EventId { get; set; }
+        public EventDto Event { get; set; }
     }
 }

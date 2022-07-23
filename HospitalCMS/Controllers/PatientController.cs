@@ -33,7 +33,10 @@ namespace HospitalCMS.Controllers
         // GET: Patient/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string url = "PatientData/FindPatient/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            PatientDto patient = response.Content.ReadAsAsync<PatientDto>().Result;
+            return View(patient);
         }
 
         // GET: Patient/Create

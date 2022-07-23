@@ -25,6 +25,7 @@ namespace HospitalCMS.Models
         public string Question { get; set; }
         public string Answer { get; set; }
         public int DepartmentId { get; set; }
+        public DepartmentDto Department { get; set; }
 
     }
 }

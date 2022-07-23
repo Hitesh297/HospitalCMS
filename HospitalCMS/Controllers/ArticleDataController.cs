@@ -55,7 +55,8 @@ namespace HospitalCMS.Controllers
                 EventId = article.EventId,
                 HasPic = article.HasPic,
                 PicExtension = article.PicExtension,
-                Title = article.Title
+                Title = article.Title,
+                Event = new EventDto() { Title = article.Event.Title}
             };
 
             return Ok(articleDto);

@@ -49,7 +49,8 @@ namespace HospitalCMS.Controllers
                 FAQId = fAQ.FAQId,
                 DepartmentId = fAQ.DepartmentId,
                 Answer = fAQ.Answer,
-                Question = fAQ.Question
+                Question = fAQ.Question,
+                Department = new DepartmentDto() { Name = fAQ.Department.Name }
             };
 
             return Ok(fAQDto);
