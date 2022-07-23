@@ -20,7 +20,7 @@ namespace HospitalCMS.Controllers
         [HttpGet]
         public IEnumerable<AppointmentDto> ListAppointments()
         {
-            List<Appointment> appointments = db.Appointments.ToList();
+            List<Appointment> appointments = db.Appointments.Include(x=>x.Doctor).Include(y=>y.Patient).ToList();
             List<AppointmentDto> appointmentDtos = new List<AppointmentDto>();
 
             appointments.ForEach(x => appointmentDtos.Add(new AppointmentDto()
@@ -29,9 +29,10 @@ namespace HospitalCMS.Controllers
                 DoctorId = x.DoctorId,
                 PatientId = x.PatientId,
                 Schedule = x.Schedule,
-                DoctorNotes = x.DoctorNotes
-
-            }));
+                DoctorNotes = x.DoctorNotes,
+                Doctor = x.Doctor != null ? new DoctorDto() { Name = x.Doctor.Name }: null,
+                Patient = x.Patient != null ? new PatientDto() { FirstName = x.Patient.FirstName}: null
+            })); ;
 
             return appointmentDtos;
         }
@@ -56,6 +57,29 @@ namespace HospitalCMS.Controllers
             }));
 
             return appointmentDtos;
+        }
+
+        [ResponseType(typeof(Appointment))]
+        [HttpGet]
+        public IHttpActionResult FindAppointment(int id)
+        {
+            Appointment appointment = db.Appointments.Find(id);
+            //Appointment appointment = db.Appointments.Find(id);
+            AppointmentDto appointmentDto = new AppointmentDto();
+
+            appointmentDto = new AppointmentDto()
+            {
+                AppointmentId = appointment.AppointmentId,
+                DoctorId = appointment.DoctorId,
+                PatientId = appointment.PatientId,
+                Schedule = appointment.Schedule,
+                DoctorNotes = appointment.DoctorNotes,
+                Doctor = appointment.Doctor != null ? new DoctorDto() { Name = appointment.Doctor.Name } : null,
+                Patient = appointment.Patient != null ? new PatientDto() { FirstName = appointment.Patient.FirstName } : null
+
+            };
+
+            return Ok(appointmentDto);
         }
 
         // PUT: api/AppointmentData/5

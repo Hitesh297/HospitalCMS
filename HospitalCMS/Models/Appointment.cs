@@ -46,5 +46,13 @@ namespace HospitalCMS.Models
         public DateTime Schedule { get; set; }
 
         public string DoctorNotes { get; set; }
+        public DoctorDto Doctor { get; set; }
+        public PatientDto Patient { get; set; }
+    }
+
+    public class AppointmentVM
+    {
+        public List<SpecialityDto> Specialities { get; set; }
+        public List<PatientDto> Patients { get; set; }
     }
 }

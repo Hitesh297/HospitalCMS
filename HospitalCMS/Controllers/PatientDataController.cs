@@ -19,8 +19,8 @@ namespace HospitalCMS.Controllers
 
         [HttpGet]
         [ResponseType(typeof(PatientDto))]
-        // GET: api/PatientData
-        public IHttpActionResult ListPatients() // Ihttpaction result
+        // GET: api/PatientData/ListPatients
+        public IHttpActionResult ListPatients()
         {
             List<Patient> Patient = db.Patients.ToList();
             List<PatientDto> PatientDto = new List<PatientDto>();
@@ -46,7 +46,7 @@ namespace HospitalCMS.Controllers
 
         [HttpGet]
         [ResponseType(typeof(Patient))]
-        // GET: api/PatientData/1
+        // GET: api/PatientData/FindPatient/1
         public IHttpActionResult FindPatient(int id)
 
         {
@@ -77,9 +77,9 @@ namespace HospitalCMS.Controllers
 
 
         [HttpPost]
-        // PUT: api/PatientData/5
+        // PUT: api/PatientData/EditPatient/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult UpdatePatient(int id, Patient patient)
+        public IHttpActionResult EditPatient(int id, Patient patient)
         {
             if (!ModelState.IsValid)
             {
@@ -114,7 +114,7 @@ namespace HospitalCMS.Controllers
 
 
         [HttpPost]
-        // POST: api/PatientData
+        // POST: api/PatientData/AddPatient
         [ResponseType(typeof(Patient))]
         public IHttpActionResult AddPatient(Patient patient)
         {
@@ -130,59 +130,8 @@ namespace HospitalCMS.Controllers
         }
 
 
-
-        // GET: api/PatientData/5
-        [ResponseType(typeof(Patient))]
-        public IHttpActionResult GetPatient(int id)
-        {
-            Patient patient = db.Patients.Find(id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(patient);
-        }
-
-        // PUT: api/PatientData/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPatient(int id, Patient patient)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != patient.PatientId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(patient).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PatientExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-
-
         [HttpPost]
-        // DELETE: api/PatientData/5
+        // DELETE: api/PatientData/DeletePatient/5
         [ResponseType(typeof(Patient))]
         public IHttpActionResult DeletePatient(int id)
         {
@@ -217,102 +166,4 @@ namespace HospitalCMS.Controllers
   
 
 
-        //// GET: api/PatientData
-        //public IQueryable<Patient> GetPatients()
-        //{
-        //    return db.Patients;
-        //}
-
-        //// GET: api/PatientData/5
-        //[ResponseType(typeof(Patient))]
-        //public IHttpActionResult GetPatient(int id)
-        //{
-        //    Patient patient = db.Patients.Find(id);
-        //    if (patient == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(patient);
-        //}
-
-        //// PUT: api/PatientData/5
-        //[ResponseType(typeof(void))]
-        //public IHttpActionResult PutPatient(int id, Patient patient)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    if (id != patient.PatientId)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    db.Entry(patient).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!PatientExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
-
-        //// POST: api/PatientData
-        //[ResponseType(typeof(Patient))]
-        //public IHttpActionResult PostPatient(Patient patient)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    db.Patients.Add(patient);
-        //    db.SaveChanges();
-
-        //    return CreatedAtRoute("DefaultApi", new { id = patient.PatientId }, patient);
-        //}
-
-        //// DELETE: api/PatientData/5
-        //[ResponseType(typeof(Patient))]
-        //public IHttpActionResult DeletePatient(int id)
-        //{
-        //    Patient patient = db.Patients.Find(id);
-        //    if (patient == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    db.Patients.Remove(patient);
-        //    db.SaveChanges();
-
-        //    return Ok(patient);
-        //}
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-
-        //private bool PatientExists(int id)
-        //{
-        //    return db.Patients.Count(e => e.PatientId == id) > 0;
-        //}
-    
+       

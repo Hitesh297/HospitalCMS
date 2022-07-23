@@ -26,6 +26,7 @@ namespace HospitalCMS.Models
     public class DoctorDto
     {
         public int DoctorId { get; set; }
+        [Display(Name = "Doctor Name")]
         public string Name { get; set; }
         public int Experience { get; set; }
         public int SpecialityId { get; set; }

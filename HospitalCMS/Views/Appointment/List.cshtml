@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HospitalCMS.Models.AppointmentDto>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Doctor.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patient.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DoctorNotes)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Doctor.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Schedule)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DoctorNotes)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.AppointmentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AppointmentId })
+        </td>
+    </tr>
+}
+
+</table>

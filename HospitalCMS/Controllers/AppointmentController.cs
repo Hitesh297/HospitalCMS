@@ -1,40 +1,85 @@
-﻿using System;
+﻿using HospitalCMS.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace HospitalCMS.Controllers
 {
     public class AppointmentController : Controller
     {
-        // GET: Appointment
-        public ActionResult Index()
+        private static readonly HttpClient client;
+        private JavaScriptSerializer jss = new JavaScriptSerializer();
+
+        static AppointmentController()
         {
-            return View();
+            client = new HttpClient();
+            //client.BaseAddress = new Uri("https://localhost:44305/api/");
+            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["apiServer"]);
+        }
+
+        // GET: Appointment/List
+        public ActionResult List()
+        {
+            string url = "AppointmentData/ListAppointments";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IEnumerable<AppointmentDto> appointments = response.Content.ReadAsAsync<IEnumerable<AppointmentDto>>().Result;
+            return View(appointments);
         }
 
         // GET: Appointment/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string url = "AppointmentData/FindAppointment/"+ id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            AppointmentDto appointment = response.Content.ReadAsAsync<AppointmentDto>().Result;
+            return View(appointment);
         }
 
         // GET: Appointment/Create
         public ActionResult Create()
         {
-            return View();
+            AppointmentVM appointmentVM = new AppointmentVM();
+            string url = "SpecialityData/ListSpecialities";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            List<SpecialityDto> specialitys = response.Content.ReadAsAsync<List<SpecialityDto>>().Result;
+            appointmentVM.Specialities = specialitys;
+
+            url = "PatientData/ListPatients";
+            response = client.GetAsync(url).Result;
+            List<PatientDto> patients = response.Content.ReadAsAsync<List<PatientDto>>().Result;
+            appointmentVM.Patients = patients;
+
+            return View(appointmentVM);
         }
 
         // POST: Appointment/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Appointment  appointment)
         {
             try
             {
-                // TODO: Add insert logic here
+                string url = "AppointmentData/AddAppointment";
+                string jsonpayload = JsonConvert.SerializeObject(appointment);
 
-                return RedirectToAction("Index");
+                HttpContent content = new StringContent(jsonpayload);
+                content.Headers.ContentType.MediaType = "application/json";
+
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("list", "Appointment");
+                }
+                else
+                {
+                    return View("Error");
+                }
             }
             catch
             {

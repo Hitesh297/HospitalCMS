@@ -35,6 +35,25 @@ namespace HospitalCMS.Controllers
             return Ok(doctorDtos);
         }
 
+        //  GET: api/DoctorData/ListDoctorsBySpeciality/1
+        [HttpGet]
+        [ResponseType(typeof(DoctorDto))]
+        public IHttpActionResult ListDoctorsBySpeciality(int id)
+        {
+            List<Doctor> Doctors = db.Doctors.Include(x=>x.Specialities).Where(y=>y.Specialities.Any(x=>x.SpecialityId == id)).ToList();
+            List<DoctorDto> doctorDtos = new List<DoctorDto>();
+
+            Doctors.ForEach(a => doctorDtos.Add(new DoctorDto()
+            {
+                DoctorId = a.DoctorId,
+                Name = a.Name,
+                Experience = a.Experience,
+                Phone = a.Phone,
+                Email = a.Email,
+            }));
+            return Ok(doctorDtos);
+        }
+
         /// POST api/DoctorData/unassociatespecialityewithDoctor/1/2
         /// </example>
         [HttpPost]
