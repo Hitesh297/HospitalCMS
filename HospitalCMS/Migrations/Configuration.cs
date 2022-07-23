@@ -127,11 +127,19 @@ namespace HospitalCMS.Migrations
                 );
 
             context.Events.AddOrUpdate(x => x.EventId,
-                new Event() { EventId = 1, Date = DateTime.Now.AddDays(3), Description = "This interactive program will provide an intensive year-long introduction to current approaches and techniques to help physicians increase their knowledge and clinical skills in office counselling and psychotherapy.", HasPic = false, Title = "Counselling and Psychotherapy in Family", DepartmentId = 1 }
+                new Event() { EventId = 1, Date = DateTime.Now.AddDays(3), Description = "This interactive program will provide an intensive year-long introduction to current approaches and techniques to help physicians increase their knowledge and clinical skills in office counselling and psychotherapy.", HasPic = false, Title = "Counselling and Psychotherapy in Family", DepartmentId = 1 },
+                new Event() { EventId = 2, Date = DateTime.Now.AddDays(4), Description = "The 3rd Annual International Conference on detail discussion on Health & Medical Sciences & Family Medicine", HasPic = false, Title = "Counselling Mental Health Awearness Program", DepartmentId = 2 },
+                new Event() { EventId = 3, Date = DateTime.Now.AddDays(5), Description = "The Canadian Anesthesiologists' Society previously Canadian Anesthetists' Society Canadian Cardiovascular Society counselling and psychotherapy session.", HasPic = false, Title = "Lab Medicine & Pathobiology", DepartmentId = 3 },
+                new Event() { EventId = 4, Date = DateTime.Now.AddDays(6), Description = "The World Congress on Controversies in Veterinary Medicine, week long conferrence helps associates medical students.", HasPic = false, Title = "Medical Imaging", DepartmentId = 4 },
+                new Event() { EventId = 5, Date = DateTime.Now.AddDays(7), Description = "The World extreme medicine conference and expo physicians for Ophthalmology & Vision Sciences", HasPic = false, Title = "Ophthalmology & Vision Sciences", DepartmentId = 7 }
                 );
 
             context.Articles.AddOrUpdate(x => x.ArticleId,
-                new Article() { ArticleId = 1, Description = "This interactive program will provide an intensive year-long introduction to current approaches and techniques to help physicians increase their knowledge and clinical skills in office counselling and psychotherapy.", EventId = 1, Title = "All you need to know about Psychotherapy" }
+                new Article() { ArticleId = 1, Description = "The artcle covers research on detection, diagnosis, prevention, and treatment of lymphoma, myeloma, leukemia, and related disorders, including macroglobulinemia, amyloidosis, and plasma-cell dyscrasias.", EventId = 1, Title = "Clinical Lymphoma, Myeloma & Leukemia" },
+                new Article() { ArticleId = 2, Description = "A peer-reviewed medical journal covering research in pharmacology, clinical trials, drugs and drug safety. The journal was established in 2010 and is published by Dove Medical Press.", EventId = 2, Title = "Clinical Pharmacology: Advances and Applications" },
+                new Article() { ArticleId = 3, Description = "An international, peer-reviewed academic journal that publishes comprehensive review articles covering all areas of medical microbiology. Areas covered by the journal include bacteriology, virology, microbial genetics, epidemiology, and diagnostic microbiology. It is published by Taylor and Francis Group.", EventId = 1, Title = "Critical Reviews in Microbiology" },
+                new Article() { ArticleId = 4, Description = "An Open access academic journal focusing on clinical applications of oncology. The journal was founded in 2007, and was originally published by Libertas Academica, but SAGE Publications became the publisher in September 2016.[1] The editor in chief is William Chi-shing Cho.", EventId = 3, Title = "Clinical Medicine: Oncology" },
+                new Article() { ArticleId = 5, Description = "Publishes review articles on all aspects of toxicology. It is published by Taylor & Francis and the editor-in-chief is Roger O. McClellan. It was established in 1971 as CRC Critical Reviews in Toxicology, obtaining its current name in 1980.", EventId = 4, Title = "Critical Reviews in Toxicology" }
                 );
 
 
