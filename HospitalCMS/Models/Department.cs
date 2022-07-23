@@ -18,6 +18,7 @@ namespace HospitalCMS.Models
     public class DepartmentDto
     {
         public int DepartmentId { get; set; }
+        [Display(Name = "Department Name")]
         public string Name { get; set; }
 
     }

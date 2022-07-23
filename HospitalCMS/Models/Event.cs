@@ -25,6 +25,7 @@ namespace HospitalCMS.Models
     public class EventDto
     {
         public int EventId { get; set; }
+        [Display(Name = "Event Title")]
         public string Title { get; set; }
         public DateTime Date { get; set; }
         public bool HasPic { get; set; }

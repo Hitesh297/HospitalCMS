@@ -1,17 +1,34 @@
-﻿using System;
+﻿using HospitalCMS.Models;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace HospitalCMS.Controllers
 {
     public class DepartmentController : Controller
     {
-        // GET: Department
-        public ActionResult Index()
+
+        private static readonly HttpClient client;
+        private JavaScriptSerializer jss = new JavaScriptSerializer();
+
+        static DepartmentController()
         {
-            return View();
+            client = new HttpClient();
+            //client.BaseAddress = new Uri("https://localhost:44305/api/");
+            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["apiServer"]);
+        }
+        // GET: Department
+        public ActionResult List()
+        {
+            string url = "DepartmentData/ListDepartment";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IEnumerable<DepartmentDto> departments = response.Content.ReadAsAsync<IEnumerable<DepartmentDto>>().Result;
+            return View(departments);
         }
 
         // GET: Department/Details/5

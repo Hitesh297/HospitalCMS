@@ -32,6 +32,8 @@ namespace HospitalCMS.Models
         public int SpecialityId { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public bool DoctorHasPic { get; set; }
+        public string PicExtension { get; set; }
     }
 
 }

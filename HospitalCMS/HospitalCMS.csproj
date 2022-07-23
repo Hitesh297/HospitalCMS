@@ -304,17 +304,18 @@
     <Content Include="Views\Appointment\List.cshtml" />
     <Content Include="Views\Appointment\Details.cshtml" />
     <Content Include="Views\Appointment\Create.cshtml" />
+    <Content Include="Views\Appointment\ConfirmDelete.cshtml" />
+    <Content Include="Views\Article\List.cshtml" />
+    <Content Include="Views\Department\List.cshtml" />
+    <Content Include="Views\Doctor\List.cshtml" />
+    <Content Include="Views\Donor\List.cshtml" />
+    <Content Include="Views\Event\List.cshtml" />
+    <Content Include="Views\FAQ\List.cshtml" />
+    <Content Include="Views\Patient\List.cshtml" />
+    <Content Include="Views\Speciality\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Article\" />
-    <Folder Include="Views\Department\" />
-    <Folder Include="Views\Doctor\" />
-    <Folder Include="Views\Donor\" />
-    <Folder Include="Views\Event\" />
-    <Folder Include="Views\FAQ\" />
-    <Folder Include="Views\Patient\" />
-    <Folder Include="Views\Speciality\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -41,8 +41,10 @@ namespace HospitalCMS.Models
     {
         public int PatientId { get; set; }
 
+        [Display(Name = "Patient First Name")]
         public string FirstName { get; set; }
 
+        [Display(Name = "Patient Last Name")]
         public string LastName { get; set; }
 
         public DateTime DOB { get; set; }

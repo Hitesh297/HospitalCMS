@@ -23,6 +23,7 @@ namespace HospitalCMS.Models
     public class DonorDto
     {
         public int DonorId { get; set; }
+        [Display(Name = "Donor Name")]
         public string Name { get; set; }
         public string Email { get; set; }
         public int DepartmentId { get; set; }

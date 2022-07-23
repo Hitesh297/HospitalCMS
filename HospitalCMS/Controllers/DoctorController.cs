@@ -1,6 +1,7 @@
 ﻿using HospitalCMS.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -16,24 +17,16 @@ namespace HospitalCMS.Controllers
 
         static DoctorController()
         {
-            HttpClientHandler handler = new HttpClientHandler()
-            {
-                AllowAutoRedirect = false,
-                //cookies are manually set in RequestHeader
-                UseCookies = false
-            };
-
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44370/api/");
+            //client.BaseAddress = new Uri("https://localhost:44305/api/");
+            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["apiServer"]);
         }
 
         // GET: Doctor
         [HttpGet]
         public ActionResult List()
         {
-           
-            //curl https://localhost:44370/api/doctordata/listDoctors
-            string url = "docotrdata/listDoctors";
+            string url = "DoctorData/listDoctors";
             HttpResponseMessage response = client.GetAsync(url).Result;
             IEnumerable<DoctorDto> doctors = response.Content.ReadAsAsync<IEnumerable<DoctorDto>>().Result;
             return View(doctors);

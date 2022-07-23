@@ -16,7 +16,7 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Article/ListArticles
+        // GET: api/ArticleData/ListArticles
         [HttpGet]
         public IHttpActionResult ListArticles()
         {
@@ -36,7 +36,7 @@ namespace HospitalCMS.Controllers
             return Ok(ArticlesDto);
         }
 
-        // GET: api/Article/ListArticles/5
+        // GET: api/ArticleData/ListArticles/5
         [ResponseType(typeof(Article))]
         [HttpGet]
         public IHttpActionResult FindArticle(int id)
@@ -61,7 +61,7 @@ namespace HospitalCMS.Controllers
             return Ok(articleDto);
         }
 
-        // PUT: api/Article/EditArticle/5
+        // PUT: api/ArticleData/EditArticle/5
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult EditArticle(int id, Article article)
@@ -97,7 +97,7 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Article/CreateArticle
+        // POST: api/ArticleData/CreateArticle
         [ResponseType(typeof(Article))]
         [HttpPost]
         public IHttpActionResult CreateArticle(Article article)
@@ -113,7 +113,7 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = article.ArticleId }, article);
         }
 
-        // DELETE: api/Article/DeleteArticle/5
+        // DELETE: api/ArticleData/DeleteArticle/5
         [ResponseType(typeof(Article))]
         [HttpPost]
         public IHttpActionResult DeleteArticle(int id)
