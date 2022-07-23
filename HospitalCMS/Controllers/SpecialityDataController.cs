@@ -18,9 +18,17 @@ namespace HospitalCMS.Controllers
 
         // GET: api/SpecialityData/ListSpecialities
         [HttpGet]
-        public IEnumerable<Speciality> ListSpecialities()
+        public IHttpActionResult ListSpecialities()
         {
-            return db.Specialities;
+            List<Speciality> specialities = db.Specialities.ToList();
+            List<SpecialityDto> specialityDtos = new List<SpecialityDto>();
+
+            specialities.ForEach(a => specialityDtos.Add(new SpecialityDto()
+            {
+                SpecialityId = a.SpecialityId,
+                Name = a.Name
+            }));
+            return Ok(specialityDtos);
         }
 
         // GET: api/SpecialityData/FindSpeciality/5
@@ -34,7 +42,13 @@ namespace HospitalCMS.Controllers
                 return NotFound();
             }
 
-            return Ok(speciality);
+            SpecialityDto specialityDto = new SpecialityDto()
+            {
+                SpecialityId = speciality.SpecialityId,
+                Name = speciality.Name
+            };
+
+            return Ok(specialityDto);
         }
 
         // PUT: api/SpecialityData/UpdateSpeciality/5
@@ -89,7 +103,7 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = speciality.SpecialityId }, speciality);
         }
 
-        // DELETE: api/SpecialityData/5
+        // DELETE: api/SpecialityData/DeleteSpeciality/5
         [ResponseType(typeof(Speciality))]
         [HttpPost]
         public IHttpActionResult DeleteSpeciality(int id)

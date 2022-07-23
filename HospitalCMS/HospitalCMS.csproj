@@ -221,6 +221,14 @@
     <Compile Include="Migrations\202207210253281_modelsadded.designer.cs">
       <DependentUpon>202207210253281_modelsadded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207230013060_addNameToDonor.cs" />
+    <Compile Include="Migrations\202207230013060_addNameToDonor.designer.cs">
+      <DependentUpon>202207230013060_addNameToDonor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207230040283_addDepartmentToEvent.cs" />
+    <Compile Include="Migrations\202207230040283_addDepartmentToEvent.designer.cs">
+      <DependentUpon>202207230040283_addDepartmentToEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
@@ -331,6 +339,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207210253281_modelsadded.resx">
       <DependentUpon>202207210253281_modelsadded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207230013060_addNameToDonor.resx">
+      <DependentUpon>202207230013060_addNameToDonor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207230040283_addDepartmentToEvent.resx">
+      <DependentUpon>202207230040283_addDepartmentToEvent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

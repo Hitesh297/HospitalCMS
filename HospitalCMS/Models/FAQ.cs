@@ -18,4 +18,13 @@ namespace HospitalCMS.Models
         public virtual Department Department { get; set; }
 
     }
+
+    public class FAQDto
+    {
+        public int FAQId { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
+        public int DepartmentId { get; set; }
+
+    }
 }

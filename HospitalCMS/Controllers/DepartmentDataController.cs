@@ -16,15 +16,25 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/DepartmentData
-        public IQueryable<Department> GetDepartment()
+        // GET: api/DepartmentData/ListDepartment
+        [HttpGet]
+        public IHttpActionResult ListDepartment()
         {
-            return db.Departments;
+            List<Department> Departments = db.Departments.ToList();
+            List<DepartmentDto> DepartmentDto = new List<DepartmentDto>();
+
+            Departments.ForEach(a => DepartmentDto.Add(new DepartmentDto()
+            {
+               DepartmentId = a.DepartmentId,
+               Name = a.Name
+            }));
+            return Ok(DepartmentDto);
         }
 
-        // GET: api/DepartmentData/5
+        // GET: api/DepartmentData/FindDepartment/5
         [ResponseType(typeof(Department))]
-        public IHttpActionResult GetDepartment(int id)
+        [HttpGet]
+        public IHttpActionResult FindDepartment(int id)
         {
             Department department = db.Departments.Find(id);
             if (department == null)
@@ -32,12 +42,19 @@ namespace HospitalCMS.Controllers
                 return NotFound();
             }
 
-            return Ok(department);
+            DepartmentDto departmentDto = new DepartmentDto()
+            {
+                DepartmentId = department.DepartmentId,
+                Name = department.Name
+            };
+
+            return Ok(departmentDto);
         }
 
-        // PUT: api/DepartmentData/5
+        // PUT: api/DepartmentData/EditDepartment/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDepartment(int id, Department department)
+        [HttpPost]
+        public IHttpActionResult EditDepartment(int id, Department department)
         {
             if (!ModelState.IsValid)
             {
@@ -70,9 +87,10 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/DepartmentData
+        // POST: api/DepartmentData/CreateDepartment
         [ResponseType(typeof(Department))]
-        public IHttpActionResult PostDepartment(Department department)
+        [HttpPost]
+        public IHttpActionResult CreateDepartment(Department department)
         {
             if (!ModelState.IsValid)
             {
@@ -85,8 +103,9 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = department.DepartmentId }, department);
         }
 
-        // DELETE: api/DepartmentData/5
+        // DELETE: api/DepartmentData/DeleteDepartment/5
         [ResponseType(typeof(Department))]
+        [HttpPost]
         public IHttpActionResult DeleteDepartment(int id)
         {
             Department department = db.Departments.Find(id);

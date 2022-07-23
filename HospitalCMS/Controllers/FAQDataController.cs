@@ -16,15 +16,27 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/FAQData
-        public IQueryable<FAQ> GetFAQs()
+        // GET: api/FAQData/ListFAQs
+        [HttpGet]
+        public IHttpActionResult ListFAQs()
         {
-            return db.FAQs;
+            List<FAQ> fAQs = db.FAQs.ToList();
+            List<FAQDto> fAQDtos = new List<FAQDto>();
+
+            fAQs.ForEach(a => fAQDtos.Add(new FAQDto()
+            {
+                FAQId = a.FAQId,
+                DepartmentId = a.DepartmentId,
+                Answer = a.Answer,
+                Question = a.Question
+            }));
+            return Ok(fAQDtos);
         }
 
-        // GET: api/FAQData/5
+        // GET: api/FAQData/FindFAQ/5
         [ResponseType(typeof(FAQ))]
-        public IHttpActionResult GetFAQ(int id)
+        [HttpGet]
+        public IHttpActionResult FindFAQ(int id)
         {
             FAQ fAQ = db.FAQs.Find(id);
             if (fAQ == null)
@@ -32,12 +44,21 @@ namespace HospitalCMS.Controllers
                 return NotFound();
             }
 
-            return Ok(fAQ);
+            FAQDto fAQDto = new FAQDto()
+            {
+                FAQId = fAQ.FAQId,
+                DepartmentId = fAQ.DepartmentId,
+                Answer = fAQ.Answer,
+                Question = fAQ.Question
+            };
+
+            return Ok(fAQDto);
         }
 
-        // PUT: api/FAQData/5
+        // PUT: api/FAQData/EditFAQ/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutFAQ(int id, FAQ fAQ)
+        [HttpPost]
+        public IHttpActionResult EditFAQ(int id, FAQ fAQ)
         {
             if (!ModelState.IsValid)
             {
@@ -70,9 +91,10 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/FAQData
+        // POST: api/FAQData/CreateFAQ
         [ResponseType(typeof(FAQ))]
-        public IHttpActionResult PostFAQ(FAQ fAQ)
+        [HttpPost]
+        public IHttpActionResult CreateFAQ(FAQ fAQ)
         {
             if (!ModelState.IsValid)
             {
@@ -85,8 +107,9 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = fAQ.FAQId }, fAQ);
         }
 
-        // DELETE: api/FAQData/5
+        // DELETE: api/FAQData/DeleteFAQ/5
         [ResponseType(typeof(FAQ))]
+        [HttpPost]
         public IHttpActionResult DeleteFAQ(int id)
         {
             FAQ fAQ = db.FAQs.Find(id);

@@ -14,4 +14,11 @@ namespace HospitalCMS.Models
         public ICollection<FAQ> FAQs { get; set; }
 
     }
+
+    public class DepartmentDto
+    {
+        public int DepartmentId { get; set; }
+        public string Name { get; set; }
+
+    }
 }

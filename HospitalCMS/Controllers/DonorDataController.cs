@@ -27,6 +27,7 @@ namespace HospitalCMS.Controllers
             Donor.ForEach(a => DonorDto.Add(new DonorDto()
             {
                 DonorId = a.DonorId,
+                Name = a.Name,
                 Email = a.Email,
                 DepartmentId = a.DepartmentId,
                 Phone = a.Phone,
@@ -44,19 +45,22 @@ namespace HospitalCMS.Controllers
 
         {
             Donor Donor = db.Donors.Find(id);
-            DonorDto DonorDto = new DonorDto()
-            {
-                DonorId = Donor.DonorId,
-                Email = Donor.Email,
-                DepartmentId = Donor.DepartmentId,
-                Phone = Donor.Phone,
-                Amount = Donor.Amount
-            };
+           
 
             if (Donor == null)
             {
                 return NotFound();
             }
+
+            DonorDto DonorDto = new DonorDto()
+            {
+                DonorId = Donor.DonorId,
+                Name = Donor.Name,
+                Email = Donor.Email,
+                DepartmentId = Donor.DepartmentId,
+                Phone = Donor.Phone,
+                Amount = Donor.Amount
+            };
 
             return Ok(DonorDto);
         }
