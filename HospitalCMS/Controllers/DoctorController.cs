@@ -1,4 +1,5 @@
 ﻿using HospitalCMS.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -49,13 +50,26 @@ namespace HospitalCMS.Controllers
 
         // POST: Doctor/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Doctor doctor)
         {
             try
             {
-                // TODO: Add insert logic here
+                string url = "doctorData/AddDoctor";
+                string jsonpayload = JsonConvert.SerializeObject(doctor);
 
-                return RedirectToAction("Index");
+                HttpContent content = new StringContent(jsonpayload);
+                content.Headers.ContentType.MediaType = "application/json";
+
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("list", "Doctor");
+                }
+                else
+                {
+                    return View("Error");
+                }
             }
             catch
             {

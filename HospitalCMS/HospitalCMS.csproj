@@ -321,6 +321,14 @@
     <Content Include="Views\FAQ\Details.cshtml" />
     <Content Include="Views\Patient\Details.cshtml" />
     <Content Include="Views\Speciality\Details.cshtml" />
+    <Content Include="Views\Article\Create.cshtml" />
+    <Content Include="Views\Department\Create.cshtml" />
+    <Content Include="Views\Doctor\Create.cshtml" />
+    <Content Include="Views\Donor\Create.cshtml" />
+    <Content Include="Views\Event\Create.cshtml" />
+    <Content Include="Views\FAQ\Create.cshtml" />
+    <Content Include="Views\Patient\Create.cshtml" />
+    <Content Include="Views\Speciality\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
