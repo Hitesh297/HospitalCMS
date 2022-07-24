@@ -20,6 +20,45 @@
 
     </dl>
 </div>
+
+<div class="list-group">
+
+    @if (Model.Doctors != null && Model.Doctors.Count() != 0)
+    {
+        foreach (var doctor in Model.Doctors)
+        {
+            <a class="list-group-item" style="margin-top:10px;"  href="/Doctor/Details/@doctor.DoctorId">
+                <div style="display:flex">
+                    @{
+                        string imageurl = "/Content/Images/Doctors/default.jpg";
+                        if (doctor.DoctorHasPic)
+                        {
+                            imageurl = "/Content/Images/Doctors/" + doctor.DoctorId + "." + doctor.PicExtension;
+                        }
+                    }
+                    <img id="profile-pic" style="display:block; max-width:150px; padding-bottom:5px;" alt="@doctor.Name" src="@imageurl" />
+                    <div class="doctor-details">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                Name
+                            </dt>
+                            <dd>
+                                @doctor.Name
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </a>
+        }
+    }
+    else
+    {
+        <p>No Doctors assigned to @Model.Name speciality</p>
+    }
+
+
+</div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.SpecialityId }) |
     @Html.ActionLink("Back to List", "Index")

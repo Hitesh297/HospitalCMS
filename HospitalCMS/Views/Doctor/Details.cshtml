@@ -1,4 +1,5 @@
 ﻿@model HospitalCMS.Models.DoctorDto
+@using System.Globalization
 
 @{
     ViewBag.Title = "Details";
@@ -6,60 +7,87 @@
 
 <h2>Details</h2>
 
-<div>
+
     <h4>Doctor</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div style="display:flex;">
+        <div>
+            @{
+                string imageurl = "/Content/Images/Doctors/default.jpg";
+                if (Model.DoctorHasPic)
+                {
+                    imageurl = "/Content/Images/Doctors/" + Model.DoctorId + "." + Model.PicExtension;
+                }
+            }
+            <div><img style="display:block; max-width:200px;" alt="@Model.Name" src="@imageurl" /></div>
+        </div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Experience)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Experience)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Experience)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Experience)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DoctorHasPic)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Specialities)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DoctorHasPic)
-        </dd>
+            <dd>
+                <ul style="list-style:none; padding:0">
+                    @foreach (HospitalCMS.Models.SpecialityDto item in Model.Specialities)
+                    {
+                        <li><a href="/Speciality/Details/@item.SpecialityId">@item.Name</a></li>
+                    }
+                </ul>
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PicExtension)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PicExtension)
-        </dd>
 
-    </dl>
+        </dl>
+    </div>
+
+<div id="Appointments-section">
+    <h3>Appointments</h3>
+    <div class="list-group">
+        @foreach (var appointment in Model.Appointments)
+        {
+        <a href="/Appointment/Details/@appointment.AppointmentId" class="list-group-item">
+            <div style="display:flex; align-content:space-between; gap:100px">
+                <div>@appointment.Patient.FirstName @appointment.Patient.LastName            </div>
+                <div>@appointment.Schedule.ToString("f", CultureInfo.GetCultureInfo("en-US"))</div>
+            </div>
+        </a>
+        }
+        
+    </div>
 </div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorId }) |
     @Html.ActionLink("Back to List", "Index")

@@ -36,7 +36,7 @@ namespace HospitalCMS.Controllers
         [HttpGet]
         public IHttpActionResult FindSpeciality(int id)
         {
-            Speciality speciality = db.Specialities.Find(id);
+            Speciality speciality = db.Specialities.Include(x => x.Doctors).FirstOrDefault(y => y.SpecialityId == id);
             if (speciality == null)
             {
                 return NotFound();
@@ -48,7 +48,55 @@ namespace HospitalCMS.Controllers
                 Name = speciality.Name
             };
 
+            if (speciality.Doctors != null && speciality.Doctors.Count() != 0)
+            {
+                specialityDto.Doctors = new List<DoctorDto>();
+                foreach (var doctor in speciality.Doctors)
+                {
+                    specialityDto.Doctors.Add(new DoctorDto()
+                    {
+                        Name = doctor.Name,
+                        DoctorHasPic = doctor.DoctorHasPic,
+                        DoctorId = doctor.DoctorId,
+                        Email = doctor.Email,
+                        Experience = doctor.Experience,
+                        Phone = doctor.Phone,
+                        PicExtension = doctor.PicExtension
+                    });
+                }
+            }
+
             return Ok(specialityDto);
+        }
+
+        // GET: api/SpecialityData/SpecialityAssignedToDoctor/2
+        [HttpGet]
+        public IHttpActionResult SpecialityAssignedToDoctor(int id)
+        {
+            List<Speciality> specialities = db.Specialities.Where(x => x.Doctors.Any(y => y.DoctorId == id)).ToList();
+            List<SpecialityDto> specialityDtos = new List<SpecialityDto>();
+
+            specialities.ForEach(x => specialityDtos.Add(new SpecialityDto()
+            {
+                SpecialityId = x.SpecialityId,
+                Name = x.Name
+            }));
+            return Ok(specialityDtos);
+        }
+
+        // GET: api/SpecialityData/SpecialityNotAssignedToDoctor/2
+        [HttpGet]
+        public IHttpActionResult SpecialityNotAssignedToDoctor(int id)
+        {
+            List<Speciality> specialities = db.Specialities.Where(x => !x.Doctors.Any(y => y.DoctorId == id)).ToList();
+            List<SpecialityDto> specialityDtos = new List<SpecialityDto>();
+
+            specialities.ForEach(x => specialityDtos.Add(new SpecialityDto()
+            {
+                SpecialityId = x.SpecialityId,
+                Name = x.Name
+            }));
+            return Ok(specialityDtos);
         }
 
         // PUT: api/SpecialityData/UpdateSpeciality/5

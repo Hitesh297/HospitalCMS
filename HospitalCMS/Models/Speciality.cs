@@ -16,5 +16,6 @@ namespace HospitalCMS.Models
     public class SpecialityDto { 
         public int SpecialityId { get; set; }
         public string Name { get; set; }
+        public List<DoctorDto> Doctors { get; set; }
     }
 }

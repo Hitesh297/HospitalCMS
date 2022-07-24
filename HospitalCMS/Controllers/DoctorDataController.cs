@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HospitalCMS.Models;
@@ -57,9 +59,8 @@ namespace HospitalCMS.Controllers
         /// POST api/DoctorData/unassociatespecialityewithDoctor/1/2
         /// </example>
         [HttpPost]
-        [Authorize]
-        [Route("api/DoctorData/unassociatespecialityewithDoctor/{DoctorId}/{SpecialityId}")]
-        public IHttpActionResult unassociatespecialityewithDoctor(int doctorId, int specialityId)
+        [Route("api/DoctorData/UnassociatespecialityewithDoctor/{doctorId}/{specialityId}")]
+        public IHttpActionResult UnassociatespecialityewithDoctor(int doctorId, int specialityId)
         {
             Doctor doctor = db.Doctors.Include(x => x.Specialities).Where(y => y.DoctorId == doctorId).FirstOrDefault();
             Speciality speciality = db.Specialities.Find(specialityId);
@@ -78,9 +79,8 @@ namespace HospitalCMS.Controllers
         /// POST api/DoctorData/associatespecialitywithDoctor/1/2
         /// </example>
         [HttpPost]
-        [Authorize]
-        [Route("api/DoctorData/associatespecialitywithDoctor/{DoctorId}/{SpecialityId}")]
-        public IHttpActionResult associatespecialitywithDoctor(int doctorId, int specialityId)
+        [Route("api/DoctorData/AssociatespecialitywithDoctor/{doctorId}/{specialityId}")]
+        public IHttpActionResult AssociatespecialitywithDoctor(int doctorId, int specialityId)
         {
             Doctor doctor = db.Doctors.Include(x => x.Specialities).Where(y => y.DoctorId == doctorId).FirstOrDefault();
             Speciality speciality = db.Specialities.Find(specialityId);
@@ -98,7 +98,7 @@ namespace HospitalCMS.Controllers
         }
 
 
-        /// GET: api/docotrData/FindDocotr/5
+        /// GET: api/DoctorData/FindDoctor/5
         /// </example>
         // GET: api/DoctorData/5
         [ResponseType(typeof(Doctor))]
@@ -106,29 +106,54 @@ namespace HospitalCMS.Controllers
 
         public IHttpActionResult FindDoctor(int id)
         {
-            Doctor doctor = db.Doctors.Find(id);
+            Doctor doctor = db.Doctors.Include(x=>x.Specialities).Include(x => x.Appointments).FirstOrDefault(y=>y.DoctorId == id);
             DoctorDto DoctorDto = new DoctorDto()
             {
                 DoctorId = doctor.DoctorId, 
                 Name = doctor.Name,
                 Experience= doctor.Experience,
                 Phone=doctor.Phone,
-                Email=doctor.Email
-                
-
+                Email=doctor.Email,
+                DoctorHasPic = doctor.DoctorHasPic,
+                PicExtension = doctor.PicExtension
             };
+
+            if (doctor.Specialities != null && doctor.Specialities.Count() != 0)
+            {
+                DoctorDto.Specialities = new List<SpecialityDto>();
+                foreach (var speciality in doctor.Specialities)
+                {
+                    DoctorDto.Specialities.Add(new SpecialityDto() { SpecialityId = speciality.SpecialityId, Name = speciality.Name });
+                }
+            }
+
+            if (doctor.Appointments != null && doctor.Appointments.Count() != 0)
+            {
+                DoctorDto.Appointments = new List<AppointmentDto>();
+                foreach (var appointment in doctor.Appointments)
+                {
+                    DoctorDto.Appointments.Add(new AppointmentDto() { 
+                        Schedule = appointment.Schedule, 
+                        AppointmentId = appointment.AppointmentId, 
+                        Patient = new PatientDto() { 
+                            FirstName = appointment.Patient.FirstName, 
+                            LastName = appointment.Patient.LastName 
+                        } 
+                    });
+                }
+            }
+
             if (doctor == null)
             {
                 return NotFound();
             }
 
-            return Ok(doctor);
+            return Ok(DoctorDto);
         }
 
         /// POST: api/DoctorData/UpdateDoctor/5
         /// FORM DATA: doctor JSON Object
         /// </example>
-        // PUT: api/doctorData/5
         [ResponseType(typeof(void))]
         [HttpPost]
         /* [Authorize]*/
@@ -187,74 +212,72 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = doctor.DoctorId }, doctor);
         }
 
-
-        // GET: api/DoctorData
-        public IQueryable<Doctor> GetDoctors()
+        // POST: api/doctorData/UploadDoctorPic/{id}
+        [HttpPost]
+        public IHttpActionResult UploadDoctorPic(int id)
         {
-            return db.Doctors;
-        }
 
-        // GET: api/DoctorData/5
-        [ResponseType(typeof(Doctor))]
-        public IHttpActionResult GetDoctor(int id)
-        {
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
             {
-                return NotFound();
-            }
 
-            return Ok(doctor);
-        }
+                int numfiles = HttpContext.Current.Request.Files.Count;
 
-        // PUT: api/DoctorData/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutDoctor(int id, Doctor doctor)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != doctor.DoctorId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(doctor).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DoctorExists(id))
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
                 {
-                    return NotFound();
+                    var employeePic = HttpContext.Current.Request.Files[0];
+                    if (employeePic.ContentLength > 0)
+                    {
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(employeePic.FileName).Substring(1);
+                        if (valtypes.Contains(extension, StringComparer.InvariantCultureIgnoreCase))
+                        {
+                            try
+                            {
+                                string fn = id + "." + extension;
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Doctors/"), fn);
+
+                                employeePic.SaveAs(path);
+
+                                haspic = true;
+                                picextension = extension;
+
+                                Doctor Selecteddoctor = db.Doctors.Find(id);
+                                Selecteddoctor.DoctorHasPic = haspic;
+                                Selecteddoctor.PicExtension = extension;
+                                db.Entry(Selecteddoctor).State = EntityState.Modified;
+
+                                db.SaveChanges();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                return BadRequest();
+                            }
+                        }
+                    }
+
                 }
                 else
                 {
-                    throw;
+                    Doctor SelectedDoctor = db.Doctors.Find(id);
+                    SelectedDoctor.DoctorHasPic = haspic;
+                    SelectedDoctor.PicExtension = null;
+                    db.Entry(SelectedDoctor).State = EntityState.Modified;
+
+                    db.SaveChanges();
                 }
+
+                return Ok();
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/DoctorData
-        [ResponseType(typeof(Doctor))]
-        public IHttpActionResult PostDoctor(Doctor doctor)
-        {
-            if (!ModelState.IsValid)
+            else
             {
-                return BadRequest(ModelState);
+                //not multipart form data
+                return BadRequest();
+
             }
 
-            db.Doctors.Add(doctor);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = doctor.DoctorId }, doctor);
         }
 
         // DELETE: api/DoctorData/5

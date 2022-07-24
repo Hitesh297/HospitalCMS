@@ -29,11 +29,18 @@ namespace HospitalCMS.Models
         [Display(Name = "Doctor Name")]
         public string Name { get; set; }
         public int Experience { get; set; }
-        public int SpecialityId { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public bool DoctorHasPic { get; set; }
         public string PicExtension { get; set; }
+        public List<SpecialityDto> Specialities { get; set; }
+        public List<AppointmentDto> Appointments { get; set; }
     }
 
+    public class DoctorVM
+    {
+        public DoctorDto Doctor { get; set; }
+        public IEnumerable<SpecialityDto> SpecialitiesAssigned { get; set; }
+        public IEnumerable<SpecialityDto> SpecialitiesNotAssigned { get; set; }
+    }
 }

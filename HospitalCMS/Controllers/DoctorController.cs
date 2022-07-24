@@ -80,22 +80,121 @@ namespace HospitalCMS.Controllers
         // GET: Doctor/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            DoctorVM viewModel = new DoctorVM();
+
+            string url = "DoctorData/FindDoctor/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            DoctorDto selectedDoctor = response.Content.ReadAsAsync<DoctorDto>().Result;
+
+            url = "SpecialityData/SpecialityAssignedToDoctor/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<SpecialityDto> specialitiesAssignedToDoctor = response.Content.ReadAsAsync<IEnumerable<SpecialityDto>>().Result;
+
+            url = "SpecialityData/SpecialityNotAssignedToDoctor/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<SpecialityDto> specialitiesNotAssignedToDoctor = response.Content.ReadAsAsync<IEnumerable<SpecialityDto>>().Result;
+
+            viewModel.Doctor = selectedDoctor;
+            viewModel.SpecialitiesAssigned = specialitiesAssignedToDoctor;
+            viewModel.SpecialitiesNotAssigned = specialitiesNotAssignedToDoctor;
+            return View(viewModel);
         }
 
         // POST: Doctor/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Doctor doctor, HttpPostedFileBase doctorPic)
         {
             try
             {
-                // TODO: Add update logic here
+                string url = "DoctorData/UpdateDoctor/" + id;
+                string jsonpayload = jss.Serialize(doctor);
+                HttpContent content = new StringContent(jsonpayload);
+                content.Headers.ContentType.MediaType = "application/json";
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-                return RedirectToAction("Index");
+                if (response.IsSuccessStatusCode && doctorPic != null)
+                {
+                    url = "doctorData/UploadDoctorPic/" + id;
+                    MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+
+                    HttpContent imagecontent = new StreamContent(doctorPic.InputStream);
+                    requestcontent.Add(imagecontent, "EmployeePic", doctorPic.FileName);
+
+                    response = client.PostAsync(url, requestcontent).Result;
+
+                    return RedirectToAction("List");
+                }
+                else if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    return View("Error");
+                }
             }
             catch
             {
                 return View();
+            }
+        }
+
+        //GET: /Employee/UnassociateSpeciality?id={DoctorId}&serviceId={SpecialityId}
+        [HttpGet]
+        [Authorize]
+        public ActionResult UnassociateSpeciality(int id, int specialityId)
+        {
+            try
+            {
+                string url = "DoctorData/unassociatespecialityewithDoctor/" + id + "/" + specialityId;
+                HttpContent content = new StringContent("");
+                content.Headers.ContentType.MediaType = "application/json";
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Edit/" + id);
+                }
+                else
+                {
+                    return View("Error");
+                }
+
+            }
+            catch
+            {
+
+                return View("Error");
+            }
+        }
+
+        //POST: Doctor/AssociateSpeciality/{DoctorId}
+        [HttpPost]
+        [Authorize]
+        public ActionResult AssociateSpeciality(int id, int specialityId)
+        {
+            try
+            {
+                string url = "DoctorData/AssociatespecialitywithDoctor/" + id + "/" + specialityId;
+                HttpContent content = new StringContent("");
+                content.Headers.ContentType.MediaType = "application/json";
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Edit/" + id);
+                    //return Redirect($"{Url.Action("Edit", new { id = id })}#associate-form");
+                }
+                else
+                {
+                    return View("Error");
+                }
+
+            }
+            catch
+            {
+
+                return View("Error");
             }
         }
 
