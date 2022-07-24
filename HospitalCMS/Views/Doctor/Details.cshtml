@@ -78,7 +78,7 @@
         @foreach (var appointment in Model.Appointments)
         {
         <a href="/Appointment/Details/@appointment.AppointmentId" class="list-group-item">
-            <div style="display:flex; align-content:space-between; gap:100px">
+            <div style="display:flex; justify-content:space-between;">
                 <div>@appointment.Patient.FirstName @appointment.Patient.LastName            </div>
                 <div>@appointment.Schedule.ToString("f", CultureInfo.GetCultureInfo("en-US"))</div>
             </div>

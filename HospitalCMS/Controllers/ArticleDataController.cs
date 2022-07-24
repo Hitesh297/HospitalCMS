@@ -36,7 +36,7 @@ namespace HospitalCMS.Controllers
             return Ok(ArticlesDto);
         }
 
-        // GET: api/ArticleData/ListArticles/5
+        // GET: api/ArticleData/FindArticle/5
         [ResponseType(typeof(Article))]
         [HttpGet]
         public IHttpActionResult FindArticle(int id)

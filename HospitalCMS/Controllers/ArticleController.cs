@@ -104,20 +104,36 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Article/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult ConfirmDelete(int id)
         {
-            return View();
+            string url = "ArticleData/FindArticle/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            ArticleDto article = response.Content.ReadAsAsync<ArticleDto>().Result;
+            return View(article);
+           
         }
 
         // POST: Article/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
+
             try
             {
-                // TODO: Add delete logic here
+                string url = "ArticleData/DeleteArticle/" + id;
+                HttpContent content = new StringContent("");
+                content.Headers.ContentType.MediaType = "application/json";
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-                return RedirectToAction("Index");
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    return View("Error");
+                }
+                
             }
             catch
             {
