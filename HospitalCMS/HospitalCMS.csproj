@@ -181,6 +181,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountDataController.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\AppointmentDataController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />

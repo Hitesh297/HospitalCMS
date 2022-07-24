@@ -21,6 +21,12 @@ namespace HospitalCMS.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
+            context.Roles.AddOrUpdate(x => x.Id,
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = "Doctor"},
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = "Patient" },
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = "Admin" }
+                );
+
             context.Specialities.AddOrUpdate(x => x.SpecialityId,
                 new Speciality() { SpecialityId = 1, Name = "Surgery" },
                 new Speciality() { SpecialityId = 2, Name = "Internal Medicine" },
@@ -57,15 +63,15 @@ namespace HospitalCMS.Migrations
                     new Doctor() { DoctorId = 9, Name = "Arthur Abbed", Email = "arthur@gmail.com", Experience = 15, Phone = "(123)654-789", Specialities = new List<Speciality>() { context.Specialities.Find(9) } }
                     );
 
-            context.Doctors.Find(1).Specialities.Add(context.Specialities.Find(18));
-            context.Doctors.Find(2).Specialities.Add(context.Specialities.Find(19));
-            context.Doctors.Find(3).Specialities.Add(context.Specialities.Find(20));
-            context.Doctors.Find(4).Specialities.Add(context.Specialities.Find(17));
-            context.Doctors.Find(5).Specialities.Add(context.Specialities.Find(16));
-            context.Doctors.Find(6).Specialities.Add(context.Specialities.Find(15));
-            context.Doctors.Find(7).Specialities.Add(context.Specialities.Find(14));
-            context.Doctors.Find(8).Specialities.Add(context.Specialities.Find(13));
-            context.Doctors.Find(9).Specialities.Add(context.Specialities.Find(12));
+            //context.Doctors.Find(1).Specialities.Add(context.Specialities.Find(18));
+            //context.Doctors.Find(2).Specialities.Add(context.Specialities.Find(19));
+            //context.Doctors.Find(3).Specialities.Add(context.Specialities.Find(20));
+            //context.Doctors.Find(4).Specialities.Add(context.Specialities.Find(17));
+            //context.Doctors.Find(5).Specialities.Add(context.Specialities.Find(16));
+            //context.Doctors.Find(6).Specialities.Add(context.Specialities.Find(15));
+            //context.Doctors.Find(7).Specialities.Add(context.Specialities.Find(14));
+            //context.Doctors.Find(8).Specialities.Add(context.Specialities.Find(13));
+            //context.Doctors.Find(9).Specialities.Add(context.Specialities.Find(12));
 
             context.Patients.AddOrUpdate(x => x.PatientId,
                 new Patient() { PatientId = 1, FirstName = "Roy", LastName = "Isek", Gender = "Male", MaritalStatus = "N/A", Mobile = "123456789", PostalCode = "M9V 3B8", Address1 = "Anabelle Dr.", Address2 = "Willow Street", City = "London", Country = "Canada", DOB = DateTime.Now, Email = "roy@gmail.com" },

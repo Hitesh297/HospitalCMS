@@ -1,6 +1,7 @@
 ﻿@model HospitalCMS.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+    TempData.Keep("Roles");
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -15,6 +16,18 @@
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Select Role:</label>
+        <div class="col-md-10">
+            <select class="form-control" name="Role" required>
+                <option value="x">Please Select</option>
+                @foreach (var role in TempData["Roles"] as IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>)
+                {
+                    <option value="@role.Name">@role.Name</option>
+                }
+            </select>
         </div>
     </div>
     <div class="form-group">

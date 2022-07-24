@@ -9,6 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HospitalCMS.Models;
+using System.Net.Http;
+using System.Web.Script.Serialization;
+using System.Configuration;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace HospitalCMS.Controllers
 {
@@ -17,9 +22,14 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly HttpClient client;
+        private JavaScriptSerializer jss = new JavaScriptSerializer();
 
         public AccountController()
         {
+            client = new HttpClient();
+            //client.BaseAddress = new Uri("https://localhost:44305/api/");
+            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["apiServer"]);
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -139,7 +149,12 @@ namespace HospitalCMS.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel registerViewModel = new RegisterViewModel();
+            string url = "AccountData/ListRoles";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            List<IdentityRole> roles = response.Content.ReadAsAsync<List<IdentityRole>>().Result;
+            TempData["Roles"] = roles.Where(x=>x.Name != "Admin").ToList();
+            return View(registerViewModel);
         }
 
         //
@@ -156,18 +171,18 @@ namespace HospitalCMS.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    await UserManager.AddToRoleAsync(user.Id, model.Role);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
-
+  
             // If we got this far, something failed, redisplay form
             return View(model);
         }
