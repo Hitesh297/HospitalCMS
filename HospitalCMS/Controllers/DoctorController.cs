@@ -141,7 +141,6 @@ namespace HospitalCMS.Controllers
 
         //GET: /Employee/UnassociateSpeciality?id={DoctorId}&serviceId={SpecialityId}
         [HttpGet]
-        [Authorize]
         public ActionResult UnassociateSpeciality(int id, int specialityId)
         {
             try
@@ -170,7 +169,6 @@ namespace HospitalCMS.Controllers
 
         //POST: Doctor/AssociateSpeciality/{DoctorId}
         [HttpPost]
-        [Authorize]
         public ActionResult AssociateSpeciality(int id, int specialityId)
         {
             try

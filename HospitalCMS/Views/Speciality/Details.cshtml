@@ -21,31 +21,52 @@
     </dl>
 </div>
 
-<div class="list-group">
+<div class="row">
 
     @if (Model.Doctors != null && Model.Doctors.Count() != 0)
     {
         foreach (var doctor in Model.Doctors)
         {
-            <a class="list-group-item" style="margin-top:10px;"  href="/Doctor/Details/@doctor.DoctorId">
-                <div style="display:flex">
-                    @{
-                        string imageurl = "/Content/Images/Doctors/default.jpg";
-                        if (doctor.DoctorHasPic)
-                        {
-                            imageurl = "/Content/Images/Doctors/" + doctor.DoctorId + "." + doctor.PicExtension;
+            <a style="margin-top:10px;" href="/Doctor/Details/@doctor.DoctorId">
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        @{
+                            string imageurl = "/Content/Images/Doctors/default.jpg";
+                            if (doctor.DoctorHasPic)
+                            {
+                                imageurl = "/Content/Images/Doctors/" + doctor.DoctorId + "." + doctor.PicExtension;
+                            }
                         }
-                    }
-                    <img id="profile-pic" style="display:block; max-width:150px; padding-bottom:5px;" alt="@doctor.Name" src="@imageurl" />
-                    <div class="doctor-details">
-                        <dl class="dl-horizontal">
-                            <dt>
-                                Name
-                            </dt>
-                            <dd>
-                                @doctor.Name
-                            </dd>
-                        </dl>
+                        <img id="profile-pic" style="display:block; max-width:150px; padding-bottom:5px;" alt="@doctor.Name" src="@imageurl" />
+                        <div class="caption">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    Name
+                                </dt>
+                                <dd>
+                                    @doctor.Name
+                                </dd>
+                                <dt>
+                                    Experience
+                                </dt>
+                                <dd>
+                                    @doctor.Experience Years
+                                </dd>
+
+                                <dt>
+                                    Mobile
+                                </dt>
+                                <dd>
+                                    @doctor.Phone
+                                </dd>
+                                <dt>
+                                    Email
+                                </dt>
+                                <dd>
+                                    @doctor.Email
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
                 </div>
             </a>

@@ -75,7 +75,21 @@ namespace HospitalCMS.Controllers
                 Schedule = appointment.Schedule,
                 DoctorNotes = appointment.DoctorNotes,
                 Doctor = appointment.Doctor != null ? new DoctorDto() { Name = appointment.Doctor.Name } : null,
-                Patient = appointment.Patient != null ? new PatientDto() { FirstName = appointment.Patient.FirstName } : null
+                Patient = appointment.Patient != null ? new PatientDto() {
+                    FirstName = appointment.Patient.FirstName,
+                    MaritalStatus = appointment.Patient.MaritalStatus,
+                    Address1 = appointment.Patient.Address1,
+                    Address2 = appointment.Patient.Address2,
+                    City = appointment.Patient.City,
+                    Country = appointment.Patient.Country,
+                    DOB = appointment.Patient.DOB,
+                    Email = appointment.Patient.Email,
+                    Gender = appointment.Patient.Gender,
+                    LastName = appointment.Patient.LastName,
+                    Mobile = appointment.Patient.Mobile,
+                    PatientId = appointment.Patient.PatientId,
+                    PostalCode = appointment.Patient.PostalCode
+                } : null
 
             };
 

@@ -9,40 +9,33 @@
 <div>
     <h4>Appointment</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Doctor.Name)
-        </dt>
+    <div class="panel panel-default">
+        <div class="panel-heading">Patient Details</div>
+        <div class="panel-body patient-details">
+            <p>Patient Name: <span><a href="/Patient/Details/@Model.PatientId">@Model.Patient.FirstName @Model.Patient.LastName</a></span></p>
+            <p>Date of birth: <span>@Model.Patient.DOB.ToString("d")</span></p>
+            <p>Mobile: <span>@Model.Patient.Mobile</span></p>
+            <p>Email: <span>@Model.Patient.Email</span></p>
+            <p>Gender: <span>@Model.Patient.Gender</span></p>
+            <p>Marital Status: <span>@Model.Patient.MaritalStatus</span></p>
+            <p>Address 1: <span>@Model.Patient.Address1</span></p>
+            <p>Address 2: <span>@Model.Patient.Address2</span></p>
+            <p>City: <span>@Model.Patient.City</span></p>
+            <p>Country: <span>@Model.Patient.Country</span></p>
+            <p>Postal Code: <span>@Model.Patient.PostalCode</span></p>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Doctor.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Patient.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Patient.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Schedule)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Schedule)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DoctorNotes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DoctorNotes)
-        </dd>
-
-    </dl>
+    <div class="panel panel-info">
+        <div class="panel-heading doc-notes">
+            <p>Doctor Name: <a href="/Doctor/Details/@Model.DoctorId">@Model.Doctor.Name</a></p>
+            <p>Scheduled at @Model.Schedule.ToString("f")</p>
+        </div>
+        <div class="panel-body patient-details">
+            <label>Doctor Notes: </label>
+            <textarea>@Model.DoctorNotes</textarea>
+        </div>
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.AppointmentId }) |
