@@ -20,10 +20,12 @@
             First Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Schedule)
+            @*@Html.DisplayNameFor(model => model.Schedule)*@
+            Schedule
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DoctorNotes)
+            @*@Html.DisplayNameFor(model => model.DoctorNotes)*@
+            Doctors Notes
         </th>
         <th></th>
     </tr>
@@ -35,13 +37,16 @@
             @item.Doctor.Name
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Patient.FirstName)
+            @*@Html.DisplayFor(modelItem => item.Patient.FirstName)*@
+            @item.Patient.FirstName
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Schedule)
+            @*@Html.DisplayFor(modelItem => item.Schedule)*@
+            @item.Schedule
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DoctorNotes)
+            @*@Html.DisplayFor(modelItem => item.DoctorNotes)*@
+            @item.DoctorNotes
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id=item.AppointmentId }) |

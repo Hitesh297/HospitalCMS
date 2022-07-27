@@ -22,27 +22,33 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Patient.FirstName)
+            @*@Html.DisplayNameFor(model => model.Patient.FirstName)*@
+            Patient First Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Patient.FirstName)
+            @*@Html.DisplayFor(model => model.Patient.FirstName)*@
+            @Model.Patient.FirstName 
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Schedule)
+            @*@Html.DisplayNameFor(model => model.Schedule)*@
+            Schedule
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Schedule)
+            @*@Html.DisplayFor(model => model.Schedule)*@
+            @Model.Schedule
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DoctorNotes)
+            @*@Html.DisplayNameFor(model => model.DoctorNotes)*@
+            Doctors Notes
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DoctorNotes)
+            @*@Html.DisplayFor(model => model.DoctorNotes)*@
+            @Model.DoctorNotes
         </dd>
 
     </dl>
