@@ -85,20 +85,27 @@
 <div id="Appointments-section">
     <h3>Appointments</h3>
     <div class="list-group">
-        @foreach (var appointment in Model.Appointments)
+        @if (Model.Appointments == null || Model.Appointments.Count() == 0)
         {
-        <a href="/Appointment/Details/@appointment.AppointmentId" class="list-group-item">
-            <div style="display:flex; justify-content:space-between;">
-                <div>@appointment.Patient.FirstName @appointment.Patient.LastName            </div>
-                <div>@appointment.Schedule.ToString("f", CultureInfo.GetCultureInfo("en-US"))</div>
-            </div>
-        </a>
+            <span>No Appointments Assigned.</span>
         }
-        
+        else
+        {
+        foreach (var appointment in Model.Appointments)
+        {
+            <a href="/Appointment/Details/@appointment.AppointmentId" class="list-group-item">
+                <div style="display:flex; justify-content:space-between;">
+                    <div>@appointment.Patient.FirstName @appointment.Patient.LastName            </div>
+                    <div>@appointment.Schedule.ToString("f", CultureInfo.GetCultureInfo("en-US"))</div>
+                </div>
+            </a>
+        }
+        }
+
     </div>
 </div>
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "List")
 </p>

@@ -40,4 +40,8 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+    $(function () {
+        $("#accordion").accordion();
+    });
 }
+

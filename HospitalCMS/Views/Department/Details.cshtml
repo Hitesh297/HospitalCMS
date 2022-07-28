@@ -20,7 +20,22 @@
 
     </dl>
 </div>
+<div id="accordion">
+    @if (Model.FAQs != null && Model.FAQs.Count() != 0)
+    {
+        foreach (var faq in Model.FAQs)
+        {
+            <h3 class="question">@faq.Question</h3>
+            <div class="answer">
+                <p>
+                    @faq.Answer
+                </p>
+            </div>
+        }
+    }
+   
+</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.DepartmentId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "List")
 </p>

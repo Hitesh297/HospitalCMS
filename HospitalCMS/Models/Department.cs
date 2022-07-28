@@ -20,6 +20,7 @@ namespace HospitalCMS.Models
         public int DepartmentId { get; set; }
         [Display(Name = "Department Name")]
         public string Name { get; set; }
+        public List<FAQDto> FAQs { get; set; }
 
     }
 }

@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Question)
@@ -36,4 +36,23 @@
     </tr>
 }
 
-</table>
+</table>*@
+
+<div id="accordion">
+    @if (Model != null && Model.Count() != 0)
+    {
+        foreach (var faq in Model)
+        {
+            <h3 class="question">@faq.Question</h3>
+            <div class="answer">
+                <p>
+                    @faq.Answer
+                </p>
+                @Html.ActionLink("Edit", "Edit", new { id = faq.FAQId }) |
+                @Html.ActionLink("Details", "Details", new { id = faq.FAQId }) |
+                @Html.ActionLink("Delete", "ConfirmDelete", new { id = faq.FAQId })
+            </div>
+        }
+    }
+
+</div>

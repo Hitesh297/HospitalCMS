@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HospitalCMS.Models;
+using System.Web;
+using System.IO;
 
 namespace HospitalCMS.Controllers
 {
@@ -96,6 +98,75 @@ namespace HospitalCMS.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
+        // POST: api/ArticleData/UploadArticlePic/{id}
+        [HttpPost]
+        public IHttpActionResult UploadArticlePic(int id)
+        {
+
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+
+                int numfiles = HttpContext.Current.Request.Files.Count;
+
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var articlePic = HttpContext.Current.Request.Files[0];
+                    if (articlePic.ContentLength > 0)
+                    {
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(articlePic.FileName).Substring(1);
+                        if (valtypes.Contains(extension, StringComparer.InvariantCultureIgnoreCase))
+                        {
+                            try
+                            {
+                                string fn = id + "." + extension;
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Articles/"), fn);
+
+                                articlePic.SaveAs(path);
+
+                                haspic = true;
+                                picextension = extension;
+
+                                Article selectedArticle = db.Articles.Find(id);
+                                selectedArticle.HasPic = haspic;
+                                selectedArticle.PicExtension = extension;
+                                db.Entry(selectedArticle).State = EntityState.Modified;
+
+                                db.SaveChanges();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                return BadRequest();
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    Doctor SelectedDoctor = db.Doctors.Find(id);
+                    SelectedDoctor.DoctorHasPic = haspic;
+                    SelectedDoctor.PicExtension = null;
+                    db.Entry(SelectedDoctor).State = EntityState.Modified;
+
+                    db.SaveChanges();
+                }
+
+                return Ok();
+            }
+            else
+            {
+                //not multipart form data
+                return BadRequest();
+
+            }
+
         }
 
         // POST: api/ArticleData/CreateArticle

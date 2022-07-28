@@ -87,11 +87,34 @@ namespace HospitalCMS.Controllers
             }
         }
 
-        //// GET: Appointment/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        // GET: Appointment/Edit/5
+        [HttpPost]
+        public ActionResult UpdateDoctorNotes(int id, string DoctorNotes)
+        {
+            string url = "AppointmentData/FindAppointment/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            AppointmentDto appointment = response.Content.ReadAsAsync<AppointmentDto>().Result;
+            appointment.DoctorNotes = DoctorNotes;
+            appointment.Patient = null;
+            appointment.Doctor = null;
+
+            url = "AppointmentData/UpdateAppointment/"+id;
+            string jsonpayload = JsonConvert.SerializeObject(appointment);
+
+            HttpContent content = new StringContent(jsonpayload);
+            content.Headers.ContentType.MediaType = "application/json";
+
+            response = client.PostAsync(url, content).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("list", "Appointment");
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
 
         //// POST: Appointment/Edit/5
         //[HttpPost]

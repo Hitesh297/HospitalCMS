@@ -96,40 +96,40 @@ namespace HospitalCMS.Controllers
             return Ok(appointmentDto);
         }
 
-        // PUT: api/AppointmentData/5
-        //[ResponseType(typeof(void))]
-        //public IHttpActionResult PutAppointment(int id, Appointment appointment)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        // PUT: api/AppointmentData/UpdateAppointment/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult UpdateAppointment(int id, Appointment appointment)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    if (id != appointment.AppointmentId)
-        //    {
-        //        return BadRequest();
-        //    }
+            if (id != appointment.AppointmentId)
+            {
+                return BadRequest();
+            }
 
-        //    db.Entry(appointment).State = EntityState.Modified;
+            db.Entry(appointment).State = EntityState.Modified;
 
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!AppointmentExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AppointmentExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
+            return StatusCode(HttpStatusCode.NoContent);
+        }
 
         // POST: api/AppointmentData/AddAppointment
         [ResponseType(typeof(Appointment))]

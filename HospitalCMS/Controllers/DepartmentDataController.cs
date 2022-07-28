@@ -36,7 +36,7 @@ namespace HospitalCMS.Controllers
         [HttpGet]
         public IHttpActionResult FindDepartment(int id)
         {
-            Department department = db.Departments.Find(id);
+            Department department = db.Departments.Include(x=>x.FAQs).Where(y=>y.DepartmentId == id).FirstOrDefault();
             if (department == null)
             {
                 return NotFound();
@@ -47,6 +47,15 @@ namespace HospitalCMS.Controllers
                 DepartmentId = department.DepartmentId,
                 Name = department.Name
             };
+
+            if (department.FAQs != null && department.FAQs.Count() != 0)
+            {
+                departmentDto.FAQs = new List<FAQDto>();
+                foreach (var faq in department.FAQs)
+                {
+                    departmentDto.FAQs.Add(new FAQDto() { FAQId = faq.FAQId, Question = faq.Question, Answer = faq.Answer });
+                }
+            }
 
             return Ok(departmentDto);
         }

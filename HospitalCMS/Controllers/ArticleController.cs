@@ -84,18 +84,52 @@ namespace HospitalCMS.Controllers
         // GET: Article/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            string url = "ArticleData/FindArticle/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            ArticleDto article = response.Content.ReadAsAsync<ArticleDto>().Result;
+
+            url = "EventData/ListEvents";
+            response = client.GetAsync(url).Result;
+            IEnumerable<EventDto> events = response.Content.ReadAsAsync<IEnumerable<EventDto>>().Result;
+            ViewData["Events"] = events;
+
+            return View(article);
         }
 
         // POST: Article/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Article article, HttpPostedFileBase articlePic)
         {
             try
             {
-                // TODO: Add update logic here
+                string url = "ArticleData/EditArticle/"+id;
+                string jsonpayload = JsonConvert.SerializeObject(article);
 
-                return RedirectToAction("Index");
+                HttpContent content = new StringContent(jsonpayload);
+                content.Headers.ContentType.MediaType = "application/json";
+
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode && articlePic != null)
+                {
+                    url = "ArticleData/UploadArticlePic/" + id;
+                    MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+
+                    HttpContent imagecontent = new StreamContent(articlePic.InputStream);
+                    requestcontent.Add(imagecontent, "ArticlePic", articlePic.FileName);
+
+                    response = client.PostAsync(url, requestcontent).Result;
+
+                    return RedirectToAction("List");
+                }
+                else if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    return View("Error");
+                }
             }
             catch
             {

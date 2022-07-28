@@ -15,11 +15,13 @@
         </dt>
 
         <dd>
-            @Model.Event.Title
+            <a href="/Event/Details/@Model.EventId">
+                @Model.Event.Title
+            </a>
         </dd>
 
         <dt>
-            Title
+            Article Title
         </dt>
 
         <dd>
@@ -31,15 +33,14 @@
         </dt>
 
         <dd>
-            @Model.HasPic
-        </dd>
-
-        <dt>
-           Picture Extension
-        </dt>
-
-        <dd>
-            @Model.PicExtension
+            @{
+                string imageurl = "/Content/Images/Articles/default.png";
+                if (Model.HasPic)
+                {
+                    imageurl = "/Content/Images/Articles/" + Model.ArticleId + "." + Model.PicExtension;
+                }
+            }
+            <div><img style="display:block; max-width:800px;" alt="@Model.Title" src="@imageurl" /></div>
         </dd>
 
         <dt>
@@ -54,5 +55,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ArticleId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "List")
 </p>

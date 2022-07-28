@@ -32,12 +32,15 @@
             <p>Scheduled at @Model.Schedule.ToString("f")</p>
         </div>
         <div class="panel-body patient-details">
-            <label>Doctor Notes: </label>
-            <textarea>@Model.DoctorNotes</textarea>
+            <form action="/Appointment/UpdateDoctorNotes" method="post">
+                <input type="hidden" name="id" value="@Model.AppointmentId" />
+                <label>Doctor Notes: </label>
+                <textarea name="DoctorNotes">@Model.DoctorNotes</textarea>
+                <input type="submit" name="submit" value="Save Notes" />
+            </form>
         </div>
     </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AppointmentId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "List")
 </p>
