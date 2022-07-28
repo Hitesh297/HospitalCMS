@@ -12,7 +12,8 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @*@Html.DisplayNameFor(model => model.Name)*@
+            Name
         </th>
         <th></th>
     </tr>
@@ -20,7 +21,8 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @*@Html.DisplayFor(modelItem => item.Name)*@
+            @item.Name
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.SpecialityId }) |
