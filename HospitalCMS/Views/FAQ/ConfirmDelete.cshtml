@@ -12,27 +12,33 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Question)
+            @*@Html.DisplayNameFor(model => model.Question)*@
+            Question
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Question)
+            @*@Html.DisplayFor(model => model.Question)*@
+            @Model.Question
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Answer)
+            @*@Html.DisplayNameFor(model => model.Answer)*@
+            Answer
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Answer)
+            @*@Html.DisplayFor(model => model.Answer)*@
+            @Model.Answer
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DepartmentId)
+            @*@Html.DisplayNameFor(model => model.DepartmentId)*@
+            Department Id
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DepartmentId)
+            @*@Html.DisplayFor(model => model.DepartmentId)*@
+             @Model.DepartmentId
         </dd>
 
     </dl>

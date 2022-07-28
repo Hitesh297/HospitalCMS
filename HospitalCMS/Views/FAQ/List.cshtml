@@ -12,29 +12,33 @@
 @*<table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Question)
+            @*@Html.DisplayNameFor(model => model.Question)*@
+            Question
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Answer)
+            @*@Html.DisplayNameFor(model => model.Answer)*@
+            Answer
         </th>
-        <th></th>
-    </tr>
+                <th></th>
+            </tr>
 
-@foreach (var item in Model) {
-    <tr>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Question)*@
+                    @item.Question
+                </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Question)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Answer)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FAQId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FAQId }) |
-            @Html.ActionLink("Delete", "ConfirmDelete", new { id=item.FAQId })
-        </td>
-    </tr>
-}
+            @*@Html.DisplayFor(modelItem => item.Answer)*@
+            @item.Answer
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.FAQId }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.FAQId }) |
+                    @Html.ActionLink("Delete", "ConfirmDelete", new { id=item.FAQId })
+                </td>
+            </tr>
+        }
 
 </table>*@
 
