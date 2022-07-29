@@ -283,6 +283,7 @@ namespace HospitalCMS.Controllers
         // DELETE: api/DoctorData/5
         [ResponseType(typeof(Doctor))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteDoctor(int id)
         {
             Doctor doctor = db.Doctors.Find(id);
