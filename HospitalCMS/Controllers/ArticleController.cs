@@ -29,6 +29,23 @@ namespace HospitalCMS.Controllers
             client.BaseAddress = new Uri(ConfigurationManager.AppSettings["apiServer"]);
         }
 
+        /// <summary>
+        /// Grabs the authentication cookie sent to this controller.
+        /// </summary>
+        private void GetApplicationCookie()
+        {
+            string token = "";
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
+        }
+
 
         // GET: Article
         public ActionResult List()
@@ -162,6 +179,7 @@ namespace HospitalCMS.Controllers
 
             try
             {
+                GetApplicationCookie();
                 string url = "ArticleData/DeleteArticle/" + id;
                 HttpContent content = new StringContent("");
                 content.Headers.ContentType.MediaType = "application/json";

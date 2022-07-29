@@ -19,9 +19,28 @@ namespace HospitalCMS.Controllers
 
         static DepartmentController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+            client = new HttpClient(handler);
             //client.BaseAddress = new Uri("https://localhost:44305/api/");
             client.BaseAddress = new Uri(ConfigurationManager.AppSettings["apiServer"]);
+        }
+        private void GetApplicationCookie()
+        {
+            string token = "";
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
         }
         // GET: Department
         public ActionResult List()
@@ -115,6 +134,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Department/Delete/5
+        [Authorize]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "DepartmentData/FindDepartment/" + id;
@@ -126,10 +146,12 @@ namespace HospitalCMS.Controllers
 
         // POST: Department/Delete/5
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
             try
             {
+                GetApplicationCookie();
                 string url = "DepartmentData/DeleteDepartment/" + id;
                 HttpContent content = new StringContent("");
                 content.Headers.ContentType.MediaType = "application/json";
@@ -149,5 +171,7 @@ namespace HospitalCMS.Controllers
                 return View();
             }
         }
+
+     
     }
 }

@@ -115,6 +115,7 @@ namespace HospitalCMS.Controllers
         // DELETE: api/DepartmentData/DeleteDepartment/5
         [ResponseType(typeof(Department))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteDepartment(int id)
         {
             Department department = db.Departments.Find(id);
