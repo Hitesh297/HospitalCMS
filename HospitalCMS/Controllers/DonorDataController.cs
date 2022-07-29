@@ -124,6 +124,7 @@ namespace HospitalCMS.Controllers
         [HttpPost]
         // DELETE: api/DonorData/DeleteDonor/5
         [ResponseType(typeof(Donor))]
+        [Authorize]
         public IHttpActionResult DeleteDonor(int id)
         {
             Donor donor = db.Donors.Find(id);

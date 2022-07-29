@@ -18,9 +18,28 @@ namespace HospitalCMS.Controllers
 
         static DonorController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+            client = new HttpClient(handler);
             //client.BaseAddress = new Uri("https://localhost:44305/api/");
             client.BaseAddress = new Uri(ConfigurationManager.AppSettings["apiServer"]);
+        }
+        private void GetApplicationCookie()
+        {
+            string token = "";
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
         }
         // GET: Donor
         public ActionResult List()
@@ -102,6 +121,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Donor/Delete/5
+        [Authorize]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "DonorData/FindDonor/" + id;
@@ -112,10 +132,12 @@ namespace HospitalCMS.Controllers
 
         // POST: Donor/Delete/5
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
             try
             {
+                GetApplicationCookie();
                 string url = "DonorData/DeleteDonor/" + id;
                 HttpContent content = new StringContent("");
                 content.Headers.ContentType.MediaType = "application/json";
