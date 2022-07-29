@@ -117,6 +117,7 @@ namespace HospitalCMS.Controllers
         [HttpPost]
         // DELETE: api/EventData/5
         [ResponseType(typeof(Event))]
+        [Authorize]
         public IHttpActionResult DeleteEvent(int id)
         {
             Event @event = db.Events.Find(id);

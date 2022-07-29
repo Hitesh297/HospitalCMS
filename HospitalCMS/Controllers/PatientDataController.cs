@@ -133,6 +133,7 @@ namespace HospitalCMS.Controllers
         [HttpPost]
         // DELETE: api/PatientData/DeletePatient/5
         [ResponseType(typeof(Patient))]
+        [Authorize]
         public IHttpActionResult DeletePatient(int id)
         {
             Patient patient = db.Patients.Find(id);

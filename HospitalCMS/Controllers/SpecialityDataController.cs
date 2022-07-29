@@ -154,6 +154,7 @@ namespace HospitalCMS.Controllers
         // DELETE: api/SpecialityData/DeleteSpeciality/5
         [ResponseType(typeof(Speciality))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteSpeciality(int id)
         {
             Speciality speciality = db.Specialities.Find(id);

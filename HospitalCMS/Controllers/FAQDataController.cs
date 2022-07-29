@@ -111,6 +111,7 @@ namespace HospitalCMS.Controllers
         // DELETE: api/FAQData/DeleteFAQ/5
         [ResponseType(typeof(FAQ))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteFAQ(int id)
         {
             FAQ fAQ = db.FAQs.Find(id);
