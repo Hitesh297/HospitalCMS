@@ -150,6 +150,7 @@ namespace HospitalCMS.Controllers
         // DELETE: api/AppointmentData/DeleteAppointment/5
         [ResponseType(typeof(Appointment))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteAppointment(int id)
         {
             Appointment appointment = db.Appointments.Find(id);
