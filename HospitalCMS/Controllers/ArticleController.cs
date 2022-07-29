@@ -18,7 +18,13 @@ namespace HospitalCMS.Controllers
 
         static ArticleController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+            client = new HttpClient(handler);
             //client.BaseAddress = new Uri("https://localhost:44305/api/");
             client.BaseAddress = new Uri(ConfigurationManager.AppSettings["apiServer"]);
         }
@@ -138,6 +144,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Article/Delete/5
+        [Authorize]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "ArticleData/FindArticle/" + id;
@@ -149,6 +156,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Article/Delete/5
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
 

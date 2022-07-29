@@ -188,6 +188,7 @@ namespace HospitalCMS.Controllers
         // DELETE: api/ArticleData/DeleteArticle/5
         [ResponseType(typeof(Article))]
         [HttpPost]
+        [Authorize]
         public IHttpActionResult DeleteArticle(int id)
         {
             Article article = db.Articles.Find(id);
