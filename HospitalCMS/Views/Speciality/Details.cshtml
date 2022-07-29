@@ -11,11 +11,13 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @*@Html.DisplayNameFor(model => model.Name)*@
+            Speciality
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @*@Html.DisplayFor(model => model.Name)*@
+            @Model.Name
         </dd>
 
     </dl>
@@ -50,7 +52,7 @@
                                     Experience
                                 </dt>
                                 <dd>
-                                    @doctor.Experience Years
+                                    @doctor.Experience
                                 </dd>
 
                                 <dt>

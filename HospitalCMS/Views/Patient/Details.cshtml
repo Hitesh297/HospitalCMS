@@ -11,104 +11,128 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @*@Html.DisplayNameFor(model => model.FirstName)*@
+            First Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+            @*@Html.DisplayFor(model => model.FirstName)*@
+            @Model.FirstName
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            @*@Html.DisplayNameFor(model => model.LastName)*@
+            Last Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+            @*@Html.DisplayFor(model => model.LastName)*@
+            @Model.LastName 
+            </dd>
+
+         <dt>
+            @*@Html.DisplayNameFor(model => model.DOB)*@
+            DOB
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.DOB)*@
+            @Model.DOB
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DOB)
+            @*@Html.DisplayNameFor(model => model.Gender)*@
+            Gender
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DOB)
-        </dd>
+            @*@Html.DisplayFor(model => model.Gender)*@
+            @Model.Gender
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Gender)
+            @*@Html.DisplayNameFor(model => model.Mobile)*@
+            Mobile
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+            @*@Html.DisplayFor(model => model.Mobile)*@
+            @Model.Mobile
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Mobile)
+            @*@Html.DisplayNameFor(model => model.Email)*@
+            Email
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Mobile)
-        </dd>
+            @*@Html.DisplayFor(model => model.Email)*@
+            @Model.Email
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @*@Html.DisplayNameFor(model => model.MaritalStatus)*@
+            Marital Status
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+            @*@Html.DisplayFor(model => model.MaritalStatus)*@
+            @Model.MaritalStatus
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MaritalStatus)
+            @*@Html.DisplayNameFor(model => model.Address1)*@
+            Address 1
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MaritalStatus)
-        </dd>
+            @*@Html.DisplayFor(model => model.Address1)*@
+            @Model.Address1
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Address1)
+            @*@Html.DisplayNameFor(model => model.Address2)*@
+            Address 2
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Address1)
-        </dd>
+            @*@Html.DisplayFor(model => model.Address2)*@
+            @Model.Address2
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Address2)
+            @*@Html.DisplayNameFor(model => model.City)*@
+            City
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Address2)
-        </dd>
+            @*@Html.DisplayFor(model => model.City)*@
+            @Model.City
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.City)
+            @*@Html.DisplayNameFor(model => model.Country)*@
+            Country
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
+            @*@Html.DisplayFor(model => model.Country)*@
+            @Model.Country
+            </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Country)
+            @*@Html.DisplayNameFor(model => model.PostalCode)*@
+            PostalCode
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
+            @*@Html.DisplayFor(model => model.PostalCode)*@
+            @Model.PostalCode
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PostalCode)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PatientId }) |
-    @Html.ActionLink("Back to List", "List")
-</p>
+        </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.PatientId }) |
+            @Html.ActionLink("Back to List", "List")
+        </p>

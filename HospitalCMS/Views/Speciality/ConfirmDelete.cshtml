@@ -12,22 +12,24 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @*@Html.DisplayNameFor(model => model.Name)*@
+            Speciality
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @*@Html.DisplayFor(model => model.Name)*@
+            @Model.Name
         </dd>
 
-    </dl>
+            </dl>
 
-    @using (Html.BeginForm("Delete", "Speciality", new { id = Model.SpecialityId }, FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
+            @using (Html.BeginForm("Delete", "Speciality", new { id = Model.SpecialityId }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "List")
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "List")
+                </div>
+            }
         </div>
-    }
-</div>
