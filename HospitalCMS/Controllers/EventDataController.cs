@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HospitalCMS.Models;
@@ -62,7 +64,6 @@ namespace HospitalCMS.Controllers
         /// <example>
         // GET: api/EventData/FindEvent/1
         /// </example>
-        
         public IHttpActionResult FindEvent(int id)
 
         {
@@ -76,7 +77,8 @@ namespace HospitalCMS.Controllers
                 PicExtension = Event.PicExtension,
                 Description= Event.Description,
                 Articles = Event.Articles,
-                Department = new DepartmentDto() { Name = Event.Department.Name }
+                DepartmentId = Event.DepartmentId,
+                Department = new DepartmentDto() { DepartmentId = Event.DepartmentId, Name = Event.Department.Name }
             };
             if (Event == null)
             {
@@ -166,6 +168,76 @@ namespace HospitalCMS.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+
+        [HttpPost]
+        public IHttpActionResult UploadEventPic(int id)
+        {
+
+            bool haspic = false;
+            string picextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+
+                int numfiles = HttpContext.Current.Request.Files.Count;
+
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var eventPic = HttpContext.Current.Request.Files[0];
+                    if (eventPic.ContentLength > 0)
+                    {
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(eventPic.FileName).Substring(1);
+                        if (valtypes.Contains(extension, StringComparer.InvariantCultureIgnoreCase))
+                        {
+                            try
+                            {
+                                string fn = id + "." + extension;
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/Events/"), fn);
+
+                                eventPic.SaveAs(path);
+
+                                haspic = true;
+                                picextension = extension;
+
+                                Event selectedEvent = db.Events.Find(id);
+                                selectedEvent.HasPic = haspic;
+                                selectedEvent.PicExtension = extension;
+                                db.Entry(selectedEvent).State = EntityState.Modified;
+
+                                db.SaveChanges();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                return BadRequest();
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    Doctor SelectedDoctor = db.Doctors.Find(id);
+                    SelectedDoctor.DoctorHasPic = haspic;
+                    SelectedDoctor.PicExtension = null;
+                    db.Entry(SelectedDoctor).State = EntityState.Modified;
+
+                    db.SaveChanges();
+                }
+
+                return Ok();
+            }
+            else
+            {
+                //not multipart form data
+                return BadRequest();
+
+            }
+
+        }
+
+
 
         /// <summary>
         /// Deletes an Event from the system by it's ID.

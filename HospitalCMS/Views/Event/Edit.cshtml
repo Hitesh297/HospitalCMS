@@ -1,4 +1,4 @@
-﻿@model HospitalCMS.Models.ArticleDto
+﻿@model HospitalCMS.Models.EventDto
 
 @{
     ViewBag.Title = "Edit";
@@ -10,15 +10,14 @@
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-
+    
 <div class="form-horizontal">
-    <h4>Article</h4>
+    <h4>Event</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ArticleId)
+    @Html.HiddenFor(model => model.EventId)
     @Html.HiddenFor(model => model.HasPic)
     @Html.HiddenFor(model => model.PicExtension)
-
 
     <div class="form-group">
         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -26,6 +25,32 @@
             @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
         </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })*@
+            <input class="form-control" type="datetime-local" name="Date" value="@Model.Date.ToString("yyyy-MM-ddTHH:mm")" />
+        </div>
+    </div>
+
+    <div class="">
+        @{
+            string imageurl = "/Content/Images/Events/default.png";
+            if (Model.HasPic)
+            {
+                imageurl = "/Content/Images/Events/" + Model.EventId + "." + Model.PicExtension;
+            }
+        }
+        <div class="">
+            <img id="event-banner" style="display:block; max-width:800px; padding-bottom:5px;" alt="@Model.Title" src="@imageurl" />
+        </div>
+
+    </div>
+    <div class="form-group">
+        <input class="col-md-4" id="eventPic" type="file" name="eventPic" />
     </div>
 
     @*<div class="form-group">
@@ -46,42 +71,25 @@
             </div>
         </div>*@
 
-    <div class="">
-        @{
-            string imageurl = "/Content/Images/Articles/default.png";
-            if (Model.HasPic)
-            {
-                imageurl = "/Content/Images/Articles/" + Model.ArticleId + "." + Model.PicExtension;
-            }
-        }
-        <div class="">
-            <img id="article-banner" style="display:block; max-width:800px; padding-bottom:5px;" alt="@Model.Title" src="@imageurl" />
-        </div>
-
-    </div>
-    <div class="form-group">
-        <input class="col-md-4" id="articlePic" type="file" name="articlePic" />
-    </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Description, new { htmlattributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.EventId, "EventId", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.DepartmentId, "DepartmentId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*@Html.DropDownList("EventId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "text-danger" })*@
-            <select class="form-control" name="EventId">
+            @*@Html.DropDownList("DepartmentId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })*@
+            <select class="form-control" name="DepartmentId">
                 <option value="x">Please Select</option>
-                @foreach (var e in ViewData["Events"] as IEnumerable<HospitalCMS.Models.EventDto>)
+                @foreach (var department in ViewData["Departments"] as IEnumerable<HospitalCMS.Models.DepartmentDto>)
                 {
-                    string selected = e.EventId == Model.EventId ? "selected" : "";
-                    <option @selected value="@e.EventId">@e.Title</option>
+                    string selected = department.DepartmentId == Model.DepartmentId ? "selected" : "";
+                    <option @selected value="@department.DepartmentId">@department.Name</option>
 
                 }
             </select>

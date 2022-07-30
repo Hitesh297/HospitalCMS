@@ -1,20 +1,22 @@
 ﻿@model HospitalCMS.Models.DonorDto
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Donor</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.DonorId)
+
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -35,12 +37,15 @@
             @Html.LabelFor(model => model.DepartmentId, "DepartmentId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@Html.DropDownList("DepartmentId", null, htmlAttributes: new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })*@
+                    @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })*@
                 <select class="form-control" name="DepartmentId">
                     <option value="x">Please Select</option>
+                     
                     @foreach (var department in ViewData["Departments"] as IEnumerable<HospitalCMS.Models.DepartmentDto>)
+
                     {
-                        <option value="@department.DepartmentId">@department.Name</option>
+                        string selected = department.DepartmentId == Model.DepartmentId ? "selected" : "";
+                        <option @selected value="@department.DepartmentId">@department.Name</option>
 
                     }
                 </select>
@@ -65,7 +70,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>

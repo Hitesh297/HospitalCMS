@@ -101,18 +101,40 @@ namespace HospitalCMS.Controllers
         // GET: Donor/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            string url = "DonorData/FindDonor/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            DonorDto donor = response.Content.ReadAsAsync<DonorDto>().Result;
+
+            url = "DepartmentData/ListDepartment";
+            response = client.GetAsync(url).Result;
+            IEnumerable<DepartmentDto> departments = response.Content.ReadAsAsync<IEnumerable<DepartmentDto>>().Result;
+            ViewData["Departments"] = departments;
+
+            return View(donor);
         }
 
         // POST: Donor/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Donor donor)
         {
             try
             {
-                // TODO: Add update logic here
+                string url = "DonorData/UpdateDonor/"+ id;
+                string jsonpayload = JsonConvert.SerializeObject(donor);
 
-                return RedirectToAction("Index");
+                HttpContent content = new StringContent(jsonpayload);
+                content.Headers.ContentType.MediaType = "application/json";
+
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("list", "Donor");
+                }
+                else
+                {
+                    return View("Error");
+                }
             }
             catch
             {

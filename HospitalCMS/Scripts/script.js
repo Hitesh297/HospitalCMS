@@ -36,12 +36,47 @@
             reader.onload = function (e) {
                 $('#profile-pic').attr('src', e.target.result);
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    $("#eventPic").change(function () {
+        readeventURL(this);
+    });
+    function readeventURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#event-banner').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#articlePic").change(function () {
+        readarticleURL(this);
+    });
+    function readarticleURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#article-banner').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
     $(function () {
         $("#accordion").accordion();
     });
+
+    var selectedGender = $("#GenderValue").val();
+    $('#Gender').val(selectedGender);
+
+    var selectedMaritalStatus = $("#MaritalStatusValue").val();
+    $('#MaritalStatus').val(selectedMaritalStatus);
 }
 

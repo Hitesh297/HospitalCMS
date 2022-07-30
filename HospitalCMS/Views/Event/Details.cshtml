@@ -31,7 +31,7 @@
         </dt>
 
         <dd>
-            Model.Date
+            @Model.Date
         </dd>
 
         <dt>
@@ -39,16 +39,17 @@
         </dt>
 
         <dd>
-            @Model.HasPic
+            @{
+                string imageurl = "/Content/Images/Events/default.png";
+                if (Model.HasPic)
+                {
+                    imageurl = "/Content/Images/Events/" + Model.EventId + "." + Model.PicExtension;
+                }
+            }
+            <div><img style="display:block; max-width:800px;" alt="@Model.Title" src="@imageurl" /></div>
         </dd>
 
-        <dt>
-            Picture Extension
-        </dt>
-
-        <dd>
-            @Model.PicExtension
-        </dd>
+     
 
         <dt>
             Description

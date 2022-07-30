@@ -1,0 +1,69 @@
+﻿@model HospitalCMS.Models.FAQDto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>FAQ</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.FAQId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.Question, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })*@
+                <input class="form-control" style="max-width:100% !important" type="text" name="Question" value="@Model.Question" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Answer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.Answer, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Answer, "", new { @class = "text-danger" })*@
+                <textarea style="max-width:100% !important" class="form-control" rows="10" cols="80" type="text" name="Answer">@Model.Answer</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartmentId, "DepartmentId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownList("DepartmentId", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })*@
+                <select class="form-control" name="DepartmentId">
+                    <option value="x">Please Select</option>
+                    @foreach (var department in ViewData["Departments"] as IEnumerable<HospitalCMS.Models.DepartmentDto>)
+                    {
+                        string selected = department.DepartmentId == Model.DepartmentId ? "selected" : "";
+                        <option @selected value="@department.DepartmentId">@department.Name</option>
+
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

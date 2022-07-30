@@ -100,18 +100,34 @@ namespace HospitalCMS.Controllers
         // GET: Speciality/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            string url = "SpecialityData/FindSpeciality/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            SpecialityDto speciality = response.Content.ReadAsAsync<SpecialityDto>().Result;
+            return View(speciality);
         }
 
         // POST: Speciality/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Speciality speciality)
         {
             try
             {
-                // TODO: Add update logic here
+                string url = "SpecialityData/UpdateSpeciality/"+ id;
+                string jsonpayload = JsonConvert.SerializeObject(speciality);
 
-                return RedirectToAction("Index");
+                HttpContent content = new StringContent(jsonpayload);
+                content.Headers.ContentType.MediaType = "application/json";
+
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("list", "Speciality");
+                }
+                else
+                {
+                    return View("Error");
+                }
             }
             catch
             {

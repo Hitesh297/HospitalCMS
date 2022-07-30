@@ -104,18 +104,51 @@ namespace HospitalCMS.Controllers
         // GET: Event/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            string url = "EventData/FindEvent/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            EventDto eventDto = response.Content.ReadAsAsync<EventDto>().Result;
+
+            url = "DepartmentData/ListDepartment";
+            response = client.GetAsync(url).Result;
+            IEnumerable<DepartmentDto> departments = response.Content.ReadAsAsync<IEnumerable<DepartmentDto>>().Result;
+            ViewData["Departments"] = departments;
+            return View(eventDto);
         }
 
         // POST: Event/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Event eventdto, HttpPostedFileBase eventPic)
         {
             try
             {
-                // TODO: Add update logic here
+                string url = "EventData/EditEvent/" + id;
+                string jsonpayload = JsonConvert.SerializeObject(eventdto);
 
-                return RedirectToAction("Index");
+                HttpContent content = new StringContent(jsonpayload);
+                content.Headers.ContentType.MediaType = "application/json";
+
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode && eventPic != null)
+                {
+                    url = "EventData/UploadEventPic/" + id;
+                    MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+
+                    HttpContent imagecontent = new StreamContent(eventPic.InputStream);
+                    requestcontent.Add(imagecontent, "EventPic", eventPic.FileName);
+
+                    response = client.PostAsync(url, requestcontent).Result;
+
+                    return RedirectToAction("List");
+                }
+                else if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    return View("Error");
+                }
             }
             catch
             {
