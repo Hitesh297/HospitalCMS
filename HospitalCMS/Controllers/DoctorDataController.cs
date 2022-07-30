@@ -19,16 +19,16 @@ namespace HospitalCMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         /// <summary>
-        /// Returns all article in the system
+        /// Returns all Doctors in the system
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: all article in the database
+        /// CONTENT: all Doctors in the database
         /// </returns>
         /// <example>
-        /// GET: api/ArticleData/ListArticles
-        /// </example>
         //  GET: api/DoctorData/ListDoctors
+        /// </example>
+        
         [HttpGet]
         [ResponseType(typeof(DoctorDto))]
         public IHttpActionResult ListDoctors()
@@ -47,7 +47,17 @@ namespace HospitalCMS.Controllers
             return Ok(doctorDtos);
         }
 
+        /// <summary>
+        /// Returns all Doctors by speciality in the system
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all Doctors by speciality in the database
+        /// </returns>
+        /// <example>
         //  GET: api/DoctorData/ListDoctorsBySpeciality/1
+        /// </example>
+        
         [HttpGet]
         [ResponseType(typeof(DoctorDto))]
         public IHttpActionResult ListDoctorsBySpeciality(int id)
@@ -108,9 +118,20 @@ namespace HospitalCMS.Controllers
         }
 
 
+        /// <summary>
+        /// Returns details of the doctors by doctor id
+        /// </summary>
+        /// <param name="id">doctor primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: doctor in the system matching up to the doctors ID primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
         /// GET: api/DoctorData/FindDoctor/5
         /// </example>
-        // GET: api/DoctorData/5
+        
         [ResponseType(typeof(Doctor))]
         [HttpGet]
 
@@ -161,9 +182,22 @@ namespace HospitalCMS.Controllers
             return Ok(DoctorDto);
         }
 
+        /// <summary>
+        /// Upload a doctor picture to the system
+        /// </summary>
+        /// <param name="doctor">JSON form data of doctor</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT: doctor ID
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
         /// POST: api/DoctorData/UpdateDoctor/5
         /// FORM DATA: doctor JSON Object
         /// </example>
+        
+        
         [ResponseType(typeof(void))]
         [HttpPost]
         /* [Authorize]*/
@@ -201,9 +235,21 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// Add a doctor to the system
+        /// </summary>
+        /// <param name="doctor">JSON form data of doctor</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT:Article ID
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
         /// POST: api/doctorData/AddDoctor
         /// FORM DATA: Doctor JSON Object
         /// </example>
+        
 
         // POST: api/DoctorData
         [ResponseType(typeof(Doctor))]
@@ -222,7 +268,20 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = doctor.DoctorId }, doctor);
         }
 
-        // POST: api/doctorData/UploadDoctorPic/{id}
+        /// <summary>
+        /// Upload a doctor picture to the system
+        /// </summary>
+        /// <param name="doctor">JSON form data of doctor</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT: doctor ID
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
+       // POST: api/doctorData/UploadDoctorPic/{id}
+        /// </example>
+        
         [HttpPost]
         public IHttpActionResult UploadDoctorPic(int id)
         {
@@ -290,7 +349,20 @@ namespace HospitalCMS.Controllers
 
         }
 
-        // DELETE: api/DoctorData/5
+         /// <summary>
+        /// Deletes a doctor from the system by it's ID.
+        /// </summary>
+        /// <param name="id">primary key of doctor</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        // DELETE: api/DoctorData/DeleteDoctor/5
+        /// FORM DATA: (empty)
+        /// </example>
+        
         [ResponseType(typeof(Doctor))]
         [HttpPost]
         [Authorize]
