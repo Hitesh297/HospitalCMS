@@ -18,6 +18,16 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        /// <summary>
+        /// Returns all article in the system
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all article in the database
+        /// </returns>
+        /// <example>
+        /// GET: api/ArticleData/ListArticles
+        /// </example>
         //  GET: api/DoctorData/ListDoctors
         [HttpGet]
         [ResponseType(typeof(DoctorDto))]

@@ -18,7 +18,17 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/ArticleData/ListArticles
+        /// <summary>
+        /// Returns all article in the system
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all article in the database
+        /// </returns>
+        /// <example>
+        /// GET: api/ArticleData/ListArticles
+        /// </example>
+        
         [HttpGet]
         public IHttpActionResult ListArticles()
         {
@@ -38,7 +48,20 @@ namespace HospitalCMS.Controllers
             return Ok(ArticlesDto);
         }
 
-        // GET: api/ArticleData/FindArticle/5
+        /// <summary>
+        /// Returns details of the article by article id
+        /// </summary>
+        /// <param name="id">Article primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: An article in the system matching up to the article ID primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// GET: api/ArticleData/FindArticle/5
+        /// </example>
+       
         [ResponseType(typeof(Article))]
         [HttpGet]
         public IHttpActionResult FindArticle(int id)
@@ -64,7 +87,23 @@ namespace HospitalCMS.Controllers
             return Ok(articleDto);
         }
 
-        // PUT: api/ArticleData/EditArticle/5
+         /// <summary>
+        /// Edit a particular article in the system with POST Data input
+        /// </summary>
+        /// <param name="id">Article primary key</param>
+        /// <param name="article">JSON form data of an article</param>
+        /// <returns>
+        /// HEADER: 204 (Success, No Content Response)
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// or
+        /// HEADER: 404 (Not Found)
+        /// </returns>
+        /// <example>
+        /// PUT: api/ArticleData/EditArticle/5
+        /// FORM DATA: Article JSON Object
+        /// </example>
+        
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult EditArticle(int id, Article article)
@@ -100,8 +139,20 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-
-        // POST: api/ArticleData/UploadArticlePic/{id}
+        /// <summary>
+        /// Upload an article picture to the system
+        /// </summary>
+        /// <param name="article">JSON form data of article</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT: Article ID
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
+        /// POST: api/ArticleData/UploadArticlePic/{id}
+        /// </example>
+        
         [HttpPost]
         public IHttpActionResult UploadArticlePic(int id)
         {
@@ -169,7 +220,21 @@ namespace HospitalCMS.Controllers
 
         }
 
-        // POST: api/ArticleData/CreateArticle
+        /// <summary>
+        /// Create an appointment to the system
+        /// </summary>
+        /// <param name="article">JSON form data of article</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT:Article ID
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
+        /// POST: api/ArticleData/CreateArticle
+        /// </example>
+        
+
         [ResponseType(typeof(Article))]
         [HttpPost]
         public IHttpActionResult CreateArticle(Article article)
@@ -185,7 +250,20 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = article.ArticleId }, article);
         }
 
-        // DELETE: api/ArticleData/DeleteArticle/5
+        /// <summary>
+        /// Deletes an article from the system by it's ID.
+        /// </summary>
+        /// <param name="id">primary key of article</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// DELETE: api/ArticleData/DeleteArticle/5
+        /// FORM DATA: (empty)
+        /// </example>
+        
         [ResponseType(typeof(Article))]
         [HttpPost]
         [Authorize]

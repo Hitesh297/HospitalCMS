@@ -17,6 +17,17 @@ namespace HospitalCMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         [HttpGet]
         [ResponseType(typeof(EventDto))]
+
+        /// <summary>
+        /// Returns all article in the system
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all article in the database
+        /// </returns>
+        /// <example>
+        /// GET: api/ArticleData/ListArticles
+        /// </example>
         // GET: api/EventData/ListEvents
         public IHttpActionResult ListEvents()
         {
@@ -37,6 +48,20 @@ namespace HospitalCMS.Controllers
 
         [HttpGet]
         [ResponseType(typeof(Event))]
+
+        /// <summary>
+        /// Returns details of the article by article id
+        /// </summary>
+        /// <param name="id">Article primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: An article in the system matching up to the article ID primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// GET: api/ArticleData/FindArticle/5
+        /// </example>
         // GET: api/EventData/FindEvent/1
         public IHttpActionResult FindEvent(int id)
 
@@ -61,6 +86,19 @@ namespace HospitalCMS.Controllers
             return Ok(EventDto);
         }
 
+         /// <summary>
+        /// Create an appointment to the system
+        /// </summary>
+        /// <param name="article">JSON form data of article</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT:Article ID
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
+        /// POST: api/ArticleData/CreateArticle
+        /// </example>
         [HttpPost]
         // POST: api/EventData/AddEvent
         [ResponseType(typeof(Event))]
@@ -77,7 +115,22 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = @event.EventId }, @event);
         }
 
-
+        /// <summary>
+        /// Edit a particular article in the system with POST Data input
+        /// </summary>
+        /// <param name="id">Article primary key</param>
+        /// <param name="article">JSON form data of an article</param>
+        /// <returns>
+        /// HEADER: 204 (Success, No Content Response)
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// or
+        /// HEADER: 404 (Not Found)
+        /// </returns>
+        /// <example>
+        /// PUT: api/ArticleData/EditArticle/5
+        /// FORM DATA: Article JSON Object
+        /// </example>
         // POST: api/EventData/EditEvent/5
         [HttpPost]
         [ResponseType(typeof(void))]
@@ -114,6 +167,19 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// Deletes an article from the system by it's ID.
+        /// </summary>
+        /// <param name="id">primary key of article</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// DELETE: api/ArticleData/DeleteArticle/5
+        /// FORM DATA: (empty)
+        /// </example>
         [HttpPost]
         // DELETE: api/EventData/5
         [ResponseType(typeof(Event))]

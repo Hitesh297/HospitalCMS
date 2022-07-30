@@ -16,7 +16,17 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/AppointmentData/ListAppointments
+        /// <summary>
+        /// Returns all appointments in the system
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all appointments in the database
+        /// </returns>
+        /// <example>
+        /// GET: api/AppointmentData/ListAppointments
+        /// </example>
+
         [HttpGet]
         public IEnumerable<AppointmentDto> ListAppointments()
         {
@@ -37,7 +47,20 @@ namespace HospitalCMS.Controllers
             return appointmentDtos;
         }
 
-        // GET: api/AppointmentData/FindAppointmentsByEmail/5
+        /// <summary>
+        /// Returns details of the appointment by appointment id
+        /// </summary>
+        /// <param name="id">Appointment primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: An appointment in the system matching up to the appointment ID primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// GET: api/AppointmentData/FindAppointmentsByEmail/5
+        /// </example>
+
         [ResponseType(typeof(Appointment))]
         [HttpGet]
         public IEnumerable<AppointmentDto> FindAppointmentsByEmail(string email)
@@ -58,6 +81,18 @@ namespace HospitalCMS.Controllers
 
             return appointmentDtos;
         }
+
+        /// <summary>
+        /// Returns Appointment details based on id
+        /// </summary>
+        /// <param name="id">Appointment primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: An appointment in the system matching up to the appointment ID primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        // GET: api/AppointmentData/FindAppointment/5
 
         [ResponseType(typeof(Appointment))]
         [HttpGet]
@@ -96,7 +131,23 @@ namespace HospitalCMS.Controllers
             return Ok(appointmentDto);
         }
 
-        // PUT: api/AppointmentData/UpdateAppointment/5
+        /// <summary>
+        /// Updates a particular appointment in the system with POST Data input
+        /// </summary>
+        /// <param name="id">Appointment primary key</param>
+        /// <param name="appointment">JSON form data of an Appointment</param>
+        /// <returns>
+        /// HEADER: 204 (Success, No Content Response)
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// or
+        /// HEADER: 404 (Not Found)
+        /// </returns>
+        /// <example>
+        /// PUT: api/AppointmentData/UpdateAppointment/5
+        /// FORM DATA: Appointment JSON Object
+        /// </example>
+       
         [ResponseType(typeof(void))]
         public IHttpActionResult UpdateAppointment(int id, Appointment appointment)
         {
@@ -131,7 +182,20 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/AppointmentData/AddAppointment
+        /// <summary>
+        /// Adds an appointment to the system
+        /// </summary>
+        /// <param name="appointment">JSON form data of appointment</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT: Appointment ID, Appointment Data
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
+        /// POST: api/AppointmentData/AddAppointment
+        /// </example>
+        
         [ResponseType(typeof(Appointment))]
         [HttpPost]
         public IHttpActionResult AddAppointment(Appointment appointment)
@@ -147,7 +211,20 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = appointment.AppointmentId }, appointment);
         }
 
-        // DELETE: api/AppointmentData/DeleteAppointment/5
+        /// <summary>
+        /// Deletes an appointment from the system by it's ID.
+        /// </summary>
+        /// <param name="id">primary key of appointment</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// DELETE: api/AppointmentData/DeleteAppointment/5
+        /// FORM DATA: (empty)
+        /// </example>
+        
         [ResponseType(typeof(Appointment))]
         [HttpPost]
         [Authorize]

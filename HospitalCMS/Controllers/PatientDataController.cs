@@ -19,6 +19,17 @@ namespace HospitalCMS.Controllers
 
         [HttpGet]
         [ResponseType(typeof(PatientDto))]
+
+        /// <summary>
+        /// Returns all article in the system
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all article in the database
+        /// </returns>
+        /// <example>
+        /// GET: api/ArticleData/ListArticles
+        /// </example>
         // GET: api/PatientData/ListPatients
         public IHttpActionResult ListPatients()
         {
@@ -46,6 +57,20 @@ namespace HospitalCMS.Controllers
 
         [HttpGet]
         [ResponseType(typeof(Patient))]
+
+        /// <summary>
+        /// Returns details of the article by article id
+        /// </summary>
+        /// <param name="id">Article primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: An article in the system matching up to the article ID primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// GET: api/ArticleData/FindArticle/5
+        /// </example>
         // GET: api/PatientData/FindPatient/1
         public IHttpActionResult FindPatient(int id)
 
@@ -75,7 +100,22 @@ namespace HospitalCMS.Controllers
             return Ok(PatientDto);
         }
 
-
+        /// <summary>
+        /// Edit a particular article in the system with POST Data input
+        /// </summary>
+        /// <param name="id">Article primary key</param>
+        /// <param name="article">JSON form data of an article</param>
+        /// <returns>
+        /// HEADER: 204 (Success, No Content Response)
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// or
+        /// HEADER: 404 (Not Found)
+        /// </returns>
+        /// <example>
+        /// PUT: api/ArticleData/EditArticle/5
+        /// FORM DATA: Article JSON Object
+        /// </example>
         [HttpPost]
         // PUT: api/PatientData/EditPatient/5
         [ResponseType(typeof(void))]
@@ -112,7 +152,19 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-
+         /// <summary>
+        /// Create an appointment to the system
+        /// </summary>
+        /// <param name="article">JSON form data of article</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT:Article ID
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
+        /// POST: api/ArticleData/CreateArticle
+        /// </example>
         [HttpPost]
         // POST: api/PatientData/AddPatient
         [ResponseType(typeof(Patient))]
@@ -129,7 +181,19 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = patient.PatientId }, patient);
         }
 
-
+        /// <summary>
+        /// Deletes an article from the system by it's ID.
+        /// </summary>
+        /// <param name="id">primary key of article</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// DELETE: api/ArticleData/DeleteArticle/5
+        /// FORM DATA: (empty)
+        /// </example>
         [HttpPost]
         // DELETE: api/PatientData/DeletePatient/5
         [ResponseType(typeof(Patient))]

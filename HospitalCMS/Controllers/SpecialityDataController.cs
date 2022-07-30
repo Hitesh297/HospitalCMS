@@ -16,7 +16,17 @@ namespace HospitalCMS.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        /// <summary>
+        /// Returns all specialities in the system
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all specialities in the database
+        /// </returns>
+        /// <example>
         // GET: api/SpecialityData/ListSpecialities
+        /// </example>
+        
         [HttpGet]
         public IHttpActionResult ListSpecialities()
         {
@@ -31,7 +41,20 @@ namespace HospitalCMS.Controllers
             return Ok(specialityDtos);
         }
 
+        /// <summary>
+        /// Returns details of the Speciality by Speciality id
+        /// </summary>
+        /// <param name="id">Speciality primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT:Speciality in the system matching up to the Speciality ID primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
         // GET: api/SpecialityData/FindSpeciality/5
+        /// </example>
+        
         [ResponseType(typeof(Speciality))]
         [HttpGet]
         public IHttpActionResult FindSpeciality(int id)
@@ -69,7 +92,22 @@ namespace HospitalCMS.Controllers
             return Ok(specialityDto);
         }
 
-        // GET: api/SpecialityData/SpecialityAssignedToDoctor/2
+        /// <summary>
+        /// Edit a particular Speciality in the system with POST Data input
+        /// </summary>
+        /// <param name="id">Speciality primary key</param>
+        /// <param name="Speciality">JSON form data of Speciality</param>
+        /// <returns>
+        /// HEADER: 204 (Success, No Content Response)
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// or
+        /// HEADER: 404 (Not Found)
+        /// </returns>
+        /// <example>
+         // GET: api/SpecialityData/SpecialityAssignedToDoctor/2
+        /// </example>
+       
         [HttpGet]
         public IHttpActionResult SpecialityAssignedToDoctor(int id)
         {
@@ -99,7 +137,22 @@ namespace HospitalCMS.Controllers
             return Ok(specialityDtos);
         }
 
+        /// <summary>
+        /// Updates a particular Speciality in the system with POST Data input
+        /// </summary>
+        /// <param name="id">Speciality primary key</param>
+        /// <param name="Speciality">JSON form data of Speciality</param>
+        /// <returns>
+        /// HEADER: 204 (Success, No Content Response)
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// or
+        /// HEADER: 404 (Not Found)
+        /// </returns>
+        /// <example>
         // PUT: api/SpecialityData/UpdateSpeciality/5
+        /// </example>
+        
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult UpdateSpeciality(int id, Speciality speciality)
@@ -135,7 +188,20 @@ namespace HospitalCMS.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+         /// <summary>
+        /// Create an Speciality to the system
+        /// </summary>
+        /// <param name="Speciality">JSON form data of Speciality</param>
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT:Speciality ID
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// </returns>
+        /// <example>
         // POST: api/SpecialityData/CreateSpeciality
+        /// </example>
+        
         [ResponseType(typeof(Speciality))]
         [HttpPost]
         public IHttpActionResult CreateSpeciality(Speciality speciality)
@@ -151,7 +217,20 @@ namespace HospitalCMS.Controllers
             return CreatedAtRoute("DefaultApi", new { id = speciality.SpecialityId }, speciality);
         }
 
+        /// <summary>
+        /// Deletes Speciality from the system by it's ID.
+        /// </summary>
+        /// <param name="id">primary key of Speciality</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
         // DELETE: api/SpecialityData/DeleteSpeciality/5
+        /// FORM DATA: (empty)
+        /// </example>
+        
         [ResponseType(typeof(Speciality))]
         [HttpPost]
         [Authorize]
