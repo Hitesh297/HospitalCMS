@@ -20,16 +20,16 @@ namespace HospitalCMS.Controllers
         [ResponseType(typeof(DonorDto))]
 
         /// <summary>
-        /// Returns all article in the system
+        /// Returns all Donor in the system
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: all article in the database
+        /// CONTENT: all Donor in the database
         /// </returns>
         /// <example>
-        /// GET: api/ArticleData/ListArticles
-        /// </example>
         // GET: api/DonorData/ListDonors
+        /// </example>
+        
         public IHttpActionResult ListDonors()
         {
             List<Donor> Donor = db.Donors.ToList();
@@ -53,19 +53,19 @@ namespace HospitalCMS.Controllers
         [ResponseType(typeof(Donor))]
 
         /// <summary>
-        /// Returns details of the article by article id
+        /// Returns details of the Donor by Donor id
         /// </summary>
-        /// <param name="id">Article primary key</param>
+        /// <param name="id">Donor primary key</param>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: An article in the system matching up to the article ID primary key
+        /// CONTENT: Donor in the system matching up to the Donor ID primary key
         /// or
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// GET: api/ArticleData/FindArticle/5
-        /// </example>
         // GET: api/DonorData/FindDonor/1
+        /// </example>
+        
         public IHttpActionResult FindDonor(int id)
 
         {
@@ -92,10 +92,10 @@ namespace HospitalCMS.Controllers
         }
 
         /// <summary>
-        /// Updates a particular appointment in the system with POST Data input
+        /// Updates a particular Donor in the system with POST Data input
         /// </summary>
-        /// <param name="id">Appointment primary key</param>
-        /// <param name="appointment">JSON form data of an Appointment</param>
+        /// <param name="id">Donor primary key</param>
+        /// <param name="Donor">JSON form data of Donor</param>
         /// <returns>
         /// HEADER: 204 (Success, No Content Response)
         /// or
@@ -104,11 +104,11 @@ namespace HospitalCMS.Controllers
         /// HEADER: 404 (Not Found)
         /// </returns>
         /// <example>
-        /// PUT: api/AppointmentData/UpdateAppointment/5
-        /// FORM DATA: Appointment JSON Object
+        // PUT: api/DonorData/UpdateDonor/5
+        /// FORM DATA: Donor JSON Object
         /// </example>
         [HttpPost]
-        // PUT: api/DonorData/UpdateDonor/5
+        
         [ResponseType(typeof(void))]
         public IHttpActionResult UpdateDonor(int id, Donor donor)
         {
@@ -144,20 +144,20 @@ namespace HospitalCMS.Controllers
         }
 
          /// <summary>
-        /// Create an appointment to the system
+        /// Add a Donor to the system
         /// </summary>
-        /// <param name="article">JSON form data of article</param>
+        /// <param name="Donor">JSON form data of Donor</param>
         /// <returns>
         /// HEADER: 201 (Created)
-        /// CONTENT:Article ID
+        /// CONTENT:Donor ID
         /// or
         /// HEADER: 400 (Bad Request)
         /// </returns>
         /// <example>
-        /// POST: api/ArticleData/CreateArticle
+       // POST: api/DonorData/AddDonor
         /// </example>
         [HttpPost]
-        // POST: api/DonorData/AddDonor
+        
         [ResponseType(typeof(Donor))]
         public IHttpActionResult AddDonor(Donor donor)
         {
@@ -173,20 +173,20 @@ namespace HospitalCMS.Controllers
         }
 
         /// <summary>
-        /// Deletes an article from the system by it's ID.
+        /// Deletes a Donor from the system by it's ID.
         /// </summary>
-        /// <param name="id">primary key of article</param>
+        /// <param name="id">primary key of Donor</param>
         /// <returns>
         /// HEADER: 200 (OK)
         /// or
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// DELETE: api/ArticleData/DeleteArticle/5
+        // DELETE: api/DonorData/DeleteDonor/5
         /// FORM DATA: (empty)
         /// </example>
         [HttpPost]
-        // DELETE: api/DonorData/DeleteDonor/5
+        
         [ResponseType(typeof(Donor))]
         [Authorize]
         public IHttpActionResult DeleteDonor(int id)
