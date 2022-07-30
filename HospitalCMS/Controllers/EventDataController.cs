@@ -19,16 +19,16 @@ namespace HospitalCMS.Controllers
         [ResponseType(typeof(EventDto))]
 
         /// <summary>
-        /// Returns all article in the system
+        /// Returns all Event in the system
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: all article in the database
+        /// CONTENT: all Event in the database
         /// </returns>
         /// <example>
-        /// GET: api/ArticleData/ListArticles
-        /// </example>
         // GET: api/EventData/ListEvents
+        /// </example>
+        
         public IHttpActionResult ListEvents()
         {
             List<Event> Event = db.Events.ToList();
@@ -50,19 +50,19 @@ namespace HospitalCMS.Controllers
         [ResponseType(typeof(Event))]
 
         /// <summary>
-        /// Returns details of the article by article id
+        /// Returns details of the Event by Event id
         /// </summary>
-        /// <param name="id">Article primary key</param>
+        /// <param name="id">Event primary key</param>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: An article in the system matching up to the article ID primary key
+        /// CONTENT: An Event in the system matching up to the Event ID primary key
         /// or
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// GET: api/ArticleData/FindArticle/5
-        /// </example>
         // GET: api/EventData/FindEvent/1
+        /// </example>
+        
         public IHttpActionResult FindEvent(int id)
 
         {
@@ -87,20 +87,20 @@ namespace HospitalCMS.Controllers
         }
 
          /// <summary>
-        /// Create an appointment to the system
+        /// Create an Event to the system
         /// </summary>
-        /// <param name="article">JSON form data of article</param>
+        /// <param name="Event">JSON form data of Event</param>
         /// <returns>
         /// HEADER: 201 (Created)
-        /// CONTENT:Article ID
+        /// CONTENT:Event ID
         /// or
         /// HEADER: 400 (Bad Request)
         /// </returns>
         /// <example>
-        /// POST: api/ArticleData/CreateArticle
+        // POST: api/EventData/AddEvent
         /// </example>
         [HttpPost]
-        // POST: api/EventData/AddEvent
+        
         [ResponseType(typeof(Event))]
         public IHttpActionResult AddEvent(Event @event)
         {
@@ -116,10 +116,10 @@ namespace HospitalCMS.Controllers
         }
 
         /// <summary>
-        /// Edit a particular article in the system with POST Data input
+        /// Edit a particular Event in the system with POST Data input
         /// </summary>
-        /// <param name="id">Article primary key</param>
-        /// <param name="article">JSON form data of an article</param>
+        /// <param name="id">Event primary key</param>
+        /// <param name="Event">JSON form data of an Event</param>
         /// <returns>
         /// HEADER: 204 (Success, No Content Response)
         /// or
@@ -128,10 +128,10 @@ namespace HospitalCMS.Controllers
         /// HEADER: 404 (Not Found)
         /// </returns>
         /// <example>
-        /// PUT: api/ArticleData/EditArticle/5
-        /// FORM DATA: Article JSON Object
-        /// </example>
         // POST: api/EventData/EditEvent/5
+        /// FORM DATA: Event JSON Object
+        /// </example>
+        
         [HttpPost]
         [ResponseType(typeof(void))]
         public IHttpActionResult EditEvent(int id, Event @event)
@@ -168,20 +168,20 @@ namespace HospitalCMS.Controllers
         }
 
         /// <summary>
-        /// Deletes an article from the system by it's ID.
+        /// Deletes an Event from the system by it's ID.
         /// </summary>
-        /// <param name="id">primary key of article</param>
+        /// <param name="id">primary key of Event</param>
         /// <returns>
         /// HEADER: 200 (OK)
         /// or
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// DELETE: api/ArticleData/DeleteArticle/5
+        // DELETE: api/EventData/5
         /// FORM DATA: (empty)
         /// </example>
         [HttpPost]
-        // DELETE: api/EventData/5
+        
         [ResponseType(typeof(Event))]
         [Authorize]
         public IHttpActionResult DeleteEvent(int id)
