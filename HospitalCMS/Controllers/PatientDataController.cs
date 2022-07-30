@@ -21,16 +21,16 @@ namespace HospitalCMS.Controllers
         [ResponseType(typeof(PatientDto))]
 
         /// <summary>
-        /// Returns all article in the system
+        /// Returns all Patient in the system
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: all article in the database
+        /// CONTENT: all Patient in the database
         /// </returns>
         /// <example>
-        /// GET: api/ArticleData/ListArticles
-        /// </example>
         // GET: api/PatientData/ListPatients
+        /// </example>
+        
         public IHttpActionResult ListPatients()
         {
             List<Patient> Patient = db.Patients.ToList();
@@ -59,19 +59,19 @@ namespace HospitalCMS.Controllers
         [ResponseType(typeof(Patient))]
 
         /// <summary>
-        /// Returns details of the article by article id
+        /// Returns details of the Patient by Patient id
         /// </summary>
-        /// <param name="id">Article primary key</param>
+        /// <param name="id">Patient primary key</param>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: An article in the system matching up to the article ID primary key
+        /// CONTENT: Patient in the system matching up to the Patient ID primary key
         /// or
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// GET: api/ArticleData/FindArticle/5
-        /// </example>
         // GET: api/PatientData/FindPatient/1
+        /// </example>
+        
         public IHttpActionResult FindPatient(int id)
 
         {
@@ -101,10 +101,10 @@ namespace HospitalCMS.Controllers
         }
 
         /// <summary>
-        /// Edit a particular article in the system with POST Data input
+        /// Edit a particular Patient in the system with POST Data input
         /// </summary>
-        /// <param name="id">Article primary key</param>
-        /// <param name="article">JSON form data of an article</param>
+        /// <param name="id">Patient primary key</param>
+        /// <param name="Patient">JSON form data of Patient</param>
         /// <returns>
         /// HEADER: 204 (Success, No Content Response)
         /// or
@@ -113,11 +113,11 @@ namespace HospitalCMS.Controllers
         /// HEADER: 404 (Not Found)
         /// </returns>
         /// <example>
-        /// PUT: api/ArticleData/EditArticle/5
-        /// FORM DATA: Article JSON Object
+        // PUT: api/PatientData/EditPatient/5
+        /// FORM DATA: Patient JSON Object
         /// </example>
         [HttpPost]
-        // PUT: api/PatientData/EditPatient/5
+        
         [ResponseType(typeof(void))]
         public IHttpActionResult EditPatient(int id, Patient patient)
         {
@@ -153,20 +153,20 @@ namespace HospitalCMS.Controllers
         }
 
          /// <summary>
-        /// Create an appointment to the system
+        /// Create Patient to the system
         /// </summary>
-        /// <param name="article">JSON form data of article</param>
+        /// <param name="Patient">JSON form data of Patient</param>
         /// <returns>
         /// HEADER: 201 (Created)
-        /// CONTENT:Article ID
+        /// CONTENT:Patient ID
         /// or
         /// HEADER: 400 (Bad Request)
         /// </returns>
         /// <example>
-        /// POST: api/ArticleData/CreateArticle
+        // POST: api/PatientData/AddPatient
         /// </example>
         [HttpPost]
-        // POST: api/PatientData/AddPatient
+        
         [ResponseType(typeof(Patient))]
         public IHttpActionResult AddPatient(Patient patient)
         {
@@ -191,11 +191,11 @@ namespace HospitalCMS.Controllers
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// DELETE: api/ArticleData/DeleteArticle/5
+        // DELETE: api/PatientData/DeletePatient/5
         /// FORM DATA: (empty)
         /// </example>
         [HttpPost]
-        // DELETE: api/PatientData/DeletePatient/5
+        
         [ResponseType(typeof(Patient))]
         [Authorize]
         public IHttpActionResult DeletePatient(int id)
