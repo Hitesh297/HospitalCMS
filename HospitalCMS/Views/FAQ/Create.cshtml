@@ -22,7 +22,7 @@
         <div class="col-md-10">
             @*@Html.EditorFor(model => model., new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })*@
-            <input class="form-control" name="Question">
+            <input class="form-control" style="max-width:100% !important" name="Question">
         </div>
     </div>
 
@@ -33,7 +33,7 @@
         <div class="col-md-10">
             @*@Html.EditorFor(model => model.Answer, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model., "", new { @class = "text-danger" })*@
-            <input class="form-control" name="Answer">
+            <textarea class="form-control" style="max-width:100% !important" class="form-control" rows="10" cols="80" name="Answer"></textarea>
         </div>
     </div>
 
