@@ -19,22 +19,25 @@
     @Html.HiddenFor(model => model.HasPic)
     @Html.HiddenFor(model => model.PicExtension)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-        </div>
+<div class="form-group">
+    @*  @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })*@
+    <label class="control-label col-md-2">Title:</label>
+    <div class="col-md-10">
+        @*@Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })*@
+        <input class="form-control" name="Title" value="@Model.Title">
     </div>
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })*@
-            <input class="form-control" type="datetime-local" name="Date" value="@Model.Date.ToString("yyyy-MM-ddTHH:mm")" />
-        </div>
+<div class="form-group">
+    @* @Html.LabelFor(model => model., htmlAttributes: new { @class = "control-label col-md-2" })*@
+    <label class="control-label col-md-2">Date:</label>
+    <div class="col-md-10">
+        @*@Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })*@
+        <input class="form-control" type="datetime-local" name="Date" value="@Model.Date.ToString("yyyy-MM-ddTHH:mm")" />
     </div>
+</div>
 
     <div class="">
         @{
@@ -71,30 +74,33 @@
             </div>
         </div>*@
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlattributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
+<div class="form-group">
+    @*@Html.LabelFor(model => model., htmlAttributes: new { @class = "control-label col-md-2" })*@
+    <label class="control-label col-md-2">Description:</label>
+    <div class="col-md-10">
+        @*@Html.EditorFor(model => model.Description, new { htmlattributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
+        <textarea class="form-control" name="Description" value="@Model.Description"></textarea>
     </div>
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DepartmentId, "DepartmentId", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @*@Html.DropDownList("DepartmentId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })*@
-            <select class="form-control" name="DepartmentId">
-                <option value="x">Please Select</option>
-                @foreach (var department in ViewData["Departments"] as IEnumerable<HospitalCMS.Models.DepartmentDto>)
-                {
-                    string selected = department.DepartmentId == Model.DepartmentId ? "selected" : "";
-                    <option @selected value="@department.DepartmentId">@department.Name</option>
+<div class="form-group">
+    @* @Html.LabelFor(model => model., "DepartmentId", htmlAttributes: new { @class = "control-label col-md-2" })*@
+    <label class="control-label col-md-2">Department:</label>
+    <div class="col-md-10">
+        @*@Html.DropDownList("DepartmentId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })*@
+        <select class="form-control" name="DepartmentId">
+            <option value="x">Please Select</option>
+            @foreach (var department in ViewData["Departments"] as IEnumerable<HospitalCMS.Models.DepartmentDto>)
+            {
+                string selected = department.DepartmentId == Model.DepartmentId ? "selected" : "";
+                <option @selected value="@department.DepartmentId">@department.Name</option>
 
-                }
-            </select>
-        </div>
+            }
+        </select>
     </div>
+</div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
