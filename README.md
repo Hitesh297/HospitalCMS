@@ -10,9 +10,35 @@ Edit to all Views functionality (ConfirmDelete.cshtml, list.cshtml, details.csht
 
 # Authors
 ## Hitesh
-###### Appointment
-- api to add new appointment
-- api to update appointment
-- api to get all appointments
-- api to get appointment by id
+###### Appointment, Doctor, Speciality
+- api for CRUD functionality of Appointments
+- api for CRUD functionality of Doctor
+- api for CRUD functionality of Speciality
+- MVC controller for Appointment
+- MVC controller for Doctor
+- MVC controller for Speciality
 
+## Saransh
+###### Article
+- api for CRUD functionality of Article
+- MVC controller for Article
+
+## Kamran
+###### Department
+- api for CRUD functionality of Department
+- - MVC controller for Department
+
+## Vishwa
+###### Event
+- api for CRUD functionality of Events
+- - MVC controller for Event
+
+## Jinal
+###### FAQ
+- api for CRUD functionality of FAQ's
+- MVC controller for FAQ
+
+## Hunny
+###### Patient
+- api for CRUD functionality of Patient
+- MVC controller for Patient
