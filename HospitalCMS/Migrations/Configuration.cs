@@ -6,6 +6,9 @@ namespace HospitalCMS.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity;
+    using System.Diagnostics;
 
     internal sealed class Configuration : DbMigrationsConfiguration<HospitalCMS.Models.ApplicationDbContext>
     {
@@ -26,6 +29,21 @@ namespace HospitalCMS.Migrations
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = "Patient" },
                 new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = "Admin" }
                 );
+
+
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            var user1 = new ApplicationUser { UserName = "admin@gmail.com", Email = "admin@gmail.com" };
+            var user2 = new ApplicationUser { UserName = "patient@gmail.com", Email = "patient@gmail.com" };
+            var user3 = new ApplicationUser { UserName = "doctor@gmail.com", Email = "doctor@gmail.com" };
+            userManager.Create(user1, "password");
+            userManager.Create(user2, "password");
+            userManager.Create(user3, "password");
+            
+            userManager.AddToRole(user1.Id, "Admin");
+            userManager.AddToRole(user2.Id, "Patient");
+            userManager.AddToRole(user3.Id, "Doctor");
+
 
             context.Specialities.AddOrUpdate(x => x.SpecialityId,
                 new Speciality() { SpecialityId = 1, Name = "Surgery" },
