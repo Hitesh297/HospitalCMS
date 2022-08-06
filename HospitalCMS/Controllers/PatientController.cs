@@ -1,4 +1,5 @@
 ﻿using HospitalCMS.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -98,8 +99,24 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Patient/Edit/5
-        public ActionResult Edit(int id)
+        [Authorize]
+        public ActionResult Edit(int? id)
         {
+            if(User.IsInRole("Patient"))
+            {
+                string getbyemailurl = "PatientData/FindPatientByEmail/" + User.Identity.GetUserName() + "/";
+                HttpResponseMessage getbyemailresponse = client.GetAsync(getbyemailurl).Result;
+                if (!getbyemailresponse.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Create", "Patient");
+                }
+                else
+                {
+                    PatientDto patientbyemail = getbyemailresponse.Content.ReadAsAsync<PatientDto>().Result;
+                    id = patientbyemail.PatientId;
+                    //return RedirectToAction("Edit", "Patient", new { id = patientbyemail.PatientId });
+                }
+            }
             string url = "PatientData/FindPatient/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             PatientDto patient = response.Content.ReadAsAsync<PatientDto>().Result;
