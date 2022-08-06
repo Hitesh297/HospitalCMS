@@ -184,6 +184,13 @@ namespace HospitalCMS.Controllers
                     var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
                     AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, identity);
 
+                    if (model.Role == "Patient")
+                    {
+                        return RedirectToAction("Create", "Patient");
+                    } 
+                    else if(model.Role == "Patient") {
+                        return RedirectToAction("Create", "Doctor");
+                    }
                     
                     return RedirectToAction("Index", "Home");
                 }

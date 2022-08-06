@@ -108,7 +108,11 @@
 
         </dl>
         </div>
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.PatientId }) |
-            @Html.ActionLink("Back to List", "List")
-        </p>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PatientId })
+    @if (User.IsInRole("Admin"))
+    {
+    <span>|</span> 
+    @Html.ActionLink("Back to List", "List")
+    }
+</p>

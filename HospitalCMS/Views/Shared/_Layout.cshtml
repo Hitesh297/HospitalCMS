@@ -38,9 +38,9 @@
                 else if (User.IsInRole("Patient"))
                 {
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Edit", "Edit","Patient")</li>
+                        <li>@Html.ActionLink("My Details", "Details","Patient",  new { id = 0 },null) </li >
                         @*<li><a href="/Patient/Edit/0/@User.Identity.GetUserName()"></a>Edit Custome</li>*@
-                    </ul>
+</ul>
                 }
                 else
                 {
