@@ -1,4 +1,5 @@
 ﻿using HospitalCMS.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -49,10 +50,27 @@ namespace HospitalCMS.Controllers
         // GET: Appointment/List
         public ActionResult List()
         {
-            string url = "AppointmentData/ListAppointments";
+            string url = string.Empty;
+            if (User.IsInRole("Patient"))
+            {
+                url = "AppointmentData/FindAppointmentsByPatientEmail/" + User.Identity.GetUserName() + "/";
+            }
+            else
+            {
+                url = "AppointmentData/ListAppointments";
+            }
             HttpResponseMessage response = client.GetAsync(url).Result;
-            IEnumerable<AppointmentDto> appointments = response.Content.ReadAsAsync<IEnumerable<AppointmentDto>>().Result;
-            return View(appointments);
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<AppointmentDto> appointments = response.Content.ReadAsAsync<IEnumerable<AppointmentDto>>().Result;
+                return View(appointments);
+            }
+            else
+            {
+                return View();
+            }
+            
+            
         }
 
         // GET: Appointment/Details/5

@@ -101,6 +101,10 @@ namespace HospitalCMS.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (User.IsInRole("Patient"))
+                    {
+                        return RedirectToAction("Create", "Appointment");
+                    }
                     return RedirectToAction("list", "Patient");
                 }
                 else

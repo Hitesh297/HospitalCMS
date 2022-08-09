@@ -5,27 +5,45 @@
 }
 
 <h2>FAQ List</h2>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 
 
-<div id="accordion">
-    @if (Model != null && Model.Count() != 0)
+@if (Model != null && Model.Count() != 0)
+{
+    var faqgroup = Model.GroupBy(x => x.Department.Name);
+    foreach (var faqs in faqgroup.OrderByDescending(x => x.Key))
     {
-        foreach (var faq in Model)
-        {
-            <h3 class="question">@faq.Question</h3>
-            <div class="answer">
-                <p>
-                    @faq.Answer
-                </p>
-                @Html.ActionLink("Edit", "Edit", new { id = faq.FAQId }) |
-                @Html.ActionLink("Details", "Details", new { id = faq.FAQId }) |
-                @Html.ActionLink("Delete", "ConfirmDelete", new { id = faq.FAQId })
-            </div>
-        }
-    }
+        <h3>@faqs.Key Department</h3>
+        <div class="accordion">
+            @foreach (var faq in faqs)
+            {
 
-</div>
+                <h3 class="question ui-accordion-header-collapsed">@faq.Question</h3>
+                <div class="answer">
+                    <p>
+                        @faq.Answer
+                    </p>
+
+                    @Html.ActionLink("Details", "Details", new { id = faq.FAQId })
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <span>|</span>
+                        @Html.ActionLink("Edit", "Edit", new { id = faq.FAQId })
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "ConfirmDelete", new { id = faq.FAQId })
+                    }
+                </div>
+
+            }
+        </div>
+
+
+    }
+}
+

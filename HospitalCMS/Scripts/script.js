@@ -70,7 +70,9 @@
 
 
     $(function () {
-        $("#accordion").accordion();
+        $(".accordion").accordion(
+            { header: "h3", collapsible: true, active: false }
+        );
     });
 
     var selectedGender = $("#GenderValue").val();

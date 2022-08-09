@@ -30,7 +30,7 @@ namespace HospitalCMS.Controllers
         [HttpGet]
         public IHttpActionResult ListFAQs()
         {
-            List<FAQ> fAQs = db.FAQs.ToList();
+            List<FAQ> fAQs = db.FAQs.Include(x=>x.Department).ToList();
             List<FAQDto> fAQDtos = new List<FAQDto>();
 
             fAQs.ForEach(a => fAQDtos.Add(new FAQDto()
@@ -38,7 +38,8 @@ namespace HospitalCMS.Controllers
                 FAQId = a.FAQId,
                 DepartmentId = a.DepartmentId,
                 Answer = a.Answer,
-                Question = a.Question
+                Question = a.Question,
+                Department = new DepartmentDto() { DepartmentId = a.Department.DepartmentId, Name = a.Department.Name}
             }));
             return Ok(fAQDtos);
         }

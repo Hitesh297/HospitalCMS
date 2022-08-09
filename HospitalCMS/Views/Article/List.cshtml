@@ -5,41 +5,80 @@
 }
 
 <h2>Article List</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <colgroup>
-        <col span="1" style="width: 20%;">
-        <col span="1" style="width: 60%;">
-        <col span="1" style="width: 20%;">
-    </colgroup>
-    <tr>
-        <th>
-            Title
-        </th>
-        <th>
-            Description
-        </th>
-        <th></th>
-    </tr>
-
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+<div class="thumbnail-flex">
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @item.Title
-            </td>
-            <td>
-                @item.Description
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ArticleId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ArticleId }) |
-                @Html.ActionLink("Delete", "ConfirmDelete", new { id = item.ArticleId })
-            </td>
-        </tr>
-    }
 
-</table>
+        <div class="thumbnail thumbnail-flex-item">
+            @{
+                string imageurl = "/Content/Images/Articles/default.png";
+                if (item.HasPic)
+                {
+                    imageurl = "/Content/Images/Articles/" + item.ArticleId + "." + item.PicExtension;
+                }
+            }
+            <img src="@imageurl" alt="article image">
+            <div class="caption">
+                <h3>@item.Title</h3>
+                @{
+                    var shortdescription = string.Empty;
+                    if (item.Description != null) { 
+                        shortdescription = item.Description.Length > 99 ? item.Description.Substring(0, 100) : item.Description;
+                }
+                }
+                <p>@shortdescription ...</p>
+                <p>
+                    <a href="/Article/Details/@item.ArticleId" class="btn btn-primary" role="button">Details</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a href="/Article/Edit/@item.ArticleId" class="btn btn-default" role="button">Edit</a>
+                        <a href="/Article/ConfirmDelete/@item.ArticleId" class="btn btn-danger" role="button">Delete</a>
+                    }
+
+                </p>
+            </div>
+        </div>
+
+    }
+</div>
+
+@*<table class="table">
+        <colgroup>
+            <col span="1" style="width: 20%;">
+            <col span="1" style="width: 60%;">
+            <col span="1" style="width: 20%;">
+        </colgroup>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ArticleId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ArticleId }) |
+                    @Html.ActionLink("Delete", "ConfirmDelete", new { id = item.ArticleId })
+                </td>
+            </tr>
+        }
+
+    </table>*@

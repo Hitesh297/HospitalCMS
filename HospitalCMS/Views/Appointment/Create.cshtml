@@ -1,4 +1,5 @@
 ﻿@model HospitalCMS.Models.AppointmentVM
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Create";
@@ -11,73 +12,81 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Appointment</h4>
-    <hr />
+    <div class="form-horizontal">
+        <h4>Appointment</h4>
+        <hr />
 
-    <div class="form-group">
-        <label class="control-label col-md-2">Select Speciality:</label>
-        <div class="col-md-10">
-            <select class="form-control" name="SpecialityId" id="speciality-list">
-                <option value="x">Please Select</option>
-                @foreach (var speciality in Model.Specialities)
-                {
-                    <option value="@speciality.SpecialityId">@speciality.Name</option>
+        <div class="form-group">
+            <label class="control-label col-md-2">Select Speciality:</label>
+            <div class="col-md-10">
+                <select class="form-control" name="SpecialityId" id="speciality-list">
+                    <option value="x">Please Select</option>
+                    @foreach (var speciality in Model.Specialities)
+                    {
+                        <option value="@speciality.SpecialityId">@speciality.Name</option>
 
-                }
-            </select>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Select Doctor:</label>
+            <div class="col-md-10">
+                <select class="form-control" name="DoctorId" id="doctor-list">
+                    <option value="">Please Select</option>
+                </select>
+            </div>
+        </div>
+        @{
+            var readonlydropdown = Model.Patients.Contains(Model.Patients.Where(x=>x.Email == User.Identity.GetUserName()).FirstOrDefault()) ? "disabled" : "";
+            if (readonlydropdown == "disabled")
+            {
+                <input type="hidden" name="PatientId" value="@Model.Patients.Where(x=>x.Email == User.Identity.GetUserName()).FirstOrDefault().PatientId" />
+            }
+        }
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Select Patient:</label>
+            <div class="col-md-10">
+                <select class="form-control" name="PatientId" @readonlydropdown>
+                    <option value="x">Please Select</option>
+                    @foreach (var patient in Model.Patients)
+                    {
+                        string selected = patient.Email == @User.Identity.GetUserName() ? "selected" : "";
+                        <option @selected value="@patient.PatientId">@patient.FirstName @patient.LastName</option>
+
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.Schedule, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2">Select Time:</label>
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.Schedule, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Schedule, "", new { @class = "text-danger" })*@
+                <input class="form-control" type="datetime-local" name="Schedule" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.DoctorNotes, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2">Doctor Notes:</label>
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.DoctorNotes, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DoctorNotes, "", new { @class = "text-danger" })*@
+                <textarea class="form-control" name="DoctorNotes"> </textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">Select Doctor:</label>
-        <div class="col-md-10">
-            <select class="form-control" name="DoctorId" id="doctor-list">
-                <option value="">Please Select</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="control-label col-md-2">Select Patient:</label>
-        <div class="col-md-10">
-            <select class="form-control" name="PatientId">
-                <option value="x">Please Select</option>
-                @foreach (var patient in Model.Patients)
-                {
-                    <option value="@patient.PatientId">@patient.FirstName @patient.LastName</option>
-
-                }
-            </select>
-        </div>
-    </div>
-
-    <div class="form-group">
-        @*@Html.LabelFor(model => model.Schedule, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <label class="control-label col-md-2">Select Time:</label>
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.Schedule, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Schedule, "", new { @class = "text-danger" })*@
-            <input class="form-control" type="datetime-local" name="Schedule" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        @*@Html.LabelFor(model => model.DoctorNotes, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <label class="control-label col-md-2">Doctor Notes:</label>
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.DoctorNotes, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DoctorNotes, "", new { @class = "text-danger" })*@
-            <textarea class="form-control" name="DoctorNotes"> </textarea>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>

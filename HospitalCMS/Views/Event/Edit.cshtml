@@ -80,7 +80,7 @@
     <div class="col-md-10">
         @*@Html.EditorFor(model => model.Description, new { htmlattributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })*@
-        <textarea class="form-control" name="Description" value="@Model.Description"></textarea>
+        <textarea class="form-control" name="Description" >@Model.Description</textarea>
     </div>
 </div>
 

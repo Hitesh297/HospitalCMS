@@ -61,3 +61,14 @@ textarea {
     margin-bottom: 5px;
     transform: translateY(-3px);
 }
+
+.thumbnail-flex {
+    display:flex;
+    flex-wrap:wrap;
+}
+
+.thumbnail-flex-item {
+    width:25%;
+    margin:10px;
+    flex-grow:4;
+}

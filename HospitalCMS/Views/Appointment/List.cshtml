@@ -25,26 +25,42 @@
         </th>
         <th></th>
     </tr>
+    @if (Model is null)
+    {
+        <tr>
+            <td colspan="4">
+                No Appointments to display
+            </td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Doctor.Name
+                </td>
+                <td>
+                    @item.Patient.FirstName
+                </td>
+                <td>
+                    @item.Schedule
+                </td>
+                <td>
+                    @item.DoctorNotes
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.AppointmentId })
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <span>|</span>
+                        @Html.ActionLink("Delete", "ConfirmDelete", new { id = item.AppointmentId })
+                    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @item.Doctor.Name
-        </td>
-        <td>
-            @item.Patient.FirstName
-        </td>
-        <td>
-            @item.Schedule
-        </td>
-        <td>
-            @item.DoctorNotes
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.AppointmentId }) |
-            @Html.ActionLink("Delete", "ConfirmDelete", new { id=item.AppointmentId })
-        </td>
-    </tr>
-}
+                </td>
+            </tr>
+        }
+    }
 
 </table>
