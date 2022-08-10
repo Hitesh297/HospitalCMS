@@ -23,8 +23,9 @@
         <div class="accordion">
             @foreach (var faq in faqs)
             {
-
-                <h3 class="question ui-accordion-header-collapsed">@faq.Question</h3>
+            
+                <h3 class="panel-title question ui-accordion-header-collapsed">@faq.Question</h3>
+            
                 <div class="answer">
                     <p>
                         @faq.Answer

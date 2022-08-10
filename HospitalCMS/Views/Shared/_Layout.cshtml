@@ -10,7 +10,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -37,24 +37,31 @@
                 }
                 else if (User.IsInRole("Patient"))
                 {
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("My Details", "Details", "Patient", new { id = 0 }, null) </li>
-                <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
-                <li>@Html.ActionLink("My Appointments", "List", "Appointment")</li>
-                <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
-                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
-                <li>@Html.ActionLink("Articles", "List", "Article")</li>
-                <li>@Html.ActionLink("Events", "List", "Event")</li>
-                @*<li><a href="/Patient/Edit/0/@User.Identity.GetUserName()"></a>Edit Custome</li>*@
-            </ul>
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("My Details", "Details", "Patient", new { id = 0 }, null) </li>
+                        <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
+                        <li>@Html.ActionLink("My Appointments", "List", "Appointment")</li>
+                        <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                        <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                        <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                        <li>@Html.ActionLink("Events", "List", "Event")</li>
+                       
+                        @*<li><a href="/Patient/Edit/0/@User.Identity.GetUserName()"></a>Edit Custome</li>*@
+                    </ul>
                 }
                 else
                 {
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Appointments", "List", "Appointment")</li>
+                       
                     </ul>
                 }
-                @Html.Partial("_LoginPartial")
+            <ul class="nav navbar-nav navbar-right dropdown">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Account <span class="caret"></span></a>
+                    @Html.Partial("_LoginPartial")
+                </li>
+            </ul>
             </div>
         </div>
     </div>

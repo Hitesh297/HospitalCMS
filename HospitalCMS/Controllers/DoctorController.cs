@@ -84,9 +84,14 @@ namespace HospitalCMS.Controllers
                 content.Headers.ContentType.MediaType = "application/json";
 
                 HttpResponseMessage response = client.PostAsync(url, content).Result;
-
+                
                 if (response.IsSuccessStatusCode)
                 {
+                    DoctorDto createdDoctor = response.Content.ReadAsAsync<DoctorDto>().Result;
+                    if (User.IsInRole("Doctor"))
+                    {
+                        return RedirectToAction("Edit", "Doctor", new { id = createdDoctor.DoctorId });
+                    }
                     return RedirectToAction("list", "Doctor");
                 }
                 else

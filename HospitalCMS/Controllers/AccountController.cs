@@ -188,7 +188,7 @@ namespace HospitalCMS.Controllers
                     {
                         return RedirectToAction("Create", "Patient");
                     } 
-                    else if(model.Role == "Patient") {
+                    else if(model.Role == "Doctor") {
                         return RedirectToAction("Create", "Doctor");
                     }
                     
