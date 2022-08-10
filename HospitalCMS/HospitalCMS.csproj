@@ -254,6 +254,7 @@
     <Content Include="Content\Images\Articles\default.png" />
     <Content Include="Content\Images\Doctors\default.jpg" />
     <Content Include="Content\Images\Events\default.png" />
+    <Content Include="Content\Images\home.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
