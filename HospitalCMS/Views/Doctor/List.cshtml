@@ -7,8 +7,25 @@
 <h2>Doctor List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
 </p>
+<form action="/Doctor/List" method="GET">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-3">
+                <input style="width:100%" class="form-control" type="text" name="SearchKey" autocomplete="off" />
+            </div>
+            <div class="col-md-2">
+                <input style="width:100%" class="btn btn-primary" type="submit" value="Search" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
 <table class="table">
     <tr>
         <th>
@@ -26,26 +43,32 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @item.Name
-        </td>
-        <td>
-            @item.Experience
-        </td>
-        <td>
-            @item.Phone
-        </td>
-        <td>
-            @item.Email
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DoctorId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DoctorId }) |
-            @Html.ActionLink("Delete", "ConfirmDelete", new { id=item.DoctorId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Experience
+            </td>
+            <td>
+                @item.Phone
+            </td>
+            <td>
+                @item.Email
+            </td>
+            <td>
+                @if (User.IsInRole("Doctor") || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.DoctorId }) <span>|</span>
+                    @Html.ActionLink("Delete", "ConfirmDelete", new { id = item.DoctorId }) <span>|</span>
+                }
+
+                @Html.ActionLink("Details", "Details", new { id = item.DoctorId })
+
+            </td>
+        </tr>
+    }
 
 </table>

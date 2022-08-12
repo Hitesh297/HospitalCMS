@@ -24,16 +24,19 @@ body {
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select,
-textarea {
+select {
     max-width: 280px;
+}
+
+textarea {
+    max-width:700px;
 }
 
 .patient-details {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: 220px;
+    max-height: 230px;
 }
 
 .patient-details p {
@@ -104,4 +107,8 @@ textarea {
     color: black;
     /* text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue; */
     text-shadow: 5px 5px 4px #939393, 0 0 1em #dffab6, 0 0 1px black;
+}
+
+.navbar-nav li:hover {
+    background: white !important;
 }

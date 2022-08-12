@@ -49,7 +49,7 @@
             <div><img style="display:block; max-width:800px;" alt="@Model.Title" src="@imageurl" /></div>
         </dd>
 
-     
+
 
         <dt>
             Description
@@ -62,6 +62,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }) |
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }) <span>|</span>
+    }
     @Html.ActionLink("Back to List", "List")
 </p>

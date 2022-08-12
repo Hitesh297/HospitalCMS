@@ -20,9 +20,7 @@
         <th>
             Schedule
         </th>
-        <th>
-            Doctor Notes
-        </th>
+        
         <th></th>
     </tr>
     @if (Model is null)
@@ -47,9 +45,7 @@
                 <td>
                     @item.Schedule
                 </td>
-                <td>
-                    @item.DoctorNotes
-                </td>
+               
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = item.AppointmentId })
                     @if (User.IsInRole("Admin"))
