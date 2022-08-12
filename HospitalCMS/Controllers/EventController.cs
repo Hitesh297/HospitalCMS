@@ -63,6 +63,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Event/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             string url = "DepartmentData/ListDepartment";
@@ -74,6 +75,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Event/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Event @event)
         {
             try
@@ -102,6 +104,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Event/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             string url = "EventData/FindEvent/" + id;
@@ -117,6 +120,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Event/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id, Event eventdto, HttpPostedFileBase eventPic)
         {
             try
@@ -157,7 +161,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Event/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "EventData/FindEvent/" + id;
@@ -168,7 +172,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Event/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try

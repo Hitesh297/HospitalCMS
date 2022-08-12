@@ -98,6 +98,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Speciality/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             string url = "SpecialityData/FindSpeciality/" + id;
@@ -108,6 +109,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Speciality/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id, Speciality speciality)
         {
             try
@@ -137,6 +139,7 @@ namespace HospitalCMS.Controllers
 
         // GET: Speciality/Delete/5
         [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "SpecialityData/FindSpeciality/" + id;
@@ -147,7 +150,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Speciality/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try

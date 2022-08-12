@@ -55,11 +55,12 @@ namespace HospitalCMS.Controllers
             if (!string.IsNullOrWhiteSpace(SearchKey))
             {
                 url = "DoctorData/ListDoctors/" + SearchKey + "/";
-            } else
+            }
+            else
             {
                 url = "DoctorData/listDoctors";
             }
-            
+
             HttpResponseMessage response = client.GetAsync(url).Result;
             IEnumerable<DoctorDto> doctors = response.Content.ReadAsAsync<IEnumerable<DoctorDto>>().Result;
             return View(doctors);
@@ -111,7 +112,7 @@ namespace HospitalCMS.Controllers
                 content.Headers.ContentType.MediaType = "application/json";
 
                 HttpResponseMessage response = client.PostAsync(url, content).Result;
-                
+
                 if (response.IsSuccessStatusCode)
                 {
                     DoctorDto createdDoctor = response.Content.ReadAsAsync<DoctorDto>().Result;
@@ -161,7 +162,7 @@ namespace HospitalCMS.Controllers
                 response = client.GetAsync(url).Result;
                 selectedDoctor = response.Content.ReadAsAsync<DoctorDto>().Result;
             }
-            
+
 
             url = "SpecialityData/SpecialityAssignedToDoctor/" + id;
             response = client.GetAsync(url).Result;
@@ -295,27 +296,27 @@ namespace HospitalCMS.Controllers
             return View(doctor);
 
         } // POST: Doctor/Delete/5
-            [HttpPost]
-            [Authorize]
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try
-                {
-                    GetApplicationCookie();
-                    string url = "DoctorData/DeleteDoctor/" + id;
-                    HttpContent content = new StringContent("");
-                    content.Headers.ContentType.MediaType = "application/json";
-                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+            {
+                GetApplicationCookie();
+                string url = "DoctorData/DeleteDoctor/" + id;
+                HttpContent content = new StringContent("");
+                content.Headers.ContentType.MediaType = "application/json";
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("List");
-                    }
-                    else
-                    {
-                        return View("Error");
-                    }
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("List");
                 }
+                else
+                {
+                    return View("Error");
+                }
+            }
             catch
             {
                 return View();

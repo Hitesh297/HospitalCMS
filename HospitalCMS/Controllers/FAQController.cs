@@ -63,6 +63,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: FAQ/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             string url = "DepartmentData/ListDepartment";
@@ -74,6 +75,7 @@ namespace HospitalCMS.Controllers
 
         // POST: FAQ/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(FAQ fAQ)
         {
             try
@@ -102,6 +104,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: FAQ/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             string url = "FAQData/FindFAQ/" + id;
@@ -117,6 +120,7 @@ namespace HospitalCMS.Controllers
 
         // POST: FAQ/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id, FAQ faq)
         {
             try
@@ -146,6 +150,7 @@ namespace HospitalCMS.Controllers
 
         // GET: FAQ/Delete/5
         [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "FAQData/FindFAQ/" + id;
@@ -156,7 +161,7 @@ namespace HospitalCMS.Controllers
 
         // POST: FAQ/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try

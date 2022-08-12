@@ -61,6 +61,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Department/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -68,6 +69,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Department/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Department department)
         {
             try
@@ -96,6 +98,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Department/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             string url = "DepartmentData/FindDepartment/" + id;
@@ -106,6 +109,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Department/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id, Department department)
         {
             try
@@ -134,7 +138,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Department/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "DepartmentData/FindDepartment/" + id;
@@ -146,7 +150,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Department/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try

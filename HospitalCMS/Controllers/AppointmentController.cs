@@ -130,6 +130,7 @@ namespace HospitalCMS.Controllers
 
         // GET: Appointment/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin,Doctor")]
         public ActionResult UpdateDoctorNotes(int id, string DoctorNotes)
         {
             string url = "AppointmentData/FindAppointment/" + id;
@@ -174,7 +175,7 @@ namespace HospitalCMS.Controllers
         //}
 
         // GET: Appointment/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "AppointmentData/FindAppointment/" + id;
@@ -185,7 +186,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Appointment/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try

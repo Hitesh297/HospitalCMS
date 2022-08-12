@@ -87,6 +87,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Patient/Create
         [HttpPost]
+        [Authorize(Roles = "Admin,Patient")]
         public ActionResult Create(Patient patient)
         {
             try
@@ -178,7 +179,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Patient/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "PatientData/FindPatient/" + id;
@@ -189,7 +190,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Patient/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try
