@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<HospitalCMS.Models.DoctorDto>
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "List";
@@ -47,10 +48,11 @@
     {
         <tr>
             <td>
-                @item.Name
+                
+                @Html.ActionLink(@item.Name, "Details", new { id = item.DoctorId })
             </td>
             <td>
-                @item.Experience
+                @item.Experience years
             </td>
             <td>
                 @item.Phone
@@ -59,10 +61,12 @@
                 @item.Email
             </td>
             <td>
-                @if (User.IsInRole("Doctor") || User.IsInRole("Admin"))
+                @if ((User.IsInRole("Doctor") && User.Identity.GetUserName() == item.Email) || User.IsInRole("Admin"))
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.DoctorId }) <span>|</span>
+                    if (User.IsInRole("Admin")) { 
                     @Html.ActionLink("Delete", "ConfirmDelete", new { id = item.DoctorId }) <span>|</span>
+                    }
                 }
 
                 @Html.ActionLink("Details", "Details", new { id = item.DoctorId })

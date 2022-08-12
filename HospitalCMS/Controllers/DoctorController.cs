@@ -69,7 +69,7 @@ namespace HospitalCMS.Controllers
         // GET: Doctor/Details/5
         public ActionResult Details(int id)
         {
-            if (User.IsInRole("Doctor"))
+            if (User.IsInRole("Doctor") && id==0)
             {
                 string getbyemailurl = "DoctorData/FindDoctorByEmail/" + User.Identity.GetUserName() + "/";
                 HttpResponseMessage getbyemailresponse = client.GetAsync(getbyemailurl).Result;

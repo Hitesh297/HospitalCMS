@@ -7,7 +7,10 @@
 <h2>Doctor Speciality List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
 </p>
 <table class="table">
     <tr>
@@ -17,17 +20,22 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @item.Name
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SpecialityId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SpecialityId }) |
-            @Html.ActionLink("Delete", "ConfirmDelete", new { id=item.SpecialityId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+
+                @Html.ActionLink(@item.Name, "Details", new { id = item.SpecialityId })
+            </td>
+            <td>
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SpecialityId }) <span>|</span>
+                    @Html.ActionLink("Details", "Details", new { id = item.SpecialityId }) <span>|</span>
+                    @Html.ActionLink("Delete", "ConfirmDelete", new { id = item.SpecialityId })
+                }
+            </td>
+        </tr>
+    }
 
 </table>

@@ -2,6 +2,7 @@
 @using HospitalCMS.Models
 @using System.Globalization
 @using System.Collections.Generic
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Details";
@@ -37,7 +38,7 @@
         </dt>
 
         <dd>
-            @Model.Experience
+            @Model.Experience years
 
         </dd>
 
@@ -78,7 +79,7 @@
 
     </dl>
 </div>
-@if (User.IsInRole("Doctor") || User.IsInRole("Admin"))
+@if ((User.IsInRole("Doctor") && User.Identity.GetUserName() == Model.Email)  || User.IsInRole("Admin"))
 {
     <div id="Appointments-section">
         <h3>Appointments</h3>
@@ -105,7 +106,7 @@
 }
 
 <p>
-    @if (User.IsInRole("Doctor") || User.IsInRole("Admin"))
+    @if ((User.IsInRole("Doctor") && User.Identity.GetUserName() == Model.Email) || User.IsInRole("Admin"))
     {
         @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorId }) <span>|</span>
     }
