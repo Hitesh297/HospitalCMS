@@ -7,10 +7,14 @@
 <h2>Department List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+
+    }
 </p>
 
-<form action="/Department/ListDepartments" method="GET">
+<form action="/Department/List" method="GET">
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-3">

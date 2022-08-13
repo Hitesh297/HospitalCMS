@@ -37,7 +37,7 @@ namespace HospitalCMS.Controllers
             List<Doctor> Doctors = new List<Doctor>();
             if (SearchKey != null)
             {
-                Doctors = db.Doctors.Where(x => x.Name.ToLower().Contains(SearchKey) || x.Email.ToLower().Contains(SearchKey)).ToList();
+                Doctors = db.Doctors.Where(x => x.Name.ToLower().Contains(SearchKey.ToLower()) || x.Email.ToLower().Contains(SearchKey.ToLower())).ToList();
             }
             else
             {

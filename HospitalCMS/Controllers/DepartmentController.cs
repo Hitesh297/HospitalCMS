@@ -49,11 +49,11 @@ namespace HospitalCMS.Controllers
             string url = string.Empty;
             if (!string.IsNullOrWhiteSpace(SearchKey))
             {
-                url = "DepartmentData/ListDepartments/" + SearchKey + "/";
+                url = "DepartmentData/ListDepartment/" + SearchKey + "/";
             }
             else
             {
-                url = "DepartmentData/ListDepartments";
+                url = "DepartmentData/ListDepartment";
             }
 
             HttpResponseMessage response = client.GetAsync(url).Result;
