@@ -33,17 +33,26 @@ The application has 4 kinds of users; Doctor, Patient, Admin & Guest(not logged 
 
 ### Admin
 - Admin has the access to create, read, update or delete a Doctor, Patient, Appointment, Donation, Department, FAQ, Article & Event.
+
+
 #### Role based login credentials:
+
 **Admin**
+
 Email: admin@gmail.com
+
 Password: password
 
 **Patient**
+
 Email: patient@gmail.com
+
 Password: password
 
 **Doctor**
+
 Email: doctor@gmail.com
+
 Password: password
 
 
