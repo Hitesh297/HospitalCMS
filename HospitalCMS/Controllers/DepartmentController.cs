@@ -43,9 +43,19 @@ namespace HospitalCMS.Controllers
             return;
         }
         // GET: Department
-        public ActionResult List()
+        [HttpGet]
+        public ActionResult List(string SearchKey = null)
         {
-            string url = "DepartmentData/ListDepartment";
+            string url = string.Empty;
+            if (!string.IsNullOrWhiteSpace(SearchKey))
+            {
+                url = "DepartmentData/ListDepartments/" + SearchKey + "/";
+            }
+            else
+            {
+                url = "DepartmentData/ListDepartments";
+            }
+
             HttpResponseMessage response = client.GetAsync(url).Result;
             IEnumerable<DepartmentDto> departments = response.Content.ReadAsAsync<IEnumerable<DepartmentDto>>().Result;
             return View(departments);

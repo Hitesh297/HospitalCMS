@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<HospitalCMS.Models.DepartmentDto>
-
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "List";
 }
@@ -9,6 +9,20 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<form action="/Department/ListDepartments" method="GET">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-3">
+                <input style="width:100%" class="form-control" type="text" name="SearchKey" autocomplete="off" />
+            </div>
+            <div class="col-md-2">
+                <input style="width:100%" class="btn btn-primary" type="submit" value="Search" />
+            </div>
+        </div>
+    </div>
+</form>
+
 <table class="table">
     <tr>
         <th>
