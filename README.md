@@ -55,6 +55,20 @@ The application has 4 kinds of users; Doctor, Patient, Admin & Guest(not logged 
 - MVC controller for Speciality
 - Added code for seeding data
 - Worked on Register page for new user
+- Added search by name or email to doctors list page.
+- Display appointments of loggedin doctor.
+- Created workflow for doctor and patient.
+- added redirection based on patient login.
+- added redirection based on doctor login.
+- display links on page based on role for all pages.
+- Added roles and user data as seed data.
+- Added rolebased authentication to all controller methods.
+- Worked on home page design.
+- Added carousel to home page with article contents.
+- Added list of events to home page.
+- Added seed data for articles and events.
+- code cleanup
+
 
 ## Saransh
 ###### Article
