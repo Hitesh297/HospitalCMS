@@ -2,6 +2,23 @@
 1. Create App_Data folder inside [HospitalCMS](HospitalCMS)
 2. Run update-database
 
+# Application Overview
+The application has 4 kinds of users; Doctor, Patient, Admin & Guest(not logged in)
+### Patient
+- User can register as a patient by selcting the role as Patient in the register form.
+- On first login patient will be asked to input his/her details.
+- Patient can click on 'My Details' link in navbar to view his/her details, and even edit it.
+- Patient can click on 'Book Appointment' link in navbar to book an appointment with the doctor, this will be visible to the doctor when doctor logs in.
+- Patient can click on 'My Appointments' link in navbar to view all the current and past appointments.
+- Patient can click on 'Doctors' link in navbar to see the list of doctors and even search doctors by name or email.
+- Patient can click on 'Donate' to do a donation.
+- Patient can click on 'FAQs' link to view FAQ's per department.
+- Patient can click on 
+
+
+### Doctor
+
+## Admin
 
 # Authors
 ## Hitesh
