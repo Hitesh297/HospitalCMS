@@ -2,7 +2,7 @@
     ViewBag.Title = "Home Page";
     Layout = null;
 }
-@model IEnumerable<HospitalCMS.Models.EventDto>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,16 +74,16 @@
                         }
                         else
                         {
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
-                        <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
-                        <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
-                        <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
-                        <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
-                        <li>@Html.ActionLink("Articles", "List", "Article")</li>
-                        <li>@Html.ActionLink("Events", "List", "Event")</li>
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
+                                <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                                <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                                <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                                <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                                <li>@Html.ActionLink("Events", "List", "Event")</li>
 
-                    </ul>
+                            </ul>
                         }
                         <ul class="nav navbar-nav navbar-right dropdown">
                             <li class="dropdown">
@@ -102,14 +102,54 @@
     <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
+        @{int countarticle = 0; }
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+            @foreach (var item in TempData["Articles"] as IEnumerable<HospitalCMS.Models.ArticleDto>)
+            {
+                var style = countarticle == 0 ? "active" : "";
+                <li data-target="#myCarousel" data-slide-to="@countarticle" class="@style"></li>
+                countarticle++;
+            }
         </ol>
+        <!-- Indicators -->
+        @*<ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>*@
         <div class="carousel-inner" role="listbox">
-            <div class="item active">
+            @{ int articlecarouselcount = 0; }
+            @foreach (var article in TempData["Articles"] as IEnumerable<HospitalCMS.Models.ArticleDto>)
+            {
+                var activestyle = articlecarouselcount == 0 ? "active" : "";
+
+                string imageurl = "/Content/Images/Articles/default.png";
+                if (article.HasPic)
+                {
+                    imageurl = "/Content/Images/Articles/" + article.ArticleId + "." + article.PicExtension;
+                }
+
+                <div class="item @activestyle">
+                    <img class="first-slide" src="@imageurl" alt="slide">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>@article.Title</h1>
+                            @{
+                                var shortdescription = string.Empty;
+                                if (article.Description != null)
+                                {
+                                    shortdescription = article.Description.Length > 99 ? article.Description.Substring(0, 100) : article.Description;
+                                }
+                            }
+                            <p>@shortdescription</p>
+                            <p><a class="btn btn-lg btn-primary" href="/Article/Details/@article.ArticleId" role="button">Learn more</a></p>
+                        </div>
+                    </div>
+                </div>
+                articlecarouselcount++;
+            }
+
+            @*<div class="item active">
                 <img class="first-slide" src="~/Content/Images/home.jpg" alt="First slide">
                 <div class="container">
                     <div class="carousel-caption">
@@ -138,7 +178,7 @@
                         <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -155,12 +195,12 @@
         <!-- START THE FEATURETTES -->
         @*<hr class="featurette-divider">*@
 
-        @{ 
+        @{
             int count = 1;
         }
-        @foreach (var item in Model)
+        @foreach (var item in TempData["Events"] as IEnumerable<HospitalCMS.Models.EventDto>)
         {
-            var textstyle = count%2 == 0 ? "col-md-push-5" : "";
+            var textstyle = count % 2 == 0 ? "col-md-push-5" : "";
             var imagestyle = count % 2 == 0 ? "col-md-pull-7" : "";
             <div class="row featurette">
                 <div class="col-md-7 @textstyle">
@@ -168,7 +208,7 @@
                     <p class="lead">@item.Description</p>
                     <p class="text-primary">Scheduled on @item.Date.ToString("f")</p>
                 </div>
-                @{ 
+                @{
                     string imageurl = "/Content/Images/Events/default.png";
                     if (item.HasPic)
                     {
@@ -186,28 +226,28 @@
 
 
         @*<div class="row featurette">
-            <div class="col-md-7 col-md-push-5">
-                <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+                <div class="col-md-7 col-md-push-5">
+                    <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+                    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+                </div>
+                <div class="col-md-5 col-md-pull-7">
+                    <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+                </div>
             </div>
-            <div class="col-md-5 col-md-pull-7">
-                <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-            </div>
-        </div>
 
-        <hr class="featurette-divider">
+            <hr class="featurette-divider">
 
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+                    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+                </div>
+                <div class="col-md-5">
+                    <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+                </div>
             </div>
-            <div class="col-md-5">
-                <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-            </div>
-        </div>
 
-        <hr class="featurette-divider">*@
+            <hr class="featurette-divider">*@
 
         <!-- /END THE FEATURETTES -->
 

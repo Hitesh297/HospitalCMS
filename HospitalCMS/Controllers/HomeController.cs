@@ -31,8 +31,14 @@ namespace HospitalCMS.Controllers
         {
             string url = "EventData/ListEvents";
             HttpResponseMessage response = client.GetAsync(url).Result;
-            IEnumerable<EventDto> events = response.Content.ReadAsAsync<IEnumerable<EventDto>>().Result;
-            return View(events);
+            TempData["Events"] = response.Content.ReadAsAsync<IEnumerable<EventDto>>().Result;
+
+            url = "ArticleData/ListArticles";
+            response = client.GetAsync(url).Result;
+            IEnumerable<ArticleDto> articles = response.Content.ReadAsAsync<IEnumerable<ArticleDto>>().Result;
+
+            TempData["Articles"] = articles;
+            return View();
         }
 
         public ActionResult About()
