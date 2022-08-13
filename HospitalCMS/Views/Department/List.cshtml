@@ -38,12 +38,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @item.Name
+           
+            @Html.ActionLink(@item.Name, "Details", new { id = item.DepartmentId })
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DepartmentId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DepartmentId }) |
-            @Html.ActionLink("Delete", "ConfirmDelete", new { id=item.DepartmentId })
+            @if (User.IsInRole("Admin")) 
+            {
+              @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentId }) <span>|</span>
+              @Html.ActionLink("Delete", "ConfirmDelete", new { id = item.DepartmentId }) <span>|</span>
+            }
+
+            @Html.ActionLink("Details", "Details", new { id = item.DepartmentId }) 
+
+
         </td>
     </tr>
 }
