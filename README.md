@@ -40,7 +40,6 @@ The application has 4 kinds of users; Doctor, Patient, Admin & Guest(not logged 
 **Admin**
 
 Email: admin@gmail.com
-
 Password: password
 
 **Patient**
