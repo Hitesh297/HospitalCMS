@@ -37,9 +37,8 @@ The application has 4 kinds of users; Doctor, Patient, Admin & Guest(not logged 
 
 #### Role based login credentials:
 
-**Admin**
-
-Email: admin@gmail.com
+[^1]: **Admin**
+[^1]: Email: admin@gmail.com
 Password: password
 
 **Patient**
