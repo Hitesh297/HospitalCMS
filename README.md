@@ -31,8 +31,21 @@ The application has 4 kinds of users; Doctor, Patient, Admin & Guest(not logged 
 - Doctor can click on patient name on appointment details page to view patient informtion.
 - Doctor can access same features as guest like Departemnts, Doctors, Specialities, Donate, FAQ's, Articles & Events.
 
-## Admin
+### Admin
 - Admin has the access to create, read, update or delete a Doctor, Patient, Appointment, Donation, Department, FAQ, Article & Event.
+#### Role based login credentials:
+**Admin**
+Email: admin@gmail.com
+Password: password
+
+**Patient**
+Email: patient@gmail.com
+Password: password
+
+**Doctor**
+Email: doctor@gmail.com
+Password: password
+
 
 # Authors
 ## Hitesh
