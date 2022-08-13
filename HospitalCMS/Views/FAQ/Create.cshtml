@@ -16,34 +16,25 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @*@Html.LabelFor(model => model., htmlAttributes: new { @class = "control-label col-md-2" })*@
         <label class="control-label col-md-2">Question:</label>
 
         <div class="col-md-10">
-            @*@Html.EditorFor(model => model., new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })*@
             <input class="form-control" style="max-width:100% !important" name="Question">
         </div>
     </div>
 
     <div class="form-group">
-        @*@Html.LabelFor(model => model., htmlAttributes: new { @class = "control-label col-md-2" })*@
         <label class="control-label col-md-2">Answer:</label>
 
         <div class="col-md-10">
-            @*@Html.EditorFor(model => model.Answer, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model., "", new { @class = "text-danger" })*@
             <textarea class="form-control" style="max-width:100% !important" class="form-control" rows="10" cols="80" name="Answer"></textarea>
         </div>
     </div>
 
     <div class="form-group">
-        @*@Html.LabelFor(model => model., "DepartmentId", htmlAttributes: new { @class = "control-label col-md-2" })*@
         <label class="control-label col-md-2">Department:</label>
 
         <div class="col-md-10">
-            @*@Html.DropDownList("DepartmentId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })*@
             <select class="form-control" name="DepartmentId">
                 <option value="x">Please Select</option>
                 @foreach (var department in ViewData["Departments"] as IEnumerable<HospitalCMS.Models.DepartmentDto>)
