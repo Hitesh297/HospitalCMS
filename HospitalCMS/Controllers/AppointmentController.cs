@@ -83,6 +83,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Appointment/Create
+        [Authorize(Roles = "Admin,Patient")]
         public ActionResult Create()
         {
             AppointmentVM appointmentVM = new AppointmentVM();
@@ -101,6 +102,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Appointment/Create
         [HttpPost]
+        [Authorize(Roles = "Admin,Patient")]
         public ActionResult Create(Appointment  appointment)
         {
             try
