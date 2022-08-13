@@ -230,10 +230,15 @@
     <Compile Include="Migrations\202207230040283_addDepartmentToEvent.designer.cs">
       <DependentUpon>202207230040283_addDepartmentToEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208132315354_AddedCommentModel.cs" />
+    <Compile Include="Migrations\202208132315354_AddedCommentModel.designer.cs">
+      <DependentUpon>202208132315354_AddedCommentModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\Donor.cs" />
@@ -399,6 +404,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207230040283_addDepartmentToEvent.resx">
       <DependentUpon>202207230040283_addDepartmentToEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208132315354_AddedCommentModel.resx">
+      <DependentUpon>202208132315354_AddedCommentModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
