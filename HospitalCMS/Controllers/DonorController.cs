@@ -85,6 +85,10 @@ namespace HospitalCMS.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (!User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("Thankyou", "Donor");
+                    }
                     return RedirectToAction("list", "Donor");
                 }
                 else
@@ -121,7 +125,7 @@ namespace HospitalCMS.Controllers
         {
             try
             {
-                string url = "DonorData/UpdateDonor/"+ id;
+                string url = "DonorData/UpdateDonor/" + id;
                 string jsonpayload = JsonConvert.SerializeObject(donor);
 
                 HttpContent content = new StringContent(jsonpayload);
@@ -182,5 +186,11 @@ namespace HospitalCMS.Controllers
                 return View();
             }
         }
+
+        public ActionResult Thankyou()
+        {
+            return View();
+        }
+
     }
 }

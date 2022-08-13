@@ -16,23 +16,23 @@
 
         <dd>
             @Model.FirstName
-            </dd>
+        </dd>
 
         <dt>
             Last Name
         </dt>
 
         <dd>
-            @Model.LastName 
-            </dd>
+            @Model.LastName
+        </dd>
 
-         <dt>
+        <dt>
             DOB
         </dt>
 
         <dd>
             @Model.DOB.ToShortDateString()
-            </dd>
+        </dd>
 
         <dt>
             Gender
@@ -40,7 +40,7 @@
 
         <dd>
             @Model.Gender
-            </dd>
+        </dd>
 
         <dt>
             Mobile
@@ -48,7 +48,7 @@
 
         <dd>
             @Model.Mobile
-            </dd>
+        </dd>
 
         <dt>
             Email
@@ -56,7 +56,7 @@
 
         <dd>
             @Model.Email
-            </dd>
+        </dd>
 
         <dt>
             Marital Status
@@ -64,7 +64,7 @@
 
         <dd>
             @Model.MaritalStatus
-            </dd>
+        </dd>
 
         <dt>
             Address 1
@@ -72,7 +72,7 @@
 
         <dd>
             @Model.Address1
-            </dd>
+        </dd>
 
         <dt>
             Address 2
@@ -80,7 +80,7 @@
 
         <dd>
             @Model.Address2
-            </dd>
+        </dd>
 
         <dt>
             City
@@ -88,7 +88,7 @@
 
         <dd>
             @Model.City
-            </dd>
+        </dd>
 
         <dt>
             Country
@@ -96,7 +96,7 @@
 
         <dd>
             @Model.Country
-            </dd>
+        </dd>
 
         <dt>
             PostalCode
@@ -104,15 +104,18 @@
 
         <dd>
             @Model.PostalCode
-            </dd>
+        </dd>
 
-        </dl>
-        </div>
+    </dl>
+</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PatientId })
+    @if (User.IsInRole("Patient"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.PatientId })
+    }
     @if (User.IsInRole("Admin"))
     {
-    <span>|</span> 
-    @Html.ActionLink("Back to List", "List")
+        <span>|</span>
+        @Html.ActionLink("Back to List", "List")
     }
 </p>

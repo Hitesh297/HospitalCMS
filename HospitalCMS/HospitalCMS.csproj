@@ -363,6 +363,7 @@
     <Content Include="Views\FAQ\Edit.cshtml" />
     <Content Include="Views\Patient\Edit.cshtml" />
     <Content Include="Views\Speciality\Edit.cshtml" />
+    <Content Include="Views\Donor\Thankyou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

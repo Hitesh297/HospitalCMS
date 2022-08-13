@@ -55,7 +55,6 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Patient/Details/5
-        [Authorize(Roles = "Admin,Patient")]
         public ActionResult Details(int id)
         {
             if (User.IsInRole("Patient"))
@@ -215,5 +214,7 @@ namespace HospitalCMS.Controllers
                 return View();
             }
         }
+
+       
     }
 }
