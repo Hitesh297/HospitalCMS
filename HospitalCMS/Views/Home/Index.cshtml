@@ -1,35 +1,245 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = null;
 }
+@model IEnumerable<HospitalCMS.Models.EventDto>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/carousal.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @using Microsoft.AspNet.Identity
 
-@*<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>*@
-<div>
-    <img src="~/Content/Images/home.jpg" width="100%" alt="" />
-    <p id="site-title">City Hospital</p>
-</div>
+</head>
+<body>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="navbar-wrapper">
+        <div class="container">
+
+            <nav class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("City Hospital", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Appointments", "List", "Appointment")</li>
+                                <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                                <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                                <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                                <li>@Html.ActionLink("Donors", "List", "Donor")</li>
+                                <li>@Html.ActionLink("Events", "List", "Event")</li>
+                                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                                <li>@Html.ActionLink("Patients", "List", "Patient")</li>
+                                <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                            </ul>
+                        }
+                        else if (User.IsInRole("Patient"))
+                        {
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("My Details", "Details", "Patient", new { id = 0 }, null) </li>
+                                <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
+                                <li>@Html.ActionLink("My Appointments", "List", "Appointment")</li>
+                                <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                                <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                                <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                                <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                                <li>@Html.ActionLink("Events", "List", "Event")</li>-->
+                            </ul>
+                        }
+                        else if (User.IsInRole("Doctor"))
+                        {
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Edit Details", "Edit", "Doctor", new { id = 0 }, null) </li>
+                                <li>@Html.ActionLink("Dashboard", "Details", "Doctor", new { id = 0 }, null) </li>
+                                <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                                <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                                <li>@Html.ActionLink("Events", "List", "Event")</li>-->
+                                @*<li><a href="/Patient/Edit/0/@User.Identity.GetUserName()"></a>Edit Custome</li>*@
+                            </ul>
+                        }
+                        else
+                        {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
+                        <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                        <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                        <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                        <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                        <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                        <li>@Html.ActionLink("Events", "List", "Event")</li>
+
+                    </ul>
+                        }
+                        <ul class="nav navbar-nav navbar-right dropdown">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Account <span class="caret"></span></a>
+                                @Html.Partial("_LoginPartial")
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img class="first-slide" src="~/Content/Images/home.jpg" alt="First slide">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Example headline.</h1>
+                        <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img class="second-slide" src="~/Content/Images/home.jpg" alt="Second slide">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Another example headline.</h1>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img class="third-slide" src="~/Content/Images/home.jpg" alt="Third slide">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>One more for good measure.</h1>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div><!-- /.carousel -->
+
+    <div class="container marketing">
+        <h2 style="text-align: center; font-size: 60px; padding-bottom: 73px;">Upcoming Events</h2>
+        <!-- START THE FEATURETTES -->
+        @*<hr class="featurette-divider">*@
+
+        @{ 
+            int count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            var textstyle = count%2 == 0 ? "col-md-push-5" : "";
+            var imagestyle = count % 2 == 0 ? "col-md-pull-7" : "";
+            <div class="row featurette">
+                <div class="col-md-7 @textstyle">
+                    <h2 class="featurette-heading">@item.Title <span class="text-muted">By Department of @item.Department.Name</span></h2>
+                    <p class="lead">@item.Description</p>
+                    <p class="text-primary">Scheduled on @item.Date.ToString("f")</p>
+                </div>
+                @{ 
+                    string imageurl = "/Content/Images/Events/default.png";
+                    if (item.HasPic)
+                    {
+                        imageurl = "/Content/Images/Events/" + item.EventId + "." + item.PicExtension;
+                    }
+                }
+                <div class="col-md-5 @imagestyle">
+                    <img class="featurette-image img-responsive center-block" src="@imageurl" alt="Generic placeholder image">
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+            count++;
+        }
+
+
+        @*<div class="row featurette">
+            <div class="col-md-7 col-md-push-5">
+                <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5 col-md-pull-7">
+                <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            </div>
+            <div class="col-md-5">
+                <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+            </div>
+        </div>
+
+        <hr class="featurette-divider">*@
+
+        <!-- /END THE FEATURETTES -->
+
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    @*<div class="row">
+            <div class="col-md-4">
+                <h2>Getting started</h2>
+                <p>
+                    ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                    enables a clean separation of concerns and gives you full control over markup
+                    for enjoyable, agile development.
+                </p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Get more libraries</h2>
+                <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Web Hosting</h2>
+                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+            </div>
+        </div>*@
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@RenderSection("scripts", required: false)*@
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="~/Scripts/script.js"></script>
+</body>
+</html>

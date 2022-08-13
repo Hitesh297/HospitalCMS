@@ -43,7 +43,8 @@ namespace HospitalCMS.Controllers
                 Date = a.Date,
                 HasPic = a.HasPic,
                 PicExtension = a.PicExtension,
-                Description = a.Description
+                Description = a.Description,
+                Department = new DepartmentDto() { DepartmentId = a.DepartmentId, Name = a.Department.Name }
             }));
             return Ok(EventDto);
         }
