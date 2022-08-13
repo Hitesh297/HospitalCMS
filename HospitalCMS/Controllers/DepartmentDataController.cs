@@ -26,11 +26,22 @@ namespace HospitalCMS.Controllers
         /// <example>
         // GET: api/DepartmentData/ListDepartment
         /// </example>
-        
+
         [HttpGet]
-        public IHttpActionResult ListDepartment()
+        [Route("api/DepartmentData/ListDepartments/{SearchKey?}")]
+        [ResponseType(typeof(DepartmentDto))]
+        public IHttpActionResult ListDepartments(string SearchKey = null)
         {
-            List<Department> Departments = db.Departments.ToList();
+            List<Department> Departments = new List<Department>();
+            if (SearchKey != null)
+            {
+                Departments = db.Departments.Where(x => x.Name.ToLower().Contains(SearchKey)).ToList();
+            }
+            else
+            { 
+                Departments = db.Departments.ToList();
+            }
+
             List<DepartmentDto> DepartmentDto = new List<DepartmentDto>();
 
             Departments.ForEach(a => DepartmentDto.Add(new DepartmentDto()
