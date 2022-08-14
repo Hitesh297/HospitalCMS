@@ -20,12 +20,36 @@ namespace HospitalCMS.Models
         public virtual Article Article { get; set; }
 
         [ForeignKey("Doctor")]
-        public int DoctorId { get; set; }
+        public int? DoctorId { get; set; }
         public virtual Doctor Doctor { get; set; }
 
         [ForeignKey("Patient")]
-        public int PatientId { get; set; }
+        public int? PatientId { get; set; }
         public virtual Patient Patient { get; set; }
 
     }
+
+    public class CommentDto
+    {
+
+        public int Id { get; set; }
+
+        public string CommentText { get; set; }
+
+        public int ArticleId { get; set; }
+        public  ArticleDto Article { get; set; }
+
+        public int? DoctorId { get; set; }
+        public  DoctorDto Doctor { get; set; }
+
+        public int? PatientId { get; set; }
+        public  PatientDto Patient { get; set; }
+
+        public string DoctorEmail { get; set; }
+
+        public string PatientEmail { get; set; }
+
+    }
+
+
 }

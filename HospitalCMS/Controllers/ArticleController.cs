@@ -62,6 +62,28 @@ namespace HospitalCMS.Controllers
             string url = "ArticleData/FindArticle/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             ArticleDto article = response.Content.ReadAsAsync<ArticleDto>().Result;
+            if (article.Comments != null || article.Comments.Count() != 0)
+            {
+                foreach (var comment in article.Comments)
+                {
+                    if(comment.PatientId != null)
+                    {
+                        url = "PatientData/FindPatient/" + comment.PatientId;
+                        response = client.GetAsync(url).Result;
+                        PatientDto patient = response.Content.ReadAsAsync<PatientDto>().Result;
+                        comment.Patient = patient;
+                    }
+
+
+                    if (comment.DoctorId != null)
+                    {
+                        url = "DoctorData/FindDoctor/" + comment.DoctorId;
+                        response = client.GetAsync(url).Result;
+                        DoctorDto doctor = response.Content.ReadAsAsync<DoctorDto>().Result;
+                        comment.Doctor = doctor;
+                    }
+                }
+            }
             return View(article);
         }
 

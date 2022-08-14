@@ -187,6 +187,8 @@
     <Compile Include="Controllers\AppointmentDataController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\ArticleDataController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\CommentDataController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DepartmentDataController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
@@ -233,6 +235,10 @@
     <Compile Include="Migrations\202208132315354_AddedCommentModel.cs" />
     <Compile Include="Migrations\202208132315354_AddedCommentModel.designer.cs">
       <DependentUpon>202208132315354_AddedCommentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208140055348_nullableForeignKeys.cs" />
+    <Compile Include="Migrations\202208140055348_nullableForeignKeys.designer.cs">
+      <DependentUpon>202208140055348_nullableForeignKeys.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -372,6 +378,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Comment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -407,6 +414,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208132315354_AddedCommentModel.resx">
       <DependentUpon>202208132315354_AddedCommentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208140055348_nullableForeignKeys.resx">
+      <DependentUpon>202208140055348_nullableForeignKeys.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

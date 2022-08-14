@@ -1,4 +1,6 @@
 ﻿@model HospitalCMS.Models.ArticleDto
+@using Microsoft.AspNet.Identity
+
 
 @{
     ViewBag.Title = "Details";
@@ -52,6 +54,46 @@
         </dd>
 
     </dl>
+</div>
+<div style="margin-left: 15%; margin-top: 8%;">
+    <h3>Comments</h3>
+    @foreach (var comment in Model.Comments)
+    {
+        var name = "";
+        if (comment.Patient != null)
+        {
+            name = comment.Patient.FirstName + " " + comment.Patient.LastName;
+        }
+
+        if (comment.Doctor != null)
+        {
+            name = comment.Doctor.Name;
+
+        }
+        <p>@name : @comment.CommentText </p>
+    }
+    <form action="/Comment/Create" method="post">
+
+        <input type="hidden" name="ArticleId" value="@Model.ArticleId" />
+
+        @if (User.IsInRole("Patient"))
+        {
+            <input type="hidden" name="PatientEmail" value="@User.Identity.GetUserName()" />
+
+        }
+
+        @if (User.IsInRole("Doctor"))
+        {
+            <input type="hidden" name="DoctorEmail" value="@User.Identity.GetUserName()" />
+
+        }
+
+
+        <textarea style="width: 100%; margin-bottom: 4%; " class="form-control" type="text" name="CommentText" placeholder="Write your comments here" autocomplete="off"></textarea>
+
+        <input style="width:100%" class="btn btn-primary" type="submit" value="Post" />
+
+    </form>
 </div>
 <p>
     @if (User.IsInRole("Admin"))
