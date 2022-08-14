@@ -64,11 +64,14 @@
         {
             name = comment.Patient.FirstName + " " + comment.Patient.LastName;
         }
-
-        if (comment.Doctor != null)
+        else if (comment.Doctor != null)
         {
             name = comment.Doctor.Name;
 
+        }
+        else
+        {
+            name = "Admin";
         }
         <p>@name : @comment.CommentText </p>
     }

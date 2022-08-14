@@ -80,6 +80,10 @@ namespace HospitalCMS.Controllers
                     url = "PatientData/FindPatientByEmail/"+ comment.PatientEmail + "/";
                     response = client.GetAsync(url).Result;
                     PatientDto patient = response.Content.ReadAsAsync<PatientDto>().Result;
+                    if (patient == null)
+                    {
+                        return RedirectToAction("Create", "Patient");
+                    }
                     comment1.PatientId = patient.PatientId;
                 }
 
@@ -88,6 +92,10 @@ namespace HospitalCMS.Controllers
                     url = "DoctorData/FindDoctorByEmail/" + comment.DoctorEmail + "/";
                     response = client.GetAsync(url).Result;
                     DoctorDto doctor = response.Content.ReadAsAsync<DoctorDto>().Result;
+                    if (doctor == null)
+                    {
+                        return RedirectToAction("Create", "Doctor");
+                    }
                     comment1.DoctorId = doctor.DoctorId;
 
                 }
