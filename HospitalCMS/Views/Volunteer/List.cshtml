@@ -1,0 +1,36 @@
+﻿@model IEnumerable<HospitalCMS.Models.VolunteerDto>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.VolunteerName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.VolunteerName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.VolunteerId }) |
+                
+                @Html.ActionLink("Delete", "Delete", new { id = item.VolunteerId })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -119,3 +119,6 @@ textarea {
 .body-content {
     /*margin-top: 10px;*/
 }
+#navbar ul li:hover {
+    background: grey;
+}

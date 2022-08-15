@@ -68,7 +68,7 @@ namespace HospitalCMS.Controllers
         public IHttpActionResult FindEvent(int id)
 
         {
-            Event Event = db.Events.Find(id);
+            Event Event = db.Events.Include(x => x.Volunteers).Where(x => x.EventId == id).FirstOrDefault();
             EventDto EventDto = new EventDto()
             {
                 EventId = Event.EventId,
@@ -81,6 +81,18 @@ namespace HospitalCMS.Controllers
                 DepartmentId = Event.DepartmentId,
                 Department = new DepartmentDto() { DepartmentId = Event.DepartmentId, Name = Event.Department.Name }
             };
+            EventDto.Volunteers = new List<VolunteerDto>();
+            if (Event.Volunteers!=null)
+            {
+                foreach (Volunteer volunteer in Event.Volunteers)
+                {
+                    EventDto.Volunteers.Add(new VolunteerDto()
+                    {
+                        VolunteerName = volunteer.VolunteerName,
+                        VolunteerId = volunteer.VolunteerId
+                    });
+                }
+            }
             if (Event == null)
             {
                 return NotFound();

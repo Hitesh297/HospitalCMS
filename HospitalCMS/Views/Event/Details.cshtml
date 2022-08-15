@@ -29,9 +29,22 @@
         <dt>
             Date
         </dt>
-
         <dd>
             @Model.Date
+        </dd>
+
+        <dt>
+            VolunteerNames
+        </dt>
+        <dd>
+            <ul>
+                @foreach (var volunteer in Model.Volunteers)
+                {
+                    <li>
+                        @volunteer.VolunteerName
+                    </li>
+                }
+            </ul>
         </dd>
 
         <dt>

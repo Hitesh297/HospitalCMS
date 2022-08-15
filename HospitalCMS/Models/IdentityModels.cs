@@ -36,6 +36,8 @@ namespace HospitalCMS.Models
         public DbSet<FAQ> FAQs { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Volunteer> Volunteers { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

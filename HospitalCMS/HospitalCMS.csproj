@@ -205,6 +205,8 @@
     <Compile Include="Controllers\PatientDataController.cs" />
     <Compile Include="Controllers\SpecialityController.cs" />
     <Compile Include="Controllers\SpecialityDataController.cs" />
+    <Compile Include="Controllers\VolunteerController.cs" />
+    <Compile Include="Controllers\VolunteerDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,6 +242,10 @@
     <Compile Include="Migrations\202208140055348_nullableForeignKeys.designer.cs">
       <DependentUpon>202208140055348_nullableForeignKeys.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208151814460_VolunteerModeladded.cs" />
+    <Compile Include="Migrations\202208151814460_VolunteerModeladded.designer.cs">
+      <DependentUpon>202208151814460_VolunteerModeladded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
@@ -254,6 +260,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\Speciality.cs" />
+    <Compile Include="Models\Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -375,6 +382,8 @@
     <Content Include="Views\Patient\Edit.cshtml" />
     <Content Include="Views\Speciality\Edit.cshtml" />
     <Content Include="Views\Donor\Thankyou.cshtml" />
+    <Content Include="Views\Volunteer\Create.cshtml" />
+    <Content Include="Views\Volunteer\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -417,6 +426,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208140055348_nullableForeignKeys.resx">
       <DependentUpon>202208140055348_nullableForeignKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208151814460_VolunteerModeladded.resx">
+      <DependentUpon>202208151814460_VolunteerModeladded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

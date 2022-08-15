@@ -20,6 +20,8 @@ namespace HospitalCMS.Models
         public int DepartmentId { get; set; }
         public virtual Department Department { get; set; }
         public ICollection<Article> Articles { get; set; }
+
+        public ICollection<Volunteer> Volunteers { get; set; }
     }
 
     public class EventDto
@@ -34,6 +36,8 @@ namespace HospitalCMS.Models
         public int DepartmentId { get; set; }
         public ICollection<Article> Articles { get; set; }
         public DepartmentDto Department { get; set; }
+
+        public List<VolunteerDto> Volunteers { get; set; }
     }
 
 
