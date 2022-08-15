@@ -43,7 +43,10 @@ textarea {
     justify-content: space-between;
 }
 
-
+.btn btn-default{
+    background-color:black;
+    color:white;
+}
 .question {
     background: #cdcdcd;
     padding: 10px;
