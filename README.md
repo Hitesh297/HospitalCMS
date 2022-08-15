@@ -82,6 +82,10 @@ The application has 4 kinds of users; Doctor, Patient, Admin & Guest(not logged 
 - MVC controller for Event
 - View for CRUD operations on Event
 - Bug fix on DoctorData controller.
+- Created model for volunteer.
+- add volunteer to event functionality added.
+- display volunteers on event details.
+
 
 ## Jinal
 ###### FAQ
