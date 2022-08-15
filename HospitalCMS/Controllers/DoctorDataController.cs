@@ -30,10 +30,20 @@ namespace HospitalCMS.Controllers
         /// </example>
         
         [HttpGet]
+        [Route("api/DoctorData/ListDoctors/{SearchKey?}")]
         [ResponseType(typeof(DoctorDto))]
-        public IHttpActionResult ListDoctors()
+        public IHttpActionResult ListDoctors(string SearchKey = null)
         {
-            List<Doctor> Doctors = db.Doctors.ToList();
+            List<Doctor> Doctors = new List<Doctor>();
+            if (SearchKey != null)
+            {
+                Doctors = db.Doctors.Where(x => x.Name.ToLower().Contains(SearchKey.ToLower()) || x.Email.ToLower().Contains(SearchKey.ToLower())).ToList();
+            }
+            else
+            {
+                 Doctors = db.Doctors.ToList();
+            }
+            
             List<DoctorDto> doctorDtos = new List<DoctorDto>();
 
             Doctors.ForEach(a => doctorDtos.Add(new DoctorDto()
@@ -182,6 +192,76 @@ namespace HospitalCMS.Controllers
             return Ok(DoctorDto);
         }
 
+
+        [HttpGet]
+        [ResponseType(typeof(DoctorDto))]
+
+        /// <summary>
+        /// Returns details of the Doctor by Email id
+        /// </summary>
+        /// <param name="id">Doctor email id</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: Doctor in the system matching up to the email id
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        // GET: api/DoctorData/FindDoctorByEmail/hites.297@gmail.com
+        /// </example>
+        [Route("api/DoctorData/FindDoctorByEmail/{email}")]
+        public IHttpActionResult FindDoctorByEmail(string email)
+
+        {
+            Doctor doctor = db.Doctors.Include(x => x.Specialities).Include(x => x.Appointments).FirstOrDefault(x => x.Email == email);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+
+            DoctorDto DoctorDto = new DoctorDto()
+            {
+                DoctorId = doctor.DoctorId,
+                Name = doctor.Name,
+                Experience = doctor.Experience,
+                Phone = doctor.Phone,
+                Email = doctor.Email,
+                DoctorHasPic = doctor.DoctorHasPic,
+                PicExtension = doctor.PicExtension
+            };
+
+            if (doctor.Specialities != null && doctor.Specialities.Count() != 0)
+            {
+                DoctorDto.Specialities = new List<SpecialityDto>();
+                foreach (var speciality in doctor.Specialities)
+                {
+                    DoctorDto.Specialities.Add(new SpecialityDto() { SpecialityId = speciality.SpecialityId, Name = speciality.Name });
+                }
+            }
+
+            if (doctor.Appointments != null && doctor.Appointments.Count() != 0)
+            {
+                DoctorDto.Appointments = new List<AppointmentDto>();
+                foreach (var appointment in doctor.Appointments)
+                {
+                    DoctorDto.Appointments.Add(new AppointmentDto()
+                    {
+                        Schedule = appointment.Schedule,
+                        AppointmentId = appointment.AppointmentId,
+                        Patient = new PatientDto()
+                        {
+                            FirstName = appointment.Patient.FirstName,
+                            LastName = appointment.Patient.LastName
+                        }
+                    });
+                }
+            }
+
+
+            return Ok(DoctorDto);
+        }
+
+
         /// <summary>
         /// Upload a doctor picture to the system
         /// </summary>
@@ -196,8 +276,8 @@ namespace HospitalCMS.Controllers
         /// POST: api/DoctorData/UpdateDoctor/5
         /// FORM DATA: doctor JSON Object
         /// </example>
-        
-        
+
+
         [ResponseType(typeof(void))]
         [HttpPost]
         /* [Authorize]*/

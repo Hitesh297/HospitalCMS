@@ -43,9 +43,19 @@ namespace HospitalCMS.Controllers
             return;
         }
         // GET: Department
-        public ActionResult List()
+        [HttpGet]
+        public ActionResult List(string SearchKey = null)
         {
-            string url = "DepartmentData/ListDepartment";
+            string url = string.Empty;
+            if (!string.IsNullOrWhiteSpace(SearchKey))
+            {
+                url = "DepartmentData/ListDepartment/" + SearchKey + "/";
+            }
+            else
+            {
+                url = "DepartmentData/ListDepartment";
+            }
+
             HttpResponseMessage response = client.GetAsync(url).Result;
             IEnumerable<DepartmentDto> departments = response.Content.ReadAsAsync<IEnumerable<DepartmentDto>>().Result;
             return View(departments);
@@ -61,6 +71,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Department/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -68,6 +79,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Department/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Department department)
         {
             try
@@ -96,6 +108,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Department/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             string url = "DepartmentData/FindDepartment/" + id;
@@ -106,6 +119,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Department/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id, Department department)
         {
             try
@@ -134,7 +148,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Department/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "DepartmentData/FindDepartment/" + id;
@@ -146,7 +160,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Department/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try

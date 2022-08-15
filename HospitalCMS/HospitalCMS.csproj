@@ -187,6 +187,8 @@
     <Compile Include="Controllers\AppointmentDataController.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\ArticleDataController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\CommentDataController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DepartmentDataController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
@@ -230,10 +232,19 @@
     <Compile Include="Migrations\202207230040283_addDepartmentToEvent.designer.cs">
       <DependentUpon>202207230040283_addDepartmentToEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208132315354_AddedCommentModel.cs" />
+    <Compile Include="Migrations\202208132315354_AddedCommentModel.designer.cs">
+      <DependentUpon>202208132315354_AddedCommentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208140055348_nullableForeignKeys.cs" />
+    <Compile Include="Migrations\202208140055348_nullableForeignKeys.designer.cs">
+      <DependentUpon>202208140055348_nullableForeignKeys.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\Donor.cs" />
@@ -251,9 +262,22 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\carousal.css" />
+    <Content Include="Content\Images\Articles\1.jpg" />
+    <Content Include="Content\Images\Articles\2.jpg" />
+    <Content Include="Content\Images\Articles\3.jpg" />
+    <Content Include="Content\Images\Articles\4.jpg" />
+    <Content Include="Content\Images\Articles\5.jpg" />
     <Content Include="Content\Images\Articles\default.png" />
     <Content Include="Content\Images\Doctors\default.jpg" />
+    <Content Include="Content\Images\Events\1.jpg" />
+    <Content Include="Content\Images\Events\2.jpg" />
+    <Content Include="Content\Images\Events\3.jpg" />
+    <Content Include="Content\Images\Events\4.jpg" />
+    <Content Include="Content\Images\Events\5.jpg" />
+    <Content Include="Content\Images\Events\6.jpg" />
     <Content Include="Content\Images\Events\default.png" />
+    <Content Include="Content\Images\home.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -350,9 +374,11 @@
     <Content Include="Views\FAQ\Edit.cshtml" />
     <Content Include="Views\Patient\Edit.cshtml" />
     <Content Include="Views\Speciality\Edit.cshtml" />
+    <Content Include="Views\Donor\Thankyou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Comment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -385,6 +411,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207230040283_addDepartmentToEvent.resx">
       <DependentUpon>202207230040283_addDepartmentToEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208132315354_AddedCommentModel.resx">
+      <DependentUpon>202208132315354_AddedCommentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208140055348_nullableForeignKeys.resx">
+      <DependentUpon>202208140055348_nullableForeignKeys.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

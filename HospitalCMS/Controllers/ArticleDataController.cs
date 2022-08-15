@@ -66,7 +66,9 @@ namespace HospitalCMS.Controllers
         [HttpGet]
         public IHttpActionResult FindArticle(int id)
         {
-            Article article = db.Articles.Find(id);
+            //Article article = db.Articles.Find(id);
+
+            Article article = db.Articles.Include(x=>x.Comments).Where(x=>x.ArticleId == id).FirstOrDefault();
 
             if (article == null)
             {
@@ -83,6 +85,18 @@ namespace HospitalCMS.Controllers
                 Title = article.Title,
                 Event = new EventDto() { Title = article.Event.Title}
             };
+
+            articleDto.Comments = new List<CommentDto>();
+            foreach (var comment in article.Comments)
+            {
+                articleDto.Comments.Add(new CommentDto() { 
+                    
+                    ArticleId = comment.ArticleId,
+                    PatientId = comment.PatientId,
+                    DoctorId = comment.DoctorId,
+                    CommentText = comment.CommentText
+                });
+            }
 
             return Ok(articleDto);
         }

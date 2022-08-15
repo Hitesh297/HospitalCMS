@@ -21,6 +21,9 @@
     </dl>
 </div>
 
+<h3>List of Doctors with <span class="label label-default">@Model.Name</span> as speciality</h3>
+
+
 <div class="row">
 
     @if (Model.Doctors != null && Model.Doctors.Count() != 0)
@@ -81,6 +84,9 @@
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SpecialityId }) |
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.SpecialityId }) <span>|</span>
+    }
     @Html.ActionLink("Back to List", "List")
 </p>

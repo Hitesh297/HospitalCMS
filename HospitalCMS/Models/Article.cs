@@ -17,6 +17,9 @@ namespace HospitalCMS.Models
         [ForeignKey("Event")]
         public int EventId { get; set; }
         public virtual Event Event { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
+
     }
     public class ArticleDto
     {
@@ -28,5 +31,8 @@ namespace HospitalCMS.Models
         public string Description { get; set; }
         public int EventId { get; set; }
         public EventDto Event { get; set; }
+
+        public List<CommentDto> Comments { get; set; }
+
     }
 }

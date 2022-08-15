@@ -62,10 +62,33 @@ namespace HospitalCMS.Controllers
             string url = "ArticleData/FindArticle/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             ArticleDto article = response.Content.ReadAsAsync<ArticleDto>().Result;
+            if (article.Comments != null || article.Comments.Count() != 0)
+            {
+                foreach (var comment in article.Comments)
+                {
+                    if(comment.PatientId != null)
+                    {
+                        url = "PatientData/FindPatient/" + comment.PatientId;
+                        response = client.GetAsync(url).Result;
+                        PatientDto patient = response.Content.ReadAsAsync<PatientDto>().Result;
+                        comment.Patient = patient;
+                    }
+
+
+                    if (comment.DoctorId != null)
+                    {
+                        url = "DoctorData/FindDoctor/" + comment.DoctorId;
+                        response = client.GetAsync(url).Result;
+                        DoctorDto doctor = response.Content.ReadAsAsync<DoctorDto>().Result;
+                        comment.Doctor = doctor;
+                    }
+                }
+            }
             return View(article);
         }
 
         // GET: Article/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             string url = "EventData/ListEvents";
@@ -77,6 +100,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Article/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Article article)
         {
             try
@@ -105,6 +129,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Article/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             string url = "ArticleData/FindArticle/" + id;
@@ -121,6 +146,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Article/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id, Article article, HttpPostedFileBase articlePic)
         {
             try
@@ -161,7 +187,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Article/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "ArticleData/FindArticle/" + id;
@@ -173,7 +199,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Article/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
 

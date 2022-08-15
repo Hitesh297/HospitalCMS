@@ -1,4 +1,5 @@
 ﻿using HospitalCMS.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,21 @@ namespace HospitalCMS.Controllers
         // GET: Patient/Details/5
         public ActionResult Details(int id)
         {
+            if (User.IsInRole("Patient"))
+            {
+                string getbyemailurl = "PatientData/FindPatientByEmail/" + User.Identity.GetUserName() + "/";
+                HttpResponseMessage getbyemailresponse = client.GetAsync(getbyemailurl).Result;
+                if (!getbyemailresponse.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Create", "Patient");
+                }
+                else
+                {
+                    PatientDto patientbyemail = getbyemailresponse.Content.ReadAsAsync<PatientDto>().Result;
+                    id = patientbyemail.PatientId;
+                    //return RedirectToAction("Edit", "Patient", new { id = patientbyemail.PatientId });
+                }
+            }
             string url = "PatientData/FindPatient/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             PatientDto patient = response.Content.ReadAsAsync<PatientDto>().Result;
@@ -70,6 +86,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Patient/Create
         [HttpPost]
+        [Authorize(Roles = "Admin,Patient")]
         public ActionResult Create(Patient patient)
         {
             try
@@ -84,6 +101,10 @@ namespace HospitalCMS.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (User.IsInRole("Patient"))
+                    {
+                        return RedirectToAction("Create", "Appointment");
+                    }
                     return RedirectToAction("list", "Patient");
                 }
                 else
@@ -98,8 +119,24 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Patient/Edit/5
+        [Authorize(Roles = "Admin,Patient")]
         public ActionResult Edit(int id)
         {
+            //if(User.IsInRole("Patient"))
+            //{
+            //    string getbyemailurl = "PatientData/FindPatientByEmail/" + User.Identity.GetUserName() + "/";
+            //    HttpResponseMessage getbyemailresponse = client.GetAsync(getbyemailurl).Result;
+            //    if (!getbyemailresponse.IsSuccessStatusCode)
+            //    {
+            //        return RedirectToAction("Create", "Patient");
+            //    }
+            //    else
+            //    {
+            //        PatientDto patientbyemail = getbyemailresponse.Content.ReadAsAsync<PatientDto>().Result;
+            //        id = patientbyemail.PatientId;
+            //        //return RedirectToAction("Edit", "Patient", new { id = patientbyemail.PatientId });
+            //    }
+            //}
             string url = "PatientData/FindPatient/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             PatientDto patient = response.Content.ReadAsAsync<PatientDto>().Result;
@@ -108,6 +145,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Patient/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin,Patient")]
         public ActionResult Edit(int id, Patient patient)
         {
             try
@@ -122,6 +160,10 @@ namespace HospitalCMS.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (User.IsInRole("Patient"))
+                    {
+                        return RedirectToAction("Create", "Appointment");
+                    }
                     return RedirectToAction("list", "Patient");
                 }
                 else
@@ -136,7 +178,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Patient/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "PatientData/FindPatient/" + id;
@@ -147,7 +189,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Patient/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try
@@ -172,5 +214,7 @@ namespace HospitalCMS.Controllers
                 return View();
             }
         }
+
+       
     }
 }

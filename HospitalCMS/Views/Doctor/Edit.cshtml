@@ -5,144 +5,113 @@
 }
 
 <h2>Edit</h2>
-
-<div id="form-section">
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-
-
-        <div class="form-horizontal">
-            <h4>Doctor</h4>
-            <hr />
-            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.DoctorId)*@
-            <input type="hidden" name="DoctorId" value="@Model.Doctor.DoctorId" />
-            <input type="hidden" name="DoctorHasPic" value="@Model.Doctor.DoctorHasPic.ToString()" />
-            <input type="hidden" name="PicExtension" value="@Model.Doctor.PicExtension" />
-            <div class="form-group">
-                @{
-                    string imageurl = "/Content/Images/Doctors/default.jpg";
-                    if (Model.Doctor.DoctorHasPic)
-                    {
-                        imageurl = "/Content/Images/Doctors/" + Model.Doctor.DoctorId + "." + Model.Doctor.PicExtension;
-                    }
-                }
-                <div class="col-md-4">
-                    <img id="profile-pic" style="display:block; max-width:150px; padding-bottom:5px;" alt="@Model.Doctor.Name" src="@imageurl" />
-                </div>
-
-            </div>
-            <div class="form-group">
-                <input class="col-md-4" id="imgInput" type="file" name="doctorPic" />
-            </div>
-            <div class="form-group">
-                @*@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                <label class="control-label col-md-2">Name:</label>
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })*@
-                    <input class="form-control" type="text" name="Name" value="@Model.Doctor.Name" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                @*@Html.LabelFor(model => model.Experience, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                <label class="control-label col-md-2">Experience:</label>
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Experience, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Experience, "", new { @class = "text-danger" })*@
-                    <input class="form-control" type="number" name="Experience" value="@Model.Doctor.Experience" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                @*@Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                <label class="control-label col-md-2">Phone:</label>
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })*@
-                    <input class="form-control" type="text" name="Phone" value="@Model.Doctor.Phone" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                @*@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                <label class="control-label col-md-2">Email:</label>
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
-                    <input class="form-control" type="email" name="Email" value="@Model.Doctor.Email" />
-                </div>
-            </div>
-
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.DoctorHasPic, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <div class="checkbox">
-                            @Html.EditorFor(model => model.DoctorHasPic)
-                            @Html.ValidationMessageFor(model => model.DoctorHasPic, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>*@
-
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.PicExtension, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.PicExtension, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.PicExtension, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
-    }
-</div>
-<div id="speciality-section">
-    <label>Specialities</label>
-    <div id="speciality-container">
-        @if (Model.SpecialitiesAssigned == null || Model.SpecialitiesAssigned.Count() == 0)
+<h4>Doctor</h4>
+<hr />
+<div id="doctor-edit-container">
+    <div id="form-section">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <span>No Speciality Assigned.</span>
-        }
-        <ul>
-            @foreach (var speciality in Model.SpecialitiesAssigned)
-            {
-                <li><a href="/Speciality/Details/@speciality.SpecialityId">@speciality.Name</a> <a style="color:#ab2020;" href="/Doctor/UnassociateSpeciality?id=@Model.Doctor.DoctorId&specialityId=@speciality.SpecialityId">[x]</a></li>
+            @Html.AntiForgeryToken()
 
-            }
-        </ul>
-    </div>
 
-    <form id="associate-form" method="POST" action="/Doctor/AssociateSpeciality/@Model.Doctor.DoctorId">
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label class="control-label col-md-3">Add Speciality:</label>
-                <div class="col-md-9">
-                    <select class="form-control" name="specialityId">
-                        @foreach (var speciality in Model.SpecialitiesNotAssigned)
+            <div class="form-horizontal">
+                <input type="hidden" name="DoctorId" value="@Model.Doctor.DoctorId" />
+                <input type="hidden" name="DoctorHasPic" value="@Model.Doctor.DoctorHasPic.ToString()" />
+                <input type="hidden" name="PicExtension" value="@Model.Doctor.PicExtension" />
+                <div class="form-group">
+                    @{
+                        string imageurl = "/Content/Images/Doctors/default.jpg";
+                        if (Model.Doctor.DoctorHasPic)
                         {
-                            <option value="@speciality.SpecialityId">@speciality.Name</option>
+                            imageurl = "/Content/Images/Doctors/" + Model.Doctor.DoctorId + "." + Model.Doctor.PicExtension;
                         }
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-3 col-md-10">
-                    <input type="submit" value="Add Speciality" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-    <div>
-        @Html.ActionLink("Back to List", "List")
-    </div>
+                    }
+                    <div class="col-md-4">
+                        <img id="profile-pic" style="display:block; max-width:150px; padding-bottom:5px;" alt="@Model.Doctor.Name" src="@imageurl" />
+                    </div>
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+                </div>
+                <div class="form-group">
+                    <input class="col-md-4" id="imgInput" type="file" name="doctorPic" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Name:</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="Name" value="@Model.Doctor.Name" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Experience:</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="number" name="Experience" value="@Model.Doctor.Experience" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Phone:</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="Phone" value="@Model.Doctor.Phone" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Email:</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="email" name="Email" value="@Model.Doctor.Email" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div id="speciality-section">
+        <label>Specialities</label>
+        <div id="speciality-container">
+            @if (Model.SpecialitiesAssigned == null || Model.SpecialitiesAssigned.Count() == 0)
+            {
+                <span>No Speciality Assigned.</span>
+            }
+            <ul>
+                @foreach (var speciality in Model.SpecialitiesAssigned)
+                {
+                    <li><a href="/Speciality/Details/@speciality.SpecialityId">@speciality.Name</a> <a style="color:#ab2020;" href="/Doctor/UnassociateSpeciality?id=@Model.Doctor.DoctorId&specialityId=@speciality.SpecialityId">[x]</a></li>
+
+                }
+            </ul>
+        </div>
+
+        <form id="associate-form" method="POST" action="/Doctor/AssociateSpeciality/@Model.Doctor.DoctorId">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Add Speciality:</label>
+                    <div class="col-md-9">
+                        <select class="form-control" name="specialityId">
+                            @foreach (var speciality in Model.SpecialitiesNotAssigned)
+                            {
+                                <option value="@speciality.SpecialityId">@speciality.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-10">
+                        <input type="submit" value="Add Speciality" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

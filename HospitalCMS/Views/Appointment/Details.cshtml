@@ -31,14 +31,49 @@
             <p>Doctor Name: <a href="/Doctor/Details/@Model.DoctorId">@Model.Doctor.Name</a></p>
             <p>Scheduled at @Model.Schedule.ToString("f")</p>
         </div>
-        <div class="panel-body patient-details">
-            <form action="/Appointment/UpdateDoctorNotes" method="post">
-                <input type="hidden" name="id" value="@Model.AppointmentId" />
-                <label>Doctor Notes: </label>
-                <textarea name="DoctorNotes">@Model.DoctorNotes</textarea>
-                <input type="submit" name="submit" value="Save Notes" />
-            </form>
-        </div>
+        <div class="panel-body form-horizontal">
+            @if (User.IsInRole("Doctor") || User.IsInRole("Admin"))
+            {
+                <form action="/Appointment/UpdateDoctorNotes" method="post">
+                    <input type="hidden" name="id" value="@Model.AppointmentId" />
+
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Doctor Notes:</label>
+                        <div class="col-md-10">
+                            <textarea rows="4" cols="50" class="form-control" name="DoctorNotes">@Model.DoctorNotes</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input class="btn btn-info" type="submit" name="submit" value="Save Notes" />
+                        </div>
+                    </div>
+
+                </form>
+            }
+            else
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        Doctor's Notes:
+                    </dt>
+
+                    <dd>
+                        @if (string.IsNullOrWhiteSpace(Model.DoctorNotes))
+                        {
+                            <span>No Content</span>
+                        }
+                        else
+                        {
+                        @Model.DoctorNotes
+                        }
+                    </dd>
+                    </dl>
+                    }
+            </div>
     </div>
 </div>
 <p>

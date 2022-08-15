@@ -1,4 +1,5 @@
 ﻿@model HospitalCMS.Models.Doctor
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Create";
@@ -7,76 +8,51 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Doctor</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @* @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <label class="control-label col-md-2">Name:</label>
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })*@
-            <input class="form-control" name="Name">
+        <div class="form-group">
+            <label class="control-label col-md-2">Name:</label>
+            <div class="col-md-10">
+                <input class="form-control" name="Name">
+            </div>
         </div>
-    </div>
-
-    <div class="form-group">
-        @* @Html.LabelFor(model => model., htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <label class="control-label col-md-2">Experience:</label>
-
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.Experience, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Experience, "", new { @class = "text-danger" })*@
-            <input class="form-control" name="Experience">
-        </div>
-    </div>
 
         <div class="form-group">
-            @* @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2">Experience (Years):</label>
+            <div class="col-md-10">
+                <input type="number" class="form-control" name="Experience">
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="control-label col-md-2">Phone:</label>
 
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })*@
-                <input type="number" class="form-control" name="Phone">
-                @* type = number bcz phone number*@
-
+                <input type="text" class="form-control" name="Phone">
             </div>
         </div>
 
         <div class="form-group">
-           @* @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <label class="control-label col-md-2">Email:</label>
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
-                <input class="form-control" name="Email">
+                @if (User.IsInRole("Doctor"))
+                {
+                    <input class="form-control" name="Email" value="@User.Identity.GetUserName()" readonly>
+                }
+                else
+                {
+                    <input class="form-control" name="Email">
+                }
+
 
             </div>
         </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.DoctorHasPic, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.DoctorHasPic)
-                    @Html.ValidationMessageFor(model => model.DoctorHasPic, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.PicExtension, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PicExtension, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PicExtension, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

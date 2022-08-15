@@ -1,31 +1,213 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = null;
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/carousal.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @using Microsoft.AspNet.Identity
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+</head>
+<body>
+
+    <div class="navbar-wrapper">
+        <div class="container">
+
+            <nav class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("City Hospital", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Appointments", "List", "Appointment")</li>
+                                <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                                <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                                <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                                <li>@Html.ActionLink("Donors", "List", "Donor")</li>
+                                <li>@Html.ActionLink("Events", "List", "Event")</li>
+                                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                                <li>@Html.ActionLink("Patients", "List", "Patient")</li>
+                                <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                            </ul>
+                        }
+                        else if (User.IsInRole("Patient"))
+                        {
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("My Details", "Details", "Patient", new { id = 0 }, null) </li>
+                                <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
+                                <li>@Html.ActionLink("My Appointments", "List", "Appointment")</li>
+                                <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                                <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                                <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                                <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                                <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                                <li>@Html.ActionLink("Events", "List", "Event")</li>
+
+                            </ul>
+                        }
+                        else if (User.IsInRole("Doctor"))
+                        {
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Edit Details", "Edit", "Doctor", new { id = 0 }, null) </li>
+                                <li>@Html.ActionLink("Dashboard", "Details", "Doctor", new { id = 0 }, null) </li>
+                                <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                                <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                                <li>@Html.ActionLink("Events", "List", "Event")</li>
+                                <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
+                                <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                                <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                                <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                                <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                                <li>@Html.ActionLink("Events", "List", "Event")</li>
+                                <li>@Html.ActionLink("Departments", "List", "Department")</li>
+
+                            </ul>
+                        }
+                        <ul class="nav navbar-nav navbar-right dropdown">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Account <span class="caret"></span></a>
+                                @Html.Partial("_LoginPartial")
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        @{int countarticle = 0; }
+        <ol class="carousel-indicators">
+            @foreach (var item in TempData["Articles"] as IEnumerable<HospitalCMS.Models.ArticleDto>)
+            {
+                var style = countarticle == 0 ? "active" : "";
+                <li data-target="#myCarousel" data-slide-to="@countarticle" class="@style"></li>
+                countarticle++;
+            }
+        </ol>
+        <!-- Indicators -->
+        <div class="carousel-inner" role="listbox">
+            @{ int articlecarouselcount = 0; }
+            @foreach (var article in TempData["Articles"] as IEnumerable<HospitalCMS.Models.ArticleDto>)
+            {
+                var activestyle = articlecarouselcount == 0 ? "active" : "";
+
+                string imageurl = "/Content/Images/Articles/default.png";
+                if (article.HasPic)
+                {
+                    imageurl = "/Content/Images/Articles/" + article.ArticleId + "." + article.PicExtension;
+                }
+
+                <div class="item @activestyle">
+                    <img class="first-slide" src="@imageurl" alt="slide">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>@article.Title</h1>
+                            @{
+                                var shortdescription = string.Empty;
+                                if (article.Description != null)
+                                {
+                                    shortdescription = article.Description.Length > 99 ? article.Description.Substring(0, 100) : article.Description;
+                                }
+                            }
+                            <p>@shortdescription</p>
+                            <p><a class="btn btn-lg btn-primary" href="/Article/Details/@article.ArticleId" role="button">Learn more</a></p>
+                        </div>
+                    </div>
+                </div>
+                articlecarouselcount++;
+            }
+
+        </div>
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div><!-- /.carousel -->
+
+    <div class="container marketing">
+        <h2 style="text-align: center; font-size: 60px; padding-bottom: 73px;">Upcoming Events</h2>
+        <!-- START THE FEATURETTES -->
+
+        @{
+            int count = 1;
+        }
+        @foreach (var item in TempData["Events"] as IEnumerable<HospitalCMS.Models.EventDto>)
+        {
+            var textstyle = count % 2 == 0 ? "col-md-push-5" : "";
+            var imagestyle = count % 2 == 0 ? "col-md-pull-7" : "";
+            <div class="row featurette">
+                <div class="col-md-7 @textstyle">
+                    <h2 class="featurette-heading">@item.Title <span class="text-muted">By Department of @item.Department.Name</span></h2>
+                    <p class="lead">@item.Description</p>
+                    <p class="text-primary">Scheduled on @item.Date.ToString("f")</p>
+                </div>
+                @{
+                    string imageurl = "/Content/Images/Events/default.png";
+                    if (item.HasPic)
+                    {
+                        imageurl = "/Content/Images/Events/" + item.EventId + "." + item.PicExtension;
+                    }
+                }
+                <div class="col-md-5 @imagestyle">
+                    <img class="featurette-image img-responsive center-block" src="@imageurl" alt="Generic placeholder image">
+                </div>
+            </div>
+
+            <hr class="featurette-divider">
+            count++;
+        }
+
+
+
+        <!-- /END THE FEATURETTES -->
+        <footer>
+            <p>&copy; @DateTime.Now.Year - City Hospital Application</p>
+        </footer>
+
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+
+    
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="~/Scripts/script.js"></script>
+</body>
+</html>

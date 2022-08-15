@@ -100,6 +100,54 @@ namespace HospitalCMS.Controllers
             return Ok(PatientDto);
         }
 
+
+        [HttpGet]
+        [ResponseType(typeof(Patient))]
+
+        /// <summary>
+        /// Returns details of the Patient by Email id
+        /// </summary>
+        /// <param name="id">Patient email id</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: Patient in the system matching up to the email id
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        // GET: api/PatientData/FindPatientByEmail/hites.297@gmail.com
+        /// </example>
+        [Route("api/PatientData/FindPatientByEmail/{email}")]
+        public IHttpActionResult FindPatientByEmail(string email)
+
+        {
+            Patient Patient = db.Patients.Where(x => x.Email == email).FirstOrDefault();
+            if (Patient == null)
+            {
+                return NotFound();
+            }
+
+            PatientDto PatientDto = new PatientDto()
+            {
+                PatientId = Patient.PatientId,
+                FirstName = Patient.FirstName,
+                LastName = Patient.LastName,
+                DOB = Patient.DOB,
+                Gender = Patient.Gender,
+                Mobile = Patient.Mobile,
+                Email = Patient.Email,
+                MaritalStatus = Patient.MaritalStatus,
+                Address1 = Patient.Address1,
+                Address2 = Patient.Address2,
+                City = Patient.City,
+                Country = Patient.Country,
+                PostalCode = Patient.PostalCode
+            };
+           
+
+            return Ok(PatientDto);
+        }
+
         /// <summary>
         /// Edit a particular Patient in the system with POST Data input
         /// </summary>

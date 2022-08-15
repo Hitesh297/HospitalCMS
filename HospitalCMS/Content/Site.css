@@ -1,14 +1,20 @@
-﻿body {
-    padding-top: 50px;
+﻿@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Inline+One:ital@0;1&family=Righteous&display=swap');
+
+body {
+    /*padding-top: 50px;*/
     padding-bottom: 20px;
+    /*background: linear-gradient(150deg, #97c74e 0%, #2ab9a5 100%);*/
+    /*background: linear-gradient(150deg, #f0f2ed 0%, #dcc6ff 100%);*/
+    background: linear-gradient(150deg, #dfffaf 0%, #dcc6ff 100%);
+    min-height: 100vh;
 }
 
 /* Set padding to keep content from hitting the edges */
-.body-content {
+/*.body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
-
+*/
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -18,16 +24,19 @@
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select,
-textarea {
+select {
     max-width: 280px;
+}
+
+textarea {
+    max-width:700px;
 }
 
 .patient-details {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: 220px;
+    max-height: 230px;
 }
 
 .patient-details p {
@@ -48,7 +57,8 @@ textarea {
     color:white;
 }
 .question {
-    background: #cdcdcd;
+    background: #337ab7;
+    color: white;
     padding: 10px;
     border-radius: 5px;
     margin: 5px 0 0 0;
@@ -59,8 +69,53 @@ textarea {
 }
 
 .answer {
-    background: #e8e8e8;
+    background: white;
     padding: 10px;
     margin-bottom: 5px;
     transform: translateY(-3px);
+}
+
+.thumbnail-flex {
+    display:flex;
+    flex-wrap:wrap;
+}
+
+.thumbnail-flex-item {
+    width:25%;
+    margin:10px;
+    flex-grow:4;
+}
+
+#doctor-edit-container {
+    display: flex;
+    justify-content:space-around;
+}
+
+#logoutForm {
+    padding: 3px 20px;
+}
+
+.navbar-default {
+    box-shadow: 0px 0px 0px 1px rgb(0 0 0 / 8%), 0px 4px 4px rgb(0 0 0 / 30%) !important;
+    /*background:none !important;*/
+}
+
+#site-title {
+    position: absolute;
+    top: 6%;
+    left: 15%;
+    /* font-family: 'Alumni Sans Inline One', cursive; */
+    font-family: 'Righteous', cursive;
+    font-size: 150px;
+    color: black;
+    /* text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue; */
+    text-shadow: 5px 5px 4px #939393, 0 0 1em #dffab6, 0 0 1px black;
+}
+
+/*.navbar-nav li:hover {
+    background: white !important;
+}*/
+
+.body-content {
+    /*margin-top: 10px;*/
 }

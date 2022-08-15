@@ -1,4 +1,5 @@
 ﻿using HospitalCMS.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -48,9 +49,18 @@ namespace HospitalCMS.Controllers
 
         // GET: Doctor
         [HttpGet]
-        public ActionResult List()
+        public ActionResult List(string SearchKey = null)
         {
-            string url = "DoctorData/listDoctors";
+            string url = string.Empty;
+            if (!string.IsNullOrWhiteSpace(SearchKey))
+            {
+                url = "DoctorData/ListDoctors/" + SearchKey + "/";
+            }
+            else
+            {
+                url = "DoctorData/listDoctors";
+            }
+
             HttpResponseMessage response = client.GetAsync(url).Result;
             IEnumerable<DoctorDto> doctors = response.Content.ReadAsAsync<IEnumerable<DoctorDto>>().Result;
             return View(doctors);
@@ -59,6 +69,22 @@ namespace HospitalCMS.Controllers
         // GET: Doctor/Details/5
         public ActionResult Details(int id)
         {
+            if (User.IsInRole("Doctor") && id==0)
+            {
+                string getbyemailurl = "DoctorData/FindDoctorByEmail/" + User.Identity.GetUserName() + "/";
+                HttpResponseMessage getbyemailresponse = client.GetAsync(getbyemailurl).Result;
+                if (!getbyemailresponse.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Create", "Doctor");
+                }
+                else
+                {
+                    DoctorDto doctorbyemail = getbyemailresponse.Content.ReadAsAsync<DoctorDto>().Result;
+                    id = doctorbyemail.DoctorId;
+                    return View(doctorbyemail);
+                    //return RedirectToAction("Edit", "Patient", new { id = patientbyemail.PatientId });
+                }
+            }
             string url = "DoctorData/FindDoctor/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             DoctorDto doctor = response.Content.ReadAsAsync<DoctorDto>().Result;
@@ -66,6 +92,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Doctor/Create
+        [Authorize(Roles = "Admin,Doctor")]
         public ActionResult Create()
         {
             return View();
@@ -73,6 +100,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Doctor/Create
         [HttpPost]
+        [Authorize(Roles = "Admin,Doctor")]
         public ActionResult Create(Doctor doctor)
         {
             try
@@ -87,6 +115,11 @@ namespace HospitalCMS.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
+                    DoctorDto createdDoctor = response.Content.ReadAsAsync<DoctorDto>().Result;
+                    if (User.IsInRole("Doctor"))
+                    {
+                        return RedirectToAction("Edit", "Doctor", new { id = createdDoctor.DoctorId });
+                    }
                     return RedirectToAction("list", "Doctor");
                 }
                 else
@@ -101,13 +134,35 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Doctor/Edit/5
+        [Authorize(Roles = "Admin,Doctor")]
         public ActionResult Edit(int id)
         {
             DoctorVM viewModel = new DoctorVM();
+            string url = string.Empty;
+            HttpResponseMessage response;
+            DoctorDto selectedDoctor = new DoctorDto();
 
-            string url = "DoctorData/FindDoctor/" + id;
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            DoctorDto selectedDoctor = response.Content.ReadAsAsync<DoctorDto>().Result;
+            if (User.IsInRole("Doctor"))
+            {
+                string getbyemailurl = "DoctorData/FindDoctorByEmail/" + User.Identity.GetUserName() + "/";
+                HttpResponseMessage getbyemailresponse = client.GetAsync(getbyemailurl).Result;
+                if (!getbyemailresponse.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Create", "Doctor");
+                }
+                else
+                {
+                    selectedDoctor = getbyemailresponse.Content.ReadAsAsync<DoctorDto>().Result;
+                    id = selectedDoctor.DoctorId;
+                }
+            }
+            else
+            {
+                url = "DoctorData/FindDoctor/" + id;
+                response = client.GetAsync(url).Result;
+                selectedDoctor = response.Content.ReadAsAsync<DoctorDto>().Result;
+            }
+
 
             url = "SpecialityData/SpecialityAssignedToDoctor/" + id;
             response = client.GetAsync(url).Result;
@@ -125,6 +180,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Doctor/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin,Doctor")]
         public ActionResult Edit(int id, Doctor doctor, HttpPostedFileBase doctorPic)
         {
             try
@@ -145,10 +201,19 @@ namespace HospitalCMS.Controllers
 
                     response = client.PostAsync(url, requestcontent).Result;
 
+                    if (User.IsInRole("Doctor"))
+                    {
+                        return RedirectToAction("Details", "Doctor", new { id = doctor.DoctorId });
+                    }
+
                     return RedirectToAction("List");
                 }
                 else if (response.IsSuccessStatusCode)
                 {
+                    if (User.IsInRole("Doctor"))
+                    {
+                        return RedirectToAction("Details", "Doctor", new { id = doctor.DoctorId });
+                    }
                     return RedirectToAction("List");
                 }
                 else
@@ -164,6 +229,7 @@ namespace HospitalCMS.Controllers
 
         //GET: /Employee/UnassociateSpeciality?id={DoctorId}&serviceId={SpecialityId}
         [HttpGet]
+        [Authorize(Roles = "Admin,Doctor")]
         public ActionResult UnassociateSpeciality(int id, int specialityId)
         {
             try
@@ -192,6 +258,7 @@ namespace HospitalCMS.Controllers
 
         //POST: Doctor/AssociateSpeciality/{DoctorId}
         [HttpPost]
+        [Authorize(Roles = "Admin,Doctor")]
         public ActionResult AssociateSpeciality(int id, int specialityId)
         {
             try
@@ -220,7 +287,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Doctor/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "DoctorData/FindDoctor/" + id;
@@ -229,27 +296,27 @@ namespace HospitalCMS.Controllers
             return View(doctor);
 
         } // POST: Doctor/Delete/5
-            [HttpPost]
-            [Authorize]
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try
-                {
-                    GetApplicationCookie();
-                    string url = "DoctorData/DeleteDoctor/" + id;
-                    HttpContent content = new StringContent("");
-                    content.Headers.ContentType.MediaType = "application/json";
-                    HttpResponseMessage response = client.PostAsync(url, content).Result;
+            {
+                GetApplicationCookie();
+                string url = "DoctorData/DeleteDoctor/" + id;
+                HttpContent content = new StringContent("");
+                content.Headers.ContentType.MediaType = "application/json";
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("List");
-                    }
-                    else
-                    {
-                        return View("Error");
-                    }
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("List");
                 }
+                else
+                {
+                    return View("Error");
+                }
+            }
             catch
             {
                 return View();

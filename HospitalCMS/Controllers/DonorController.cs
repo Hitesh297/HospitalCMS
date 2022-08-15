@@ -85,6 +85,10 @@ namespace HospitalCMS.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (!User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("Thankyou", "Donor");
+                    }
                     return RedirectToAction("list", "Donor");
                 }
                 else
@@ -99,6 +103,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Donor/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             string url = "DonorData/FindDonor/" + id;
@@ -115,11 +120,12 @@ namespace HospitalCMS.Controllers
 
         // POST: Donor/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id, Donor donor)
         {
             try
             {
-                string url = "DonorData/UpdateDonor/"+ id;
+                string url = "DonorData/UpdateDonor/" + id;
                 string jsonpayload = JsonConvert.SerializeObject(donor);
 
                 HttpContent content = new StringContent(jsonpayload);
@@ -144,6 +150,7 @@ namespace HospitalCMS.Controllers
 
         // GET: Donor/Delete/5
         [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "DonorData/FindDonor/" + id;
@@ -154,7 +161,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Donor/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try
@@ -179,5 +186,11 @@ namespace HospitalCMS.Controllers
                 return View();
             }
         }
+
+        public ActionResult Thankyou()
+        {
+            return View();
+        }
+
     }
 }

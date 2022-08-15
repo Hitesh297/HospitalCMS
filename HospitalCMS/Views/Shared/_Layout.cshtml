@@ -4,44 +4,104 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/carousal.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @using Microsoft.AspNet.Identity
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Hospital Application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Appointments", "List", "Appointment")</li>
-                    <li>@Html.ActionLink("Articles", "List", "Article")</li>
-                    <li>@Html.ActionLink("Departments", "List", "Department")</li>
-                    <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
-                    <li>@Html.ActionLink("Donors", "List", "Donor")</li>
-                    <li>@Html.ActionLink("Events", "List", "Event")</li>
-                    <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
-                    <li>@Html.ActionLink("Patients", "List", "Patient")</li>
-                    <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
 
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+    <div class="navbar-wrapper">
+        <div class="container">
+
+            <nav class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        @Html.ActionLink("City Hospital", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Appointments", "List", "Appointment")</li>
+                                <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                                <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                                <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                                <li>@Html.ActionLink("Donors", "List", "Donor")</li>
+                                <li>@Html.ActionLink("Events", "List", "Event")</li>
+                                <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                                <li>@Html.ActionLink("Patients", "List", "Patient")</li>
+                                <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                            </ul>
+                        }
+                        else if (User.IsInRole("Patient"))
+                        {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("My Details", "Details", "Patient", new { id = 0 }, null) </li>
+                        <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
+                        <li>@Html.ActionLink("My Appointments", "List", "Appointment")</li>
+                        <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                        <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                        <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                        <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                        <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                        <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                        <li>@Html.ActionLink("Events", "List", "Event")</li>
+                    </ul>
+                        }
+                        else if (User.IsInRole("Doctor"))
+                        {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Edit Details", "Edit", "Doctor", new { id = 0 }, null) </li>
+                        <li>@Html.ActionLink("Dashboard", "Details", "Doctor", new { id = 0 }, null) </li>
+                        <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                        <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                        <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                        <li>@Html.ActionLink("Events", "List", "Event")</li>
+                        <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                    </ul>
+                        }
+                        else
+                        {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Book Appointment", "Create", "Appointment")</li>
+                        <li>@Html.ActionLink("Doctors", "List", "Doctor")</li>
+                        <li>@Html.ActionLink("Specialities", "List", "Speciality")</li>
+                        <li>@Html.ActionLink("Donate", "Create", "Donor")</li>
+                        <li>@Html.ActionLink("FAQs", "List", "FAQ")</li>
+                        <li>@Html.ActionLink("Articles", "List", "Article")</li>
+                        <li>@Html.ActionLink("Events", "List", "Event")</li>
+                        <li>@Html.ActionLink("Departments", "List", "Department")</li>
+
+                    </ul>
+                        }
+                        <ul class="nav navbar-nav navbar-right dropdown">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">Account <span class="caret"></span></a>
+                                @Html.Partial("_LoginPartial")
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+
         </div>
     </div>
+
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - City Hospital Application</p>
+    </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

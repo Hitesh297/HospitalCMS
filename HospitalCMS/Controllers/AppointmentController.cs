@@ -1,4 +1,5 @@
 ﻿using HospitalCMS.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -49,10 +50,27 @@ namespace HospitalCMS.Controllers
         // GET: Appointment/List
         public ActionResult List()
         {
-            string url = "AppointmentData/ListAppointments";
+            string url = string.Empty;
+            if (User.IsInRole("Patient"))
+            {
+                url = "AppointmentData/FindAppointmentsByPatientEmail/" + User.Identity.GetUserName() + "/";
+            }
+            else
+            {
+                url = "AppointmentData/ListAppointments";
+            }
             HttpResponseMessage response = client.GetAsync(url).Result;
-            IEnumerable<AppointmentDto> appointments = response.Content.ReadAsAsync<IEnumerable<AppointmentDto>>().Result;
-            return View(appointments);
+            if (response.IsSuccessStatusCode)
+            {
+                IEnumerable<AppointmentDto> appointments = response.Content.ReadAsAsync<IEnumerable<AppointmentDto>>().Result;
+                return View(appointments);
+            }
+            else
+            {
+                return View();
+            }
+            
+            
         }
 
         // GET: Appointment/Details/5
@@ -65,6 +83,7 @@ namespace HospitalCMS.Controllers
         }
 
         // GET: Appointment/Create
+        [Authorize(Roles = "Admin,Patient")]
         public ActionResult Create()
         {
             AppointmentVM appointmentVM = new AppointmentVM();
@@ -83,6 +102,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Appointment/Create
         [HttpPost]
+        [Authorize(Roles = "Admin,Patient")]
         public ActionResult Create(Appointment  appointment)
         {
             try
@@ -112,6 +132,7 @@ namespace HospitalCMS.Controllers
 
         // GET: Appointment/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin,Doctor")]
         public ActionResult UpdateDoctorNotes(int id, string DoctorNotes)
         {
             string url = "AppointmentData/FindAppointment/" + id;
@@ -131,6 +152,10 @@ namespace HospitalCMS.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                if (User.IsInRole("Doctor"))
+                {
+                    return RedirectToAction("Details", "Doctor", new { id = appointment.DoctorId });
+                }
                 return RedirectToAction("list", "Appointment");
             }
             else
@@ -156,7 +181,7 @@ namespace HospitalCMS.Controllers
         //}
 
         // GET: Appointment/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult ConfirmDelete(int id)
         {
             string url = "AppointmentData/FindAppointment/" + id;
@@ -167,7 +192,7 @@ namespace HospitalCMS.Controllers
 
         // POST: Appointment/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             try

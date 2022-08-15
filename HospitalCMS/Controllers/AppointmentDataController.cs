@@ -15,6 +15,11 @@ namespace HospitalCMS.Controllers
     public class AppointmentDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        //db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+        public AppointmentDataController()
+        {
+            db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+        }
 
         /// <summary>
         /// Returns all appointments in the system
@@ -58,15 +63,20 @@ namespace HospitalCMS.Controllers
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// GET: api/AppointmentData/FindAppointmentsByEmail/5
+        /// GET: api/AppointmentData/FindAppointmentsByPatientEmail/5
         /// </example>
 
         [ResponseType(typeof(Appointment))]
         [HttpGet]
-        public IEnumerable<AppointmentDto> FindAppointmentsByEmail(string email)
+        [Route("api/AppointmentData/FindAppointmentsByPatientEmail/{email}")]
+        public IHttpActionResult FindAppointmentsByPatientEmail(string email)
         {
-            List<Appointment> appointments = db.Appointments.Include(x => x.Doctor).Include(y=>y.Patient).Where(x => x.Patient.Email == email).ToList();
+            List<Appointment> appointments = (db.Appointments.Include(x => x.Doctor).Include(y=>y.Patient)).Where(y => y.Patient.Email.Equals(email)).ToList();
             //Appointment appointment = db.Appointments.Find(id);
+            if (appointments == null)
+            {
+                return NotFound();
+            }
             List<AppointmentDto> appointmentDtos = new List<AppointmentDto>();
 
             appointments.ForEach(x => appointmentDtos.Add(new AppointmentDto()
@@ -75,11 +85,13 @@ namespace HospitalCMS.Controllers
                 DoctorId = x.DoctorId,
                 PatientId = x.PatientId,
                 Schedule = x.Schedule,
-                DoctorNotes = x.DoctorNotes
+                DoctorNotes = x.DoctorNotes,
+                Doctor = x.Doctor != null ? new DoctorDto() { Name = x.Doctor.Name } : null,
+                Patient = x.Patient != null ? new PatientDto() { FirstName = x.Patient.FirstName } : null
 
             }));
 
-            return appointmentDtos;
+            return Ok(appointmentDtos);
         }
 
         /// <summary>
