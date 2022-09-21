@@ -44,48 +44,6 @@ The application has 4 kinds of users; Doctor, Patient, Admin & Guest(not logged 
 | Doctor | doctor@gmail.com | `password` |
 
 
-# Authors
-## Hitesh
-###### Appointment, Doctor, Speciality
-- api for CRUD functionality of Appointments
-- api for CRUD functionality of Doctor
-- api for CRUD functionality of Speciality
-- MVC controller for Appointment
-- MVC controller for Doctor
-- MVC controller for Speciality
-- Added code for seeding data
-- Worked on Register page for new user
-- Added search by name or email to doctors list page.
-- Display appointments of loggedin doctor.
-- Added rolebased authentication to all controller methods.
-
-
-## Saransh
-###### Article
-- api for CRUD functionality of Article
-- MVC controller for Article
-- View for CRUD operations on Article
-- PatientDataController error fixes
-- Change HTML helpers to HTML on view of Article(update & Create), Appointment(update & Create), Department(update & Create), FAQ(update & Create), Donor(update & Create), Patient(update & Create), Event(update & Create)
-
-## Kamran
-###### Department
-- api for CRUD functionality of Department
-- MVC controller for Department
-- View for CRUD operations on Department
-- Change HTML helpers to HTML on view(Delete conform, List, Detail) of all the modules.
-- Created data for migrations on configuration.cs
-
-## Vishwa
-###### Event
-- api for CRUD functionality of Events
-- MVC controller for Event
-- View for CRUD operations on Event
-- Bug fix on DoctorData controller.
-- Created model for volunteer.
-- add volunteer to event functionality added.
-- display volunteers on event details.
-
 
 ## Jinal
 ###### FAQ
