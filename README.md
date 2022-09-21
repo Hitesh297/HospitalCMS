@@ -43,16 +43,3 @@ The application has 4 kinds of users; Doctor, Patient, Admin & Guest(not logged 
 | Patient | patient@gmail.com | `password` |
 | Doctor | doctor@gmail.com | `password` |
 
-
-
-## Jinal
-###### FAQ
-- api for CRUD functionality of FAQ's
-- MVC controller for FAQ
-- View for CRUD operations on FAQ
-
-## Hunny
-###### Patient
-- api for CRUD functionality of Patient
-- MVC controller for Patient
-- View for CRUD operations on Patient
