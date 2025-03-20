@@ -1,20 +1,19 @@
 namespace HospitalCMS.Migrations
 {
-    using HospitalCMS.Models;
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
-    using Microsoft.AspNet.Identity.EntityFramework;
+    using HospitalCMS.Models;
     using Microsoft.AspNet.Identity;
-    using System.Diagnostics;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using MySql.Data.EntityFramework;
 
     internal sealed class Configuration : DbMigrationsConfiguration<HospitalCMS.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            SetSqlGenerator("MySql.Data.MySqlClient", new MySqlMigrationSqlGenerator());
         }
 
         protected override void Seed(HospitalCMS.Models.ApplicationDbContext context)
